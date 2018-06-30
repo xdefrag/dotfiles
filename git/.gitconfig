@@ -1,0 +1,22 @@
+[core]
+    filemods = false
+    editor = nvim
+
+[diff]
+    tool = vimdiff
+
+[merge]
+	tool = vimdiff3
+    conflicttyle = diff3
+
+[mergetool "vimdiff"]
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[push]
+    default = current
+
+[user]
+    name = Stanislaw Mnizhek
+    email = me@stanislawmnizhek.ru
+[url "https://"]
+	insteadOf = git://
