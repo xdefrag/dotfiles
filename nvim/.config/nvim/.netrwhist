@@ -1,9 +1,3 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/xdefrag/go/src/bitbucket.org'
-let g:netrw_dirhist_2='/Users/xdefrag/go/src'
-let g:netrw_dirhist_3='/Users/xdefrag/go'
-let g:netrw_dirhist_4='/Users/xdefrag'
-let g:netrw_dirhist_5='/Users/xdefrag/.config'
-let g:netrw_dirhist_6='/Users/xdefrag'
-let g:netrw_dirhist_7='/Users/xdefrag/.qutebrowser'
+let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_1='/home/xdefrag/.dotfiles/rofi/.config/rofi'
