@@ -342,51 +342,51 @@ c.fonts.monospace = 'Iosevka'
 
 # Font used in the completion widget.
 # Type: Font
-c.fonts.completion.entry = '16pt Iosevka'
+c.fonts.completion.entry = '14pt Iosevka'
 
 # Font used in the completion categories.
 # Type: Font
-c.fonts.completion.category = '16pt Iosevka'
+c.fonts.completion.category = '14pt Iosevka'
 
 # Font used for the debugging console.
 # Type: QtFont
-c.fonts.debug_console = '16pt Iosevka'
+c.fonts.debug_console = '14pt Iosevka'
 
 # Font used for the downloadbar.
 # Type: Font
-c.fonts.downloads = '16pt Iosevka'
+c.fonts.downloads = '14pt Iosevka'
 
 # Font used for the hints.
 # Type: Font
-c.fonts.hints = '16pt Iosevka'
+c.fonts.hints = '14pt Iosevka'
 
 # Font used in the keyhint widget.
 # Type: Font
-c.fonts.keyhint = '16pt Iosevka'
+c.fonts.keyhint = '14pt Iosevka'
 
 # Font used for error messages.
 # Type: Font
-c.fonts.messages.error = '16pt Iosevka'
+c.fonts.messages.error = '14pt Iosevka'
 
 # Font used for info messages.
 # Type: Font
-c.fonts.messages.info = '16pt Iosevka'
+c.fonts.messages.info = '14pt Iosevka'
 
 # Font used for warning messages.
 # Type: Font
-c.fonts.messages.warning = '16pt Iosevka'
+c.fonts.messages.warning = '14pt Iosevka'
 
 # Font used for prompts.
 # Type: Font
-c.fonts.prompts = '16pt Iosevka'
+c.fonts.prompts = '14pt Iosevka'
 
 # Font used in the statusbar.
 # Type: Font
-c.fonts.statusbar = '16pt Iosevka'
+c.fonts.statusbar = '14pt Iosevka'
 
 # Font used in the tab bar.
 # Type: QtFont
-c.fonts.tabs = '16pt Iosevka'
+c.fonts.tabs = '14pt Iosevka'
 
 # Bindings for normal mode
 config.bind('zp', 'open -t https://getpocket.com/edit?url={url}')
