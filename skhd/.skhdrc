@@ -1,10 +1,10 @@
 cmd - return : open -na /Applications/Kitty.app
 cmd + shift - return : open /Applications/qutebrowser.app
 
-cmd - h : chunkc tiling::window --focus west
-cmd - j : chunkc tiling::window --focus south
-cmd - k : chunkc tiling::window --focus north
-cmd - l : chunkc tiling::window --focus east
+ctrl + cmd - h : chunkc tiling::window --focus west
+ctrl + cmd - j : chunkc tiling::window --focus south
+ctrl + cmd - k : chunkc tiling::window --focus north
+ctrl + cmd - l : chunkc tiling::window --focus east
 
 shift + cmd - h : chunkc tiling::window --swap west
 shift + cmd - j : chunkc tiling::window --swap south

@@ -8,8 +8,8 @@ end
 # environment variables
 set -gx MANPAGER less
 set -gx SHELL (which fish)
-set -U EDITOR nvim
-set -U VISUAL nvim
+set -gx EDITOR nvim
+set -gx VISUAL nvim
 set -U fisher_copy true
 
 # fancy colorscheme
@@ -106,7 +106,6 @@ abbr dcb "docker-compose build"
 
 # kubectl
 abbr k "kubectl"
-abbr kga "kubectl get all"
 
 # apps
 abbr cask "brew cask"

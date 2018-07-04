@@ -1,5 +1,6 @@
 " {{{
-let makeprg = 'luac -p ' . shellescape(expand(''))
-let errorformat =  'luac: #f:l: m'
+setlocal iskeyword+=:
+
+let b:ale_fixers = ['luac', 'luacheck']
 " }}}
 " vim:foldmethod=marker:foldlevel=0

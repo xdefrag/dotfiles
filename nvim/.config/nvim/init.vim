@@ -19,11 +19,22 @@ let mapleader="\<Space>"
 " Default shell
 set shell=/bin/bash
 
+" Tags
+set tags=./tags,tags;
+
+" Helptags
+packloadall
+silent! helptags ALL
+
+" Disable this useless piece of hardware
+set mouse=
+autocmd BufEnter * set mouse=
+
 " Backspacing like a god!
 set backspace=indent,eol,start
 " Check files for fancy vim settings (like this on on last line)
 set modelines=1
-" Copy on main system clipboard like a god 
+" Copy on main system clipboard like a god
 set clipboard=unnamed
 " Read file if it changed somewhere
 set autoread
@@ -193,6 +204,9 @@ tnoremap <C-w>h <C-\><C-n><C-w>h
 tnoremap <C-w>j <C-\><C-n><C-w>j
 tnoremap <C-w>k <C-\><C-n><C-w>k
 tnoremap <C-w>l <C-\><C-n><C-w>l
+
+inoremap <expr> <C-j> ("\<C-n>")
+inoremap <expr> <C-k> ("\<C-p>")
 " }}}
 " Netrw {{{
 " Disable banner
