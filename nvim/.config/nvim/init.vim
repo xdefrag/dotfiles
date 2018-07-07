@@ -1,9 +1,18 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
-Plug 'chriskempson/base16-vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mileszs/ack.vim'
-Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }
+Plug 'chriskempson/base16-vim'                                              " Fancy colorschemes
+Plug 'editorconfig/editorconfig-vim'                                        " Editorconfig rules support
+Plug 'sheerun/vim-polyglot'                                                 " Filetype plugins
+Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
+Plug 'mileszs/ack.vim'                                                      " Ag interface
+Plug 'SirVer/ultisnips'                                                     " Snippets
+Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
+Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }            " Golang magic plugin for everything
+Plug 'airblade/vim-gitgutter'                                               " Git state in SignColumn
+Plug 'tpope/vim-commentary'                                                 " Easy commenting
+Plug 'tpope/vim-unimpaired'                                                 " Shortcuts with [ and ]
+Plug 'tpope/vim-surround'                                                   " Controls surrounding characters
+Plug 'tpope/vim-repeat'                                                     " Dot support for bunch of plugins
 call plug#end()
 " }}}
 " Colors {{{
@@ -42,8 +51,10 @@ set autoread
 set autowriteall
 " Key press timeout
 set timeoutlen=500
-" Hide nonactive buffers 
+" Hide nonactive buffers
 set hidden
+" Write swap file every 100ms
+set updatetime=100
 " }}}
 " Visual {{{
 " Syn
@@ -62,12 +73,14 @@ set laststatus=0
 set noruler
 " I know on what mode am I, huh
 set noshowmode
-" Disable left gutter
-set signcolumn=no
+" Always show sign column
+set signcolumn=yes
 " Display unprintable characters
 set list
 " Mark indenting with dots and trails with minus
 set listchars=tab:\.\ ,trail:-
+" Transparent SignColumn
+hi SignColumn ctermbg=none
 " }}}
 " Completion {{{
 " Show popup even there is only one match
@@ -81,7 +94,7 @@ set completeopt+=noinsert
 " Do not select any matches
 set completeopt+=noselect
 " Omnifunc
-set omnifunc=syntaxcomplete#Complete
+"set omnifunc=syntaxcomplete#Complete
 " }}}
 " Errors {{{
 " No visual bell
@@ -220,12 +233,60 @@ nnoremap <C-n> :Explore<CR>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
-nnoremap <C-a> :Ack!<Space>
 " }}}
 " CtrlP {{{
 nnoremap <C-p> :CtrlP<CR>
 "nnoremap <leader>b :CtrlPBuffer<CR>
 "nnoremap <leader>h :CtrlPMRUFiles<CR>
+" }}}
+" Ultisnips {{{
+let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets/'
+let g:UltiSnipsEditSplit="vertical"
+" }}}
+" Ale {{{
+" Run only linters from local ftplugin files
+let g:ale_linters_explicit = 1
+" Run b:ale_fixers on save
+let g:ale_fix_on_save = 1
+" Language server autocompletion
+let g:ale_completion_enabled = 0
+" Linting
+"let g:ale_lint_delay = 300
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
+" Gutter always open
+let g:ale_sign_column_always = 1
+" Signs
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+" Quickfix settings
+let g:ale_open_list = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_list_window_size = 5
+" Transparent errors and warnings
+hi ALEErrorSign ctermbg=none ctermfg=Cyan
+hi ALEWarningSign ctermbg=none ctermfg=Cyan
+hi ALESignColumnWithoutErrors ctermbg=none ctermfg=Cyan
+" Ale error msg
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" }}}
+" Git Gutter {{{
+" Disable default keys
+let g:gitgutter_map_keys = 0
+" Don't touch mah fancy scheme
+let g:gitgutter_override_sign_column_highlight = 0
+" Default grep
+if executable('ag')
+  let g:gitgutter_grep = 'ag'
+endif
+" Colors
+hi GitGutterAdd ctermbg=none ctermfg=Cyan
+hi GitGutterChange ctermbg=none ctermfg=Cyan
+hi GitGutterDelete ctermbg=none ctermfg=Cyan
+hi GitGutterChangeDelete ctermbg=none ctermfg=Cyan
 " }}}
 " vim:foldmethod=marker:foldlevel=0

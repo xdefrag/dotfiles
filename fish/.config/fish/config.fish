@@ -47,7 +47,7 @@ test -e /usr/local/opt/go/libexec/bin; and set -gx PATH /usr/local/opt/go/libexe
 test -e ~/go; and set -gx GOPATH ~/go; set -gx PATH ~/go/bin $PATH
 
 # npm
-test -e ~/.config/fnm/bin; and set -gx PATH ~/.config/fnm/bin $PATH
+test -e ~/.npm-global/bin; and set -gx PATH ~/.npm-global/bin $PATH
 
 # composer 
 test -e ~/.composer; and set -gx PATH ~/.composer/vendor/bin $PATH
