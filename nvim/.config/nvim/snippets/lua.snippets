@@ -1,0 +1,46 @@
+snippet tab
+	local ${1:`expand('%:t:r')`} = {}
+
+	${0:${VISUAL}}
+
+	return $1
+snippet test
+	#!/usr/bin/env tarantool
+
+	box.cfg{wal_mode = 'none', log_level = 0}
+
+	local tap = require('tap')
+
+	local taptest = tap.test(${1:`expand('%:t:r')`})
+
+	taptest:plan(1)
+	taptest:diag(taptest.name)
+
+	${0:${VISUAL}}
+
+	taptest:ok(true, '')
+
+	os.exit(tonumber(taptest:check()))
+snippet testapp
+	#!/usr/bin/env tarantool
+
+	local app = require('test.testdata.app')
+
+	app.up()
+
+	local tap = require('tap')
+
+	local taptest = tap.test(${1:`expand('%:t:r')`})
+
+	taptest:plan(1)
+	taptest:diag(taptest.name)
+
+	${0:${VISUAL}}
+
+	taptest:ok(true, '')
+
+	app.down()
+
+	os.exit(tonumber(taptest:check()))
+snippet dump
+	local dump = require('pl.pretty').dump

@@ -220,6 +220,20 @@ tnoremap <C-w>l <C-\><C-n><C-w>l
 
 inoremap <expr> <C-j> ("\<C-n>")
 inoremap <expr> <C-k> ("\<C-p>")
+
+" Mimic Emacs Line Editing in Insert Mode Only
+inoremap <C-A> <Home>
+inoremap <C-B> <Left>
+inoremap <C-E> <End>
+inoremap <C-F> <Right>
+" â is <Alt-B>
+inoremap â <C-Left>
+" æ is <Alt-F>
+inoremap æ <C-Right>
+inoremap <C-K> <Esc>lDa
+inoremap <C-U> <Esc>d0xi
+inoremap <C-Y> <Esc>Pa
+inoremap <C-X><C-S> <Esc>:w<CR>a
 " }}}
 " Netrw {{{
 " Disable banner
@@ -242,6 +256,9 @@ nnoremap <C-p> :CtrlP<CR>
 " Ultisnips {{{
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets/'
 let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " }}}
 " Ale {{{
 " Run only linters from local ftplugin files
@@ -261,9 +278,9 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 " Quickfix settings
-let g:ale_open_list = 1
+let g:ale_open_list = 0
 let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_quickfix = 0
 let g:ale_list_window_size = 5
 " Transparent errors and warnings
 hi ALEErrorSign ctermbg=none ctermfg=Cyan
