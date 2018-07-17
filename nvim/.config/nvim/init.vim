@@ -37,7 +37,6 @@ silent! helptags ALL
 
 " Disable this useless piece of hardware
 set mouse=
-autocmd BufEnter * set mouse=
 
 " Backspacing like a god!
 set backspace=indent,eol,start
@@ -55,6 +54,8 @@ set timeoutlen=500
 set hidden
 " Write swap file every 100ms
 set updatetime=100
+" Disable line wrapping
+set nowrap
 " }}}
 " Visual {{{
 " Syn
@@ -67,6 +68,8 @@ set cursorline
 set lazyredraw
 " Show matched braces
 set showmatch
+" Timing
+set matchtime=1
 " Disabling useless statusline
 set laststatus=0
 " No cursor position
@@ -181,6 +184,14 @@ nnoremap k gk
 " Esc is too far away
 inoremap jk <Esc>
 
+" Don't press shift everytime
+nnoremap 9 (
+nnoremap 0 )
+
+" Line nav
+nnoremap L $
+nnoremap H ^
+
 " Window split navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -234,6 +245,39 @@ inoremap <C-K> <Esc>lDa
 inoremap <C-U> <Esc>d0xi
 inoremap <C-Y> <Esc>Pa
 inoremap <C-X><C-S> <Esc>:w<CR>a
+
+" folds
+nnoremap h zc
+nnoremap l zo
+
+" nops
+noremap <Esc> <nop>
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+inoremap <Esc> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+
+" moves
+"onoremap p i(
+" }}}
+" Abbr {{{
+" What a useful feature!
+iabbrev adn and
+" }}}
+" Autocmd {{{
+" :help autocmd-events
+augroup basegroup
+  autocmd!
+  " Disable mouse on every buffer
+  autocmd BufEnter * set mouse=
+  " Write files on disk after creating
+  autocmd BufNewFile * :write
+augroup END
 " }}}
 " Netrw {{{
 " Disable banner
