@@ -7,6 +7,17 @@ Plug 'ctrlpvim/ctrlp.vim'                                                   " Fu
 Plug 'mileszs/ack.vim'                                                      " Ag interface
 Plug 'SirVer/ultisnips'                                                     " Snippets
 Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
+Plug 'ternjs/tern_for_vim'                                                  " Tern integration
+Plug 'christoomey/vim-tmux-navigator'                                       " Let's find out what it is
+Plug 'ludovicchabant/vim-gutentags'                                         " Auto tags generations
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }               " Autocomplete
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }            " Tern autocomplete
+Plug 'Shougo/neco-syntax'                                                   " Weird complete, but I LIKE
+Plug 'zchee/deoplete-go', { 'do': 'make'}                                   " Go complete
+Plug 'HerringtonDarkholme/yats.vim'                                         " Wow, what this?
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}                  " Typescript tools
+Plug 'fszymanski/deoplete-emoji'                                            " Emojs
+Plug 'wellle/tmux-complete.vim'                                             " Tmux autocomplete
 Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }            " Golang magic plugin for everything
 Plug 'airblade/vim-gitgutter'                                               " Git state in SignColumn
 Plug 'tpope/vim-commentary'                                                 " Easy commenting
@@ -132,6 +143,7 @@ set ignorecase
 " Wild file find
 set path+=**
 set wildmenu
+set wildignore+=*/node_modules/*,*/vendor/*
 " }}}
 " Folds {{{
 " Enabling folding feature
@@ -297,8 +309,6 @@ endif
 " }}}
 " CtrlP {{{
 nnoremap <C-p> :CtrlP<CR>
-"nnoremap <leader>b :CtrlPBuffer<CR>
-"nnoremap <leader>h :CtrlPMRUFiles<CR>
 " }}}
 " Ultisnips {{{
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets/'
@@ -337,6 +347,9 @@ hi ALESignColumnWithoutErrors ctermbg=none ctermfg=Cyan
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" }}}
+" Deoplete {{{
+let g:deoplete#enable_at_startup = 1
 " }}}
 " Git Gutter {{{
 " Disable default keys

@@ -1,0 +1,4 @@
+snippet glob.sync
+	glob.sync('./${0}/**/*.js').forEach(p => {
+	  require(path.resolve(p))
+	})
