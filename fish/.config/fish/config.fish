@@ -106,17 +106,13 @@ abbr dcb "docker-compose build"
 
 # kubectl
 abbr k "kubectl"
+abbr kgp "kubectl get pods"
 
 # apps
-abbr cask "brew cask"
 abbr ag "ag --follow --hidden"
 abbr vim nvim
 abbr vi nvim
 abbr v nvim
-abbr mc vifm
-abbr f vifm
-abbr n newsboat
-abbr m neomutt
 abbr p pass
 abbr df "df -h"
 abbr xm "xrdb -merge ~/.Xresources"
