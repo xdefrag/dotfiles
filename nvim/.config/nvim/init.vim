@@ -1,6 +1,6 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
-Plug 'chriskempson/base16-vim'                                              " Fancy colorschemes
+Plug 'robertmeta/nofrils'                                                   " Colorschemes
 Plug 'editorconfig/editorconfig-vim'                                        " Editorconfig rules support
 Plug 'sheerun/vim-polyglot'                                                 " Filetype plugins
 Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
@@ -27,10 +27,14 @@ Plug 'tpope/vim-repeat'                                                     " Do
 call plug#end()
 " }}}
 " Colors {{{
-" 256 colors
-set t_Co=256
+colorscheme nofrils-dark
+let g:nofrils_heavylinenumbers=0
+let g:nofrils_strbackgrounds=1
+let g:nofrils_heavycomments=1
 
-colorscheme base16-grayscale-dark
+hi SignColumn ctermbg=none
+hi VertSplit ctermbg=none ctermfg=none
+hi Normal ctermbg=none
 " }}}
 " Options {{{
 " Leader keys
@@ -69,8 +73,6 @@ set updatetime=100
 set nowrap
 " }}}
 " Visual {{{
-" Syn
-syntax enable
 " Indenting on file type
 filetype plugin indent on
 " Highlight line with cursor
@@ -93,8 +95,6 @@ set signcolumn=yes
 set list
 " Mark indenting with dots and trails with minus
 set listchars=tab:\.\ ,trail:-
-" Transparent SignColumn
-hi SignColumn ctermbg=none
 " }}}
 " Completion {{{
 " Show popup even there is only one match

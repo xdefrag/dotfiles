@@ -71,6 +71,7 @@ abbr ll "ls -l"
 abbr c cd
 abbr m mkdir
 abbr r "rm -rf"
+abbr cl "clear"
 
 # dirs
 abbr . "cd .."
