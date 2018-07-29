@@ -1,15 +1,13 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
-Plug 'robertmeta/nofrils'                                                   " Colorschemes
+Plug 'chriskempson/base16-vim'                                              " Colorschemes
 Plug 'editorconfig/editorconfig-vim'                                        " Editorconfig rules support
-Plug 'sheerun/vim-polyglot'                                                 " Filetype plugins
 Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
 Plug 'mileszs/ack.vim'                                                      " Ag interface
 Plug 'SirVer/ultisnips'                                                     " Snippets
 Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
 Plug 'ternjs/tern_for_vim'                                                  " Tern integration
 Plug 'christoomey/vim-tmux-navigator'                                       " Let's find out what it is
-Plug 'ludovicchabant/vim-gutentags'                                         " Auto tags generations
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }               " Autocomplete
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }            " Tern autocomplete
 Plug 'Shougo/neco-syntax'                                                   " Weird complete, but I LIKE
@@ -27,14 +25,18 @@ Plug 'tpope/vim-repeat'                                                     " Do
 call plug#end()
 " }}}
 " Colors {{{
-colorscheme nofrils-dark
-let g:nofrils_heavylinenumbers=0
-let g:nofrils_strbackgrounds=1
-let g:nofrils_heavycomments=1
+colorscheme base16-grayscale-dark
+syntax on
 
+" Editor
 hi SignColumn ctermbg=none
 hi VertSplit ctermbg=none ctermfg=none
-hi Normal ctermbg=none
+hi Normal ctermbg=none ctermfg=white
+" Gitgut
+hi GitGutterAdd ctermbg=none ctermfg=Cyan
+hi GitGutterChange ctermbg=none ctermfg=Cyan
+hi GitGutterDelete ctermbg=none ctermfg=Cyan
+hi GitGutterChangeDelete ctermbg=none ctermfg=Cyan
 " }}}
 " Options {{{
 " Leader keys
@@ -360,10 +362,5 @@ let g:gitgutter_override_sign_column_highlight = 0
 if executable('ag')
   let g:gitgutter_grep = 'ag'
 endif
-" Colors
-hi GitGutterAdd ctermbg=none ctermfg=Cyan
-hi GitGutterChange ctermbg=none ctermfg=Cyan
-hi GitGutterDelete ctermbg=none ctermfg=Cyan
-hi GitGutterChangeDelete ctermbg=none ctermfg=Cyan
 " }}}
 " vim:foldmethod=marker:foldlevel=0
