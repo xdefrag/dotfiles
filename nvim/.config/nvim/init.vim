@@ -5,9 +5,8 @@ Plug 'editorconfig/editorconfig-vim'                                        " Ed
 Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
 Plug 'mileszs/ack.vim'                                                      " Ag interface
 Plug 'SirVer/ultisnips'                                                     " Snippets
-Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
+" Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
 Plug 'ternjs/tern_for_vim'                                                  " Tern integration
-Plug 'christoomey/vim-tmux-navigator'                                       " Let's find out what it is
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }               " Autocomplete
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }            " Tern autocomplete
 Plug 'Shougo/neco-syntax'                                                   " Weird complete, but I LIKE
@@ -275,9 +274,6 @@ inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
-
-" moves
-"onoremap p i(
 " }}}
 " Abbr {{{
 " What a useful feature!
