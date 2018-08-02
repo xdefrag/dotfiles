@@ -110,7 +110,6 @@ abbr k "kubectl"
 abbr kgp "kubectl get pods"
 
 # apps
-abbr ag "ag --follow --hidden"
 abbr vim nvim
 abbr vi nvim
 abbr v nvim

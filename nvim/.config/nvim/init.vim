@@ -3,9 +3,9 @@ call plug#begin('~/.cache/nvim/plugins')
 Plug 'chriskempson/base16-vim'                                              " Colorschemes
 Plug 'editorconfig/editorconfig-vim'                                        " Editorconfig rules support
 Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
-Plug 'mileszs/ack.vim'                                                      " Ag interface
+Plug 'jremmen/vim-ripgrep'                                                  " Rg interface
 Plug 'SirVer/ultisnips'                                                     " Snippets
-" Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
+Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
 Plug 'ternjs/tern_for_vim'                                                  " Tern integration
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }               " Autocomplete
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }            " Tern autocomplete
@@ -155,6 +155,11 @@ set foldlevelstart=2
 set foldnestmax=10
 " Indent based folding
 set foldmethod=indent
+
+augroup foldings
+  autocmd!
+  autocmd BufEnter *test.js setlocal foldlevelstart=0 | execute 'normal! zM'
+augroup END
 " }}}
 " Backup {{{
 if isdirectory($HOME . '/.cache/nvim/backup') == 0
@@ -292,18 +297,13 @@ augroup END
 " Netrw {{{
 " Disable banner
 let g:netrw_banner = 0
-let g:netrw_liststyle = 3
+" let g:netrw_liststyle = 3
 let g:netrw_sort_options = 'i'
 let g:netrw_altv = 1
-let g:netrw_list_hide = netrw_gitignore#Hide()
-let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
+" let g:netrw_list_hide = netrw_gitignore#Hide()
+" let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
 
 nnoremap <C-n> :Explore<CR>
-" }}}
-" Ack {{{
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
 " }}}
 " CtrlP {{{
 nnoremap <C-p> :CtrlP<CR>
@@ -355,8 +355,8 @@ let g:gitgutter_map_keys = 0
 " Don't touch mah fancy scheme
 let g:gitgutter_override_sign_column_highlight = 0
 " Default grep
-if executable('ag')
-  let g:gitgutter_grep = 'ag'
+if executable('rg')
+  let g:gitgutter_grep = 'rg'
 endif
 " }}}
 " vim:foldmethod=marker:foldlevel=0
