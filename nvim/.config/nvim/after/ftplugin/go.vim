@@ -7,7 +7,6 @@ set foldmethod=syntax
 
 let g:go_gocode_unimported_packages = 0
 let g:go_test_show_name = 0
-let g:go_play_browser_command = 'qutebrowser %URL% &'
 let g:go_info_mode = 'guru'
 let g:go_fmt_command = 'goimports'
 let g:go_updatetime = 100
@@ -26,6 +25,5 @@ nnoremap <leader>i :GoImport<Space>
 nnoremap <leader>I :GoImportAs<Space>
 nnoremap <leader>a :GoAlternate<CR>
 nnoremap <leader>b :GoBuild<CR>
-"inoremap . .<C-x><C-o>
 " }}}
 " vim:foldmethod=marker:foldlevel=0

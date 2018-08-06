@@ -6,15 +6,6 @@ Plug 'ctrlpvim/ctrlp.vim'                                                   " Fu
 Plug 'jremmen/vim-ripgrep'                                                  " Rg interface
 Plug 'SirVer/ultisnips'                                                     " Snippets
 Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
-Plug 'ternjs/tern_for_vim'                                                  " Tern integration
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }               " Autocomplete
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }            " Tern autocomplete
-Plug 'Shougo/neco-syntax'                                                   " Weird complete, but I LIKE
-Plug 'zchee/deoplete-go', { 'do': 'make'}                                   " Go complete
-Plug 'HerringtonDarkholme/yats.vim'                                         " Wow, what this?
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}                  " Typescript tools
-Plug 'fszymanski/deoplete-emoji'                                            " Emojs
-Plug 'wellle/tmux-complete.vim'                                             " Tmux autocomplete
 Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }            " Golang magic plugin for everything
 Plug 'airblade/vim-gitgutter'                                               " Git state in SignColumn
 Plug 'tpope/vim-commentary'                                                 " Easy commenting
@@ -94,8 +85,6 @@ set noshowmode
 set signcolumn=yes
 " Display unprintable characters
 set list
-" Mark indenting with dots and trails with minus
-set listchars=tab:\.\ ,trail:-
 " }}}
 " Completion {{{
 " Show popup even there is only one match
@@ -155,10 +144,10 @@ set foldlevelstart=2
 set foldnestmax=10
 " Indent based folding
 set foldmethod=indent
-
+" Fold test files to maximum
 augroup foldings
   autocmd!
-  autocmd BufEnter *test.js setlocal foldlevelstart=0 | execute 'normal! zM'
+  autocmd BufRead *test* setlocal foldlevelstart=0 | execute 'normal! zM'
 augroup END
 " }}}
 " Backup {{{
@@ -205,6 +194,7 @@ inoremap jk <Esc>
 " Don't press shift everytime
 nnoremap 9 (
 nnoremap 0 )
+nnoremap ; :
 
 " Line nav
 nnoremap L $
@@ -215,6 +205,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" No highlighting
+nnoremap <silent> <BS> :noh<CR>
 
 " Vim config stuff
 nnoremap <leader>vc :edit $MYVIMRC<CR>
@@ -345,9 +338,6 @@ hi ALESignColumnWithoutErrors ctermbg=none ctermfg=Cyan
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-" }}}
-" Deoplete {{{
-let g:deoplete#enable_at_startup = 1
 " }}}
 " Git Gutter {{{
 " Disable default keys
