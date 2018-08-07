@@ -1,16 +1,16 @@
-Xft.dpi: 96
+/* Xft.dpi: 96 */
 Xft.antialias: true
 Xft.rgba: rgb
 Xft.hinting: true
 Xft.autohint: true
 
-URxvt.font: xft:Iosevka:size=20
-URxvt.boldFont: xft:Iosevka:bold:size=20
-URxvt.italicFont: xft:Iosevka:italic:size=20
-URxvt.boldItalicFont: xft:Iosevka:bold:italic:size=20
+URxvt.font: xft:Iosevka:size=16
+URxvt.boldFont: xft:Iosevka:bold:size=16
+URxvt.italicFont: xft:Iosevka:italic:size=16
+URxvt.boldItalicFont: xft:Iosevka:bold:italic:size=16
 URxvt.scrollBar: false
 URxvt.letterSpace: 0
-URxvt.internalBorder: 30
+URxvt.internalBorder: 10
 URxvt.externalBorder: 0
 URxvt.borderless: 1
 

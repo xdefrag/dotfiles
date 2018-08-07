@@ -1,9 +1,9 @@
 # startup
 fish_default_key_bindings
 
-if test -z $TMUX
-    tmux attach; or tmux new -s main
-end
+# if test -z $TMUX
+#     tmux attach; or tmux new -s main
+# end
 
 # environment variables
 set -gx MANPAGER less
