@@ -1,10 +1,18 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
-Plug 'chriskempson/base16-vim'                                              " Colorschemes
 Plug 'editorconfig/editorconfig-vim'                                        " Editorconfig rules support
 Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
 Plug 'jremmen/vim-ripgrep'                                                  " Rg interface
 Plug 'SirVer/ultisnips'                                                     " Snippets
+Plug 'ncm2/ncm2'                                                            " Completion
+Plug 'roxma/nvim-yarp'                                                      " Remote plugin framework
+Plug 'ncm2/ncm2-bufword'                                                    " Buffer completion source
+Plug 'ncm2/ncm2-tmux'                                                       " Tmux completion source
+Plug 'ncm2/ncm2-path'                                                       " Path completion source
+Plug 'ncm2/ncm2-ultisnips'                                                  " Snippets completion source
+Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                      " Tern completion source
+Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                     " VimScript completion source
+Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                       " Golang completion source
 Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
 Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }            " Golang magic plugin for everything
 Plug 'airblade/vim-gitgutter'                                               " Git state in SignColumn
@@ -15,18 +23,8 @@ Plug 'tpope/vim-repeat'                                                     " Do
 call plug#end()
 " }}}
 " Colors {{{
-colorscheme base16-grayscale-dark
-syntax on
-
-" Editor
-hi SignColumn ctermbg=none
-hi VertSplit ctermbg=none ctermfg=none
-hi Normal ctermbg=none ctermfg=white
-" Gitgut
-hi GitGutterAdd ctermbg=none ctermfg=Cyan
-hi GitGutterChange ctermbg=none ctermfg=Cyan
-hi GitGutterDelete ctermbg=none ctermfg=Cyan
-hi GitGutterChangeDelete ctermbg=none ctermfg=Cyan
+set background=dark
+colorscheme beelzebub
 " }}}
 " Options {{{
 " Leader keys
@@ -90,7 +88,7 @@ set list
 " Show popup even there is only one match
 set completeopt+=menuone
 " Longest matches
-set completeopt+=longest
+set completeopt-=longest
 " Remove useless preview window
 set completeopt-=preview
 " Do not insert any test
@@ -192,8 +190,6 @@ nnoremap k gk
 inoremap jk <Esc>
 
 " Don't press shift everytime
-nnoremap 9 (
-nnoremap 0 )
 nnoremap ; :
 
 " Line nav
@@ -348,5 +344,10 @@ let g:gitgutter_override_sign_column_highlight = 0
 if executable('rg')
   let g:gitgutter_grep = 'rg'
 endif
+" }}}
+" NCM2 {{{
+augroup NCM2
+  autocmd BufEnter * call ncm2#enable_for_buffer()
+augroup END
 " }}}
 " vim:foldmethod=marker:foldlevel=0
