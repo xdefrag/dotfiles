@@ -1,5 +1,6 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
+Plug 'xdefrag/vim-beelzebub'                                                " Best colorscheme
 Plug 'editorconfig/editorconfig-vim'                                        " Editorconfig rules support
 Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
 Plug 'jremmen/vim-ripgrep'                                                  " Rg interface

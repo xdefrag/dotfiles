@@ -1,3 +1,9 @@
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.autohint: true
+
 URxvt.font: -misc-tamsyn-medium-r-normal--16-116-100-100-c-80-iso8859-1
 URxvt.boldFont: -misc-tamsyn-bold-r-normal--16-116-100-100-c-80-iso8859-1
 URxvt.italicFont: -misc-tamsyn-medium-r-normal--16-116-100-100-c-80-iso8859-1
