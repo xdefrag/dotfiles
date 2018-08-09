@@ -4,7 +4,8 @@ Plug 'xdefrag/vim-beelzebub'                                                " Be
 Plug 'editorconfig/editorconfig-vim'                                        " Editorconfig rules support
 Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
 Plug 'jremmen/vim-ripgrep'                                                  " Rg interface
-Plug 'SirVer/ultisnips'                                                     " Snippets
+Plug 'SirVer/ultisnips'                                                     " Snippets engine
+Plug 'honza/vim-snippets'                                                   " Snippets
 Plug 'ncm2/ncm2'                                                            " Completion
 Plug 'roxma/nvim-yarp'                                                      " Remote plugin framework
 Plug 'ncm2/ncm2-bufword'                                                    " Buffer completion source
@@ -14,8 +15,10 @@ Plug 'ncm2/ncm2-ultisnips'                                                  " Sn
 Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                      " Tern completion source
 Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                     " VimScript completion source
 Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                       " Golang completion source
+Plug 'phpactor/ncm2-phpactor', { 'for': 'php', 'do': 'composer install' }   " Php completion source
 Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
 Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }            " Golang magic plugin for everything
+Plug 'phpactor/phpactor', { 'fog': 'php', 'do': 'composer install' }        " Phpactor
 Plug 'airblade/vim-gitgutter'                                               " Git state in SignColumn
 Plug 'tpope/vim-commentary'                                                 " Easy commenting
 Plug 'tpope/vim-unimpaired'                                                 " Shortcuts with [ and ]
