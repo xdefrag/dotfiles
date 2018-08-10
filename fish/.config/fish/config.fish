@@ -39,19 +39,12 @@ test -e /usr/share/fish/completions; and source /usr/share/fish/completions/*
 test -e ~/.config/fish/completions; and source ~/.config/fish/completions/*
 not test -e ~/.local/share/fish/generated_completions; and fish_update_completions
 
-# phpbrew
-test -e ~/.phpbrew; and source ~/.phpbrew/phpbrew.fish
-
 # go
 test -e /usr/local/opt/go/libexec/bin; and set -gx PATH /usr/local/opt/go/libexec/bin $PATH
 test -e ~/go; and set -gx GOPATH ~/go; set -gx PATH ~/go/bin $PATH
 
 # npm
 test -e ~/.npm-global/bin; and set -gx PATH ~/.npm-global/bin $PATH
-
-# composer 
-test -e ~/.composer; and set -gx PATH ~/.composer/vendor/bin $PATH
-test -e ~/.config/composer; and set -gx PATH ~/.config/composer/vendor/bin $PATH
 
 # cargo
 test -e ~/.cargo; and set -gx PATH ~/.cargo/bin $PATH
@@ -84,8 +77,8 @@ abbr gs "git status"
 abbr gd "git diff"
 abbr ga "git add ."
 abbr gc "git checkout"
-abbr gci "git commit"
-abbr gcim "git commit -m"
+abbr gci "git commit -S"
+abbr gcim "git commit -S -m"
 abbr gco "git checkout"
 abbr gss "git stash"
 abbr gsa "git stash apply"

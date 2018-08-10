@@ -16,7 +16,7 @@ let g:go_term_enabled = 1
 let g:go_decls_mode = 'ctrlp.vim'
 let g:go_list_type = ''
 let g:go_template_autocreate = 0
-"let g:go_fmt_fail_silently = 1
+let g:go_fmt_fail_silently = 0
 " }}}
 " Keys {{{
 nnoremap <leader>T :GoTestFunc<CR>

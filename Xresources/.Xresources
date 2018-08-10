@@ -15,7 +15,7 @@ URxvt.externalBorder: 0
 URxvt.borderless: 1
 
 #define base00 #121212
-#define base01 #121212
+#define base01 #bcbcbc
 #define base02 #bcbcbc
 #define base03 #5f5f87
 #define base04 #bcbcbc
@@ -27,7 +27,7 @@ URxvt.borderless: 1
 #define base0A #bcbcbc
 #define base0B #bcbcbc
 #define base0C #bcbcbc
-#define base0D #bcbcbc
+#define base0D #5f5f87
 #define base0E #bcbcbc
 #define base0F #bcbcbc
 

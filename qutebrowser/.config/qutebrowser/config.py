@@ -305,7 +305,7 @@ c.colors.tabs.indicator.error = '#7c7c7c'
 
 # Foreground color of unselected odd tabs.
 # Type: QtColor
-c.colors.tabs.odd.fg = '#525252'
+c.colors.tabs.odd.fg = '#b9b9b9'
 
 # Background color of unselected odd tabs.
 # Type: QtColor
@@ -325,11 +325,11 @@ c.colors.tabs.selected.odd.fg = '#525252'
 
 # Background color of selected odd tabs.
 # Type: QtColor
-c.colors.tabs.selected.odd.bg = '#101010'
+c.colors.tabs.selected.odd.bg = '#b9b9b9'
 
 # Foreground color of selected even tabs.
 # Type: QtColor
-c.colors.tabs.selected.even.fg = '#101010'
+c.colors.tabs.selected.even.fg = '#525252'
 
 # Background color of selected even tabs.
 # Type: QtColor
