@@ -33,7 +33,7 @@ colorscheme beelzebub
 let mapleader="\<Space>"
 
 " Default shell
-set shell=/bin/bash
+set shell=/bin/zsh
 
 " Tags
 set tags=./tags,tags;
