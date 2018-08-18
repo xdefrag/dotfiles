@@ -26,8 +26,6 @@ plugins=(
   battery
 )
 
-source $ZSH/oh-my-zsh.sh
-
 addToPath() {
   if [[ -d $1 ]]; then
     export PATH=$1:$PATH
@@ -55,3 +53,5 @@ alias kgp=kubectl get pods
 alias p=pass
 alias df=df -h
 alias xm=xrdb -merge ~/.Xresources
+
+source $ZSH/oh-my-zsh.sh
