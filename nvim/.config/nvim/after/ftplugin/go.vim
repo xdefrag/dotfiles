@@ -19,11 +19,11 @@ let g:go_template_autocreate = 0
 let g:go_fmt_fail_silently = 0
 " }}}
 " Keys {{{
-nnoremap <leader>T :GoTestFunc<CR>
-nnoremap <leader>t :GoTest<CR>
-nnoremap <leader>i :GoImport<Space>
-nnoremap <leader>I :GoImportAs<Space>
-nnoremap <leader>a :GoAlternate<CR>
-nnoremap <leader>b :GoBuild<CR>
+nnoremap <localleader>T :GoTestFunc<CR>
+nnoremap <localleader>t :GoTest<CR>
+nnoremap <localleader>i :GoImport<Space>
+nnoremap <localleader>I :GoImportAs<Space>
+nnoremap <localleader>a :GoAlternate<CR>
+nnoremap <localleader>b :GoBuild<CR>
 " }}}
 " vim:foldmethod=marker:foldlevel=0

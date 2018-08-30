@@ -18,10 +18,10 @@
 [user]
   name = Stanislaw Mnizhek
   email = me@stanislawmnizhek.ru
-  signingkey = 304AA853E4E3C9F3A68FB4AE684B38F633FF2FCA
+  ; signingkey = 304AA853E4E3C9F3A68FB4AE684B38F633FF2FCA
 
-[gpg]
-  program = gpg
+; [gpg]
+;   program = gpg
 
-[commit]
-  gpgsign = true
+; [commit]
+;   gpgsign = true

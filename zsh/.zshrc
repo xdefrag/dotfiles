@@ -2,9 +2,9 @@ ZSH_THEME="minimal"
 CASE_SENSITIVE="false"
 HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_UPDATE="false"
-DISABLE_LS_COLORS="true"
+DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="true"
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd.mm.yyyy"
@@ -21,9 +21,7 @@ plugins=(
   node
   npm
   nvm
-  zsh-nvm
-  archlinux
-  battery
+  osx
 )
 
 addToPath() {
@@ -37,11 +35,10 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 addToPath ~/.npm-global/bin
 addToPath ~/go/bin
 
-# export UPDATE_ZSH_DAYS=13
-# export MANPATH="/usr/local/man:$MANPATH"
 export EDITOR=nvim
-export ZSH="/home/xdefrag/.oh-my-zsh"
+export ZSH="/Users/xdefrag/.oh-my-zsh"
 export LANG=en_US.UTF-8
+export GOBIN=~/go/bin
 
 alias v=nvim
 alias vi=nvim
@@ -52,6 +49,14 @@ alias kgp=kubectl get pods
 
 alias p=pass
 alias df=df -h
-alias xm=xrdb -merge ~/.Xresources
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 source $ZSH/oh-my-zsh.sh
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

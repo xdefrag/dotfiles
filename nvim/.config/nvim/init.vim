@@ -1,27 +1,31 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
-Plug 'xdefrag/vim-beelzebub'                                                " Best colorscheme
-Plug 'editorconfig/editorconfig-vim'                                        " Editorconfig rules support
-Plug 'ctrlpvim/ctrlp.vim'                                                   " Fuzzy find
-Plug 'jremmen/vim-ripgrep'                                                  " Rg interface
-Plug 'SirVer/ultisnips'                                                     " Snippets engine
-Plug 'honza/vim-snippets'                                                   " Snippets
-Plug 'ncm2/ncm2'                                                            " Completion
-Plug 'roxma/nvim-yarp'                                                      " Remote plugin framework
-Plug 'ncm2/ncm2-bufword'                                                    " Buffer completion source
-Plug 'ncm2/ncm2-tmux'                                                       " Tmux completion source
-Plug 'ncm2/ncm2-path'                                                       " Path completion source
-Plug 'ncm2/ncm2-ultisnips'                                                  " Snippets completion source
-Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                      " Tern completion source
-Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                     " VimScript completion source
-Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                       " Golang completion source
-Plug 'w0rp/ale'                                                             " Syntax checker, linter etc
-Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }            " Golang magic plugin for everything
-Plug 'airblade/vim-gitgutter'                                               " Git state in SignColumn
-Plug 'tpope/vim-commentary'                                                 " Easy commenting
-Plug 'tpope/vim-unimpaired'                                                 " Shortcuts with [ and ]
-Plug 'tpope/vim-surround'                                                   " Controls surrounding characters
-Plug 'tpope/vim-repeat'                                                     " Dot support for bunch of plugins
+Plug 'xdefrag/vim-beelzebub'                                     " Best colorscheme
+Plug 'editorconfig/editorconfig-vim'                             " Editorconfig rules support
+Plug 'scrooloose/nerdtree'                                       " File viewer
+Plug '/usr/local/opt/fzf'                                        " FuzzyFinder
+Plug 'junegunn/fzf.vim'                                          " FuzzyFinder interface
+Plug 'SirVer/ultisnips'                                          " Snippets engine
+Plug 'honza/vim-snippets'                                        " Snippets
+Plug 'ncm2/ncm2'                                                 " Completion
+Plug 'roxma/nvim-yarp'                                           " Remote plugin framework
+Plug 'ncm2/ncm2-bufword'                                         " Buffer completion source
+Plug 'ncm2/ncm2-tmux'                                            " Tmux completion source
+Plug 'ncm2/ncm2-path'                                            " Path completion source
+Plug 'ncm2/ncm2-ultisnips'                                       " Snippets completion source
+Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }           " Tern completion source
+Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                          " VimScript completion source
+Plug 'ncm2/ncm2-go', { 'for' : 'go' }                            " Golang completion source
+Plug 'w0rp/ale'                                                  " Syntax checker, linter etc
+Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' } " Golang magic plugin for everything
+Plug 'majutsushi/tagbar'                                         " Code tree
+Plug 'mbbill/undotree'                                           " What it says, yep
+Plug 'godlygeek/tabular'                                         " Text align
+Plug 'airblade/vim-gitgutter'                                    " Git state in SignColumn
+Plug 'tpope/vim-commentary'                                      " Easy commenting
+Plug 'tpope/vim-unimpaired'                                      " Shortcuts with [ and ]
+Plug 'tpope/vim-surround'                                        " Controls surrounding characters
+Plug 'tpope/vim-repeat'                                          " Dot support for bunch of plugins
 call plug#end()
 " }}}
 " Colors {{{
@@ -31,6 +35,7 @@ colorscheme beelzebub
 " Options {{{
 " Leader keys
 let mapleader="\<Space>"
+let maplocalleader="\\"
 
 " Default shell
 set shell=/bin/zsh
@@ -45,7 +50,7 @@ silent! helptags ALL
 " Disable this useless piece of hardware
 set mouse=
 
-" Backspacing like a god!
+" Backspacing, yeah!
 set backspace=indent,eol,start
 " Check files for fancy vim settings (like this on on last line)
 set modelines=1
@@ -144,11 +149,6 @@ set foldlevelstart=2
 set foldnestmax=10
 " Indent based folding
 set foldmethod=indent
-" Fold test files to maximum
-augroup foldings
-  autocmd!
-  autocmd BufRead *test* setlocal foldlevelstart=0 | execute 'normal! zM'
-augroup END
 " }}}
 " Backup {{{
 if isdirectory($HOME . '/.cache/nvim/backup') == 0
@@ -269,6 +269,10 @@ inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
+
+" plugins
+nnoremap <silent> <leader>t :TagbarToggle<CR>
+nnoremap <silent> <leader>u :UndotreeToggle<CR>
 " }}}
 " Abbr {{{
 " What a useful feature!
@@ -280,23 +284,48 @@ augroup basegroup
   autocmd!
   " Disable mouse on every buffer
   autocmd BufEnter * set mouse=
-  " Write files on disk after creating
-  autocmd BufNewFile * :write
 augroup END
 " }}}
-" Netrw {{{
-" Disable banner
-let g:netrw_banner = 0
-" let g:netrw_liststyle = 3
-let g:netrw_sort_options = 'i'
-let g:netrw_altv = 1
-" let g:netrw_list_hide = netrw_gitignore#Hide()
-" let g:netrw_list_hide .= ',\(^\|\s\s\)\zs\.\S\+'
+" FZF {{{
+" Layout
+let g:fzf_layout = { 'down': '~20%' }
 
-nnoremap <C-n> :Explore<CR>
+" Colours
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'Normal'],
+  \ 'bg+':     ['bg', 'Normal'],
+  \ 'hl+':     ['fg', 'Comment'],
+  \ 'info':    ['fg', 'Comment'],
+  \ 'border':  ['fg', 'Comment'],
+  \ 'prompt':  ['fg', 'Normal'],
+  \ 'pointer': ['fg', 'Normal'],
+  \ 'marker':  ['fg', 'Normal'],
+  \ 'spinner': ['fg', 'Comment'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Use ripgrep instead ag
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+" Mappings
+nnoremap <silent><leader>ff :Files<CR>
+nnoremap <silent><leader>fb :Buffers<CR>
+nnoremap <silent><leader>ft :Tags<CR>
+nnoremap <silent><leader>fh :History<CR>
+nnoremap <silent><leader>fs :Snippets<CR>
 " }}}
-" CtrlP {{{
-nnoremap <C-p> :CtrlP<CR>
+" NERDTree {{{
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
 " }}}
 " Ultisnips {{{
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets/'
