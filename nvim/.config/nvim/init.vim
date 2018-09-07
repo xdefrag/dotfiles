@@ -18,6 +18,7 @@ Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                          " VimScript com
 Plug 'ncm2/ncm2-go', { 'for' : 'go' }                            " Golang completion source
 Plug 'w0rp/ale'                                                  " Syntax checker, linter etc
 Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' } " Golang magic plugin for everything
+Plug 'sebdah/vim-delve', { 'for' : 'go' }                        " Go debug
 Plug 'majutsushi/tagbar'                                         " Code tree
 Plug 'mbbill/undotree'                                           " What it says, yep
 Plug 'godlygeek/tabular'                                         " Text align
@@ -35,7 +36,6 @@ colorscheme beelzebub
 " Options {{{
 " Leader keys
 let mapleader="\<Space>"
-let maplocalleader="\\"
 
 " Default shell
 set shell=/bin/zsh
@@ -269,10 +269,6 @@ inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
-
-" plugins
-nnoremap <silent> <leader>t :TagbarToggle<CR>
-nnoremap <silent> <leader>u :UndotreeToggle<CR>
 " }}}
 " Abbr {{{
 " What a useful feature!
