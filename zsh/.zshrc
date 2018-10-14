@@ -50,13 +50,16 @@ alias kgp=kubectl get pods
 alias p=pass
 alias df=df -h
 
+# Zsh
+source $ZSH/oh-my-zsh.sh
+
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-source $ZSH/oh-my-zsh.sh
 
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.cargo ] && source ~/.cargo/env
+[ -f ~/.phpbrew ] && source ~/.phpbrew/bashrc

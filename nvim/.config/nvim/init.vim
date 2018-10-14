@@ -1,32 +1,44 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
-Plug 'xdefrag/vim-beelzebub'                                     " Best colorscheme
-Plug 'editorconfig/editorconfig-vim'                             " Editorconfig rules support
-Plug 'scrooloose/nerdtree'                                       " File viewer
-Plug '/usr/local/opt/fzf'                                        " FuzzyFinder
-Plug 'junegunn/fzf.vim'                                          " FuzzyFinder interface
-Plug 'SirVer/ultisnips'                                          " Snippets engine
-Plug 'honza/vim-snippets'                                        " Snippets
-Plug 'ncm2/ncm2'                                                 " Completion
-Plug 'roxma/nvim-yarp'                                           " Remote plugin framework
-Plug 'ncm2/ncm2-bufword'                                         " Buffer completion source
-Plug 'ncm2/ncm2-tmux'                                            " Tmux completion source
-Plug 'ncm2/ncm2-path'                                            " Path completion source
-Plug 'ncm2/ncm2-ultisnips'                                       " Snippets completion source
-Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }           " Tern completion source
-Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                          " VimScript completion source
-Plug 'ncm2/ncm2-go', { 'for' : 'go' }                            " Golang completion source
-Plug 'w0rp/ale'                                                  " Syntax checker, linter etc
-Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' } " Golang magic plugin for everything
-Plug 'sebdah/vim-delve', { 'for' : 'go' }                        " Go debug
-Plug 'majutsushi/tagbar'                                         " Code tree
-Plug 'mbbill/undotree'                                           " What it says, yep
-Plug 'godlygeek/tabular'                                         " Text align
-Plug 'airblade/vim-gitgutter'                                    " Git state in SignColumn
-Plug 'tpope/vim-commentary'                                      " Easy commenting
-Plug 'tpope/vim-unimpaired'                                      " Shortcuts with [ and ]
-Plug 'tpope/vim-surround'                                        " Controls surrounding characters
-Plug 'tpope/vim-repeat'                                          " Dot support for bunch of plugins
+
+Plug 'xdefrag/vim-beelzebub'                                       " Best colorscheme
+
+Plug 'tpope/vim-commentary'                                        " Easy commenting
+Plug 'tpope/vim-unimpaired'                                        " Shortcuts with [ and ]
+Plug 'tpope/vim-surround'                                          " Controls surrounding characters
+Plug 'tpope/vim-repeat'                                            " Dot support for bunch of plugins
+Plug 'godlygeek/tabular'                                           " Text align
+Plug 'airblade/vim-gitgutter'                                      " Git state in SignColumn
+Plug 'junegunn/rainbow_parentheses.vim'                            " Rainbows without ponies
+
+Plug 'editorconfig/editorconfig-vim'                               " Editorconfig rules support
+Plug 'mhinz/vim-startify'                                          " Start screen and session manager
+Plug 'scrooloose/nerdtree'                                         " File viewer
+Plug '/usr/local/opt/fzf'                                          " FuzzyFinder
+Plug 'junegunn/fzf.vim'                                            " FuzzyFinder interface
+Plug 'SirVer/ultisnips'                                            " Snippets engine
+Plug 'honza/vim-snippets'                                          " Snippets
+Plug 'tpope/vim-fugitive'                                          " Git
+Plug 'mbbill/undotree'                                             " What it says, yep
+Plug 'majutsushi/tagbar'                                           " Code tree
+
+Plug 'w0rp/ale'                                                    " Syntax checker, linter etc
+Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }   " Golang magic plugin for everything
+Plug 'sebdah/vim-delve', { 'for' : 'go' }                          " Go debug
+Plug 'buoto/gotests-vim', { 'for' : 'go' }                         " Table test generator
+
+Plug 'roxma/nvim-yarp'                                             " Remote plugin framework
+Plug 'ncm2/ncm2'                                                   " Completion
+Plug 'ncm2/ncm2-bufword'                                           " Buffer
+Plug 'ncm2/ncm2-tmux'                                              " Tmux
+Plug 'ncm2/ncm2-path'                                              " Path
+Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'                " Syntax
+Plug 'filipekiss/ncm2-look.vim', { 'for' : 'md' }                  " Look
+Plug 'ncm2/ncm2-ultisnips'                                         " Snippets
+Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }             " Tern
+Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                            " VimScript
+Plug 'ncm2/ncm2-go', { 'for' : 'go' }                              " Golang
+
 call plug#end()
 " }}}
 " Colors {{{
@@ -282,6 +294,9 @@ augroup basegroup
   autocmd BufEnter * set mouse=
 augroup END
 " }}}
+" Startify {{{
+let g:startify_session_dir='~/.cache/nvim/sessions/'
+" }}}
 " FZF {{{
 " Layout
 let g:fzf_layout = { 'down': '~20%' }
@@ -353,6 +368,7 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 0
 let g:ale_list_window_size = 5
 " Transparent errors and warnings
+" TODO: move to colorscheme!
 hi ALEErrorSign ctermbg=none ctermfg=Cyan
 hi ALEWarningSign ctermbg=none ctermfg=Cyan
 hi ALESignColumnWithoutErrors ctermbg=none ctermfg=Cyan
@@ -375,5 +391,11 @@ endif
 augroup NCM2
   autocmd BufEnter * call ncm2#enable_for_buffer()
 augroup END
+" }}}
+" DLV {{{
+let g:delve_breakpoint_sign_highlight = 'Normal'
+let g:delve_breakpoint_sign = 'B'
+let g:delve_tracepoint_sign_highlight = 'Normal'
+let g:delve_tracepoint_sign = 'T'
 " }}}
 " vim:foldmethod=marker:foldlevel=0

@@ -14,14 +14,9 @@ let g:go_metalinter_autosave = 1
 let g:go_list_autoclose = 1
 let g:go_term_enabled = 1
 let g:go_decls_mode = 'fzf'
-let g:go_list_type = ''
+let g:go_list_type = 'quickfix'
 let g:go_template_autocreate = 0
 let g:go_fmt_fail_silently = 1
-
-let g:delve_breakpoint_sign_highlight = 'Normal'
-let g:delve_breakpoint_sign = '>>'
-let g:delve_tracepoint_sign_highlight = 'Normal'
-let g:delve_tracepoint_sign = '->'
 " }}}
 " Keys {{{
 nnoremap <leader>T :GoTestFunc<CR>
@@ -31,7 +26,7 @@ nnoremap <leader>I :GoImportAs<Space>
 nnoremap <leader>a :GoAlternate<CR>
 nnoremap <leader>b :GoBuild<CR>
 
-nnoremap <leader>b :DlvToggleBrakepoint<CR>
+nnoremap <leader>b :DlvToggleBreakpoint<CR>
 nnoremap <leader>d :DlvTest<CR>
 " }}}
 " vim:foldmethod=marker:foldlevel=0
