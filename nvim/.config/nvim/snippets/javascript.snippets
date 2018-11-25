@@ -1,4 +1,15 @@
 snippet glob.sync
-	glob.sync('./${0}/**/*.js').forEach(p => {
+	glob.sync('./${1}/**/*.js').forEach(p => {
 	  require(path.resolve(p))
 	})
+
+snippet component
+	const ${1} = (props) => (
+	  <div>
+	    {props.children}
+	  </div>
+	  <style jsx>{``}
+	  </style>
+	)
+
+	export default $1

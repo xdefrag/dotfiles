@@ -1,31 +1,32 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
 
-Plug 'xdefrag/vim-beelzebub'                                       " Best colorscheme
+Plug 'xdefrag/vim-beelzebub'                                           " Best colorscheme
 
-Plug 'tpope/vim-commentary'                                        " Easy commenting
-Plug 'tpope/vim-unimpaired'                                        " Shortcuts with [ and ]
-Plug 'tpope/vim-surround'                                          " Controls surrounding characters
-Plug 'tpope/vim-repeat'                                            " Dot support for bunch of plugins
-Plug 'godlygeek/tabular'                                           " Text align
-Plug 'airblade/vim-gitgutter'                                      " Git state in SignColumn
-Plug 'junegunn/rainbow_parentheses.vim'                            " Rainbows without ponies
+Plug 'tpope/vim-commentary'                                            " Easy commenting
+Plug 'tpope/vim-unimpaired'                                            " Shortcuts with [ and ]
+Plug 'tpope/vim-surround'                                              " Controls surrounding characters
+Plug 'tpope/vim-repeat'                                                " Dot support for bunch of plugins
+Plug 'godlygeek/tabular'                                               " Text align
+Plug 'airblade/vim-gitgutter'                                          " Git state in SignColumn
+Plug 'junegunn/rainbow_parentheses.vim'                                " Rainbows without ponies
+Plug 'airblade/vim-rooter'                                             " Finding root of app
 
-Plug 'editorconfig/editorconfig-vim'                               " Editorconfig rules support
-Plug 'mhinz/vim-startify'                                          " Start screen and session manager
-Plug 'scrooloose/nerdtree'                                         " File viewer
-Plug '/usr/local/opt/fzf'                                          " FuzzyFinder
-Plug 'junegunn/fzf.vim'                                            " FuzzyFinder interface
-Plug 'SirVer/ultisnips'                                            " Snippets engine
-Plug 'honza/vim-snippets'                                          " Snippets
-Plug 'tpope/vim-fugitive'                                          " Git
-Plug 'mbbill/undotree'                                             " What it says, yep
-Plug 'majutsushi/tagbar'                                           " Code tree
+Plug 'editorconfig/editorconfig-vim'                                   " Editorconfig rules support
+Plug 'mhinz/vim-startify'                                              " Start screen and session manager
+Plug '/usr/local/opt/fzf'                                              " FuzzyFinder
+Plug 'junegunn/fzf.vim'                                                " FuzzyFinder interface
+Plug 'SirVer/ultisnips'                                                " Snippets engine
+Plug 'honza/vim-snippets'                                              " Snippets
+Plug 'tpope/vim-fugitive'                                              " Git
+Plug 'mbbill/undotree'                                                 " What it says, yep
+Plug 'majutsushi/tagbar'                                               " Code tree
 
-Plug 'w0rp/ale'                                                    " Syntax checker, linter etc
-Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }   " Golang magic plugin for everything
-Plug 'sebdah/vim-delve', { 'for' : 'go' }                          " Go debug
-Plug 'buoto/gotests-vim', { 'for' : 'go' }                         " Table test generator
+Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }       " Golang magic plugin for everything
+Plug 'sebdah/vim-delve', { 'for' : 'go' }                              " Go debug
+Plug 'buoto/gotests-vim', { 'for' : 'go' }                             " Table test generator
+
+Plug 'ElmCast/elm-vim', { 'for': 'elm' }                               " Elm tools
 
 Plug 'roxma/nvim-yarp'                                             " Remote plugin framework
 Plug 'ncm2/ncm2'                                                   " Completion
@@ -294,6 +295,14 @@ augroup basegroup
   autocmd BufEnter * set mouse=
 augroup END
 " }}}
+" Netrw {{{
+let g:netrw_banner       = 0
+let g:netrw_keepdir      = 0
+let g:netrw_liststyle    = 1
+let g:netrw_sort_options = 'i'
+
+nnoremap <leader>n :Explore<CR>
+" }}}
 " Startify {{{
 let g:startify_session_dir='~/.cache/nvim/sessions/'
 " }}}
@@ -332,50 +341,13 @@ nnoremap <silent><leader>ft :Tags<CR>
 nnoremap <silent><leader>fh :History<CR>
 nnoremap <silent><leader>fs :Snippets<CR>
 " }}}
-" NERDTree {{{
-nnoremap <C-n> :NERDTreeToggle<CR>
-
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
-" }}}
 " Ultisnips {{{
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets/'
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<C-tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
-" }}}
-" Ale {{{
-" Run only linters from local ftplugin files
-let g:ale_linters_explicit = 1
-" Run b:ale_fixers on save
-let g:ale_fix_on_save = 1
-" Language server autocompletion
-let g:ale_completion_enabled = 0
-" Linting
-"let g:ale_lint_delay = 300
-let g:ale_lint_on_text_changed = 0
-let g:ale_lint_on_enter = 1
-let g:ale_lint_on_save = 1
-" Gutter always open
-let g:ale_sign_column_always = 1
-" Signs
-let g:ale_sign_error = 'E'
-let g:ale_sign_warning = 'W'
-" Quickfix settings
-let g:ale_open_list = 0
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 0
-let g:ale_list_window_size = 5
-" Transparent errors and warnings
-" TODO: move to colorscheme!
-hi ALEErrorSign ctermbg=none ctermfg=Cyan
-hi ALEWarningSign ctermbg=none ctermfg=Cyan
-hi ALESignColumnWithoutErrors ctermbg=none ctermfg=Cyan
-" Ale error msg
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 " }}}
 " Git Gutter {{{
 " Disable default keys

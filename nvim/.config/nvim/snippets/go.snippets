@@ -1,3 +1,29 @@
+snippet sharand
+	func GenerateRandomSha512() string {
+		data := make([]byte, 10)
+		for i := range data {
+			data[i] = byte(rand.Intn(512))
+		}
+
+		return fmt.Sprintf("%x", sha512.Sum512(data))
+	}
+
+snippet withdefstr
+	func WithDefaultString(v, d string) string {
+		if v == "" {
+			return d
+		}
+
+		return v
+	}
+
 snippet ht
 	r := httptest.NewRequest(http.Method${1}, "${2}", nil)
 	w := httptest.NewRecorder()
+
+snippet mockgen
+	//go:generate mockgen -destination ${2} -package mock ${1}
+
+snippet mockctrl
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()

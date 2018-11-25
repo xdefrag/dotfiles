@@ -26,7 +26,7 @@ nnoremap <leader>I :GoImportAs<Space>
 nnoremap <leader>a :GoAlternate<CR>
 nnoremap <leader>b :GoBuild<CR>
 
-nnoremap <leader>b :DlvToggleBreakpoint<CR>
+nnoremap <leader>p :DlvToggleBreakpoint<CR>
 nnoremap <leader>d :DlvTest<CR>
 " }}}
 " vim:foldmethod=marker:foldlevel=0
