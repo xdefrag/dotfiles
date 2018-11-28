@@ -5,18 +5,18 @@ set shiftwidth=8
 
 set foldmethod=syntax
 
-let g:go_gocode_unimported_packages = 1
+let g:go_gocode_unimported_packages = 0
 let g:go_test_show_name = 0
 let g:go_info_mode = 'guru'
 let g:go_fmt_command = 'goimports'
 let g:go_updatetime = 100
-let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave = 0
 let g:go_list_autoclose = 1
 let g:go_term_enabled = 1
 let g:go_decls_mode = 'fzf'
 let g:go_list_type = 'quickfix'
 let g:go_template_autocreate = 0
-let g:go_fmt_fail_silently = 1
+let g:go_fmt_fail_silently = 0
 " }}}
 " Keys {{{
 nnoremap <leader>T :GoTestFunc<CR>
@@ -28,5 +28,13 @@ nnoremap <leader>b :GoBuild<CR>
 
 nnoremap <leader>p :DlvToggleBreakpoint<CR>
 nnoremap <leader>d :DlvTest<CR>
+" }}}
+" ALE {{{
+let b:ale_go_golangci_lint_options = "--fast"
+let b:ale_go_golangci_lint_package = 1
+let b:ale_linters = [
+			\ 'golangci-lint',
+			\]
+let b:ale_fixers = ['goimports']
 " }}}
 " vim:foldmethod=marker:foldlevel=0

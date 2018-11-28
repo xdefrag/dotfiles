@@ -22,6 +22,8 @@ Plug 'tpope/vim-fugitive'                                              " Git
 Plug 'mbbill/undotree'                                                 " What it says, yep
 Plug 'majutsushi/tagbar'                                               " Code tree
 
+Plug 'w0rp/ale'
+
 Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }       " Golang magic plugin for everything
 Plug 'sebdah/vim-delve', { 'for' : 'go' }                              " Go debug
 Plug 'buoto/gotests-vim', { 'for' : 'go' }                             " Table test generator
@@ -72,7 +74,7 @@ set clipboard=unnamed
 " Read file if it changed somewhere
 set autoread
 " Write files in any case, we have big undo anyway
-"set autowriteall
+set autowrite
 " Key press timeout
 set timeoutlen=500
 " Hide nonactive buffers
@@ -369,5 +371,23 @@ let g:delve_breakpoint_sign_highlight = 'Normal'
 let g:delve_breakpoint_sign = 'B'
 let g:delve_tracepoint_sign_highlight = 'Normal'
 let g:delve_tracepoint_sign = 'T'
+" }}}
+" Ale {{{
+let g:ale_linters_explicit = 1
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+let g:ale_set_highlights = 0
+"let g:ale_lint_on_text_changed = 'always'
+"let g:ale_lint_on_insert_leave = 'always'
+"let g:ale_lint_on_enter = 0
+"let g:ale_set_loclist = 0
+"let g:ale_set_quickfix = 1
+"let g:ale_fix_on_save = 1
+
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
 " }}}
 " vim:foldmethod=marker:foldlevel=0

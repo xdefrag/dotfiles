@@ -38,8 +38,9 @@ addToPath ~/.npm-global/bin
 addToPath ~/go/bin
 
 export EDITOR=nvim
-export ZSH="~/.oh-my-zsh"
+export ZSH="/Users/xdefrag/.oh-my-zsh"
 export LANG=en_US.UTF-8
+export GOPATH=~/go
 export GOBIN=~/go/bin
 
 alias v=nvim
