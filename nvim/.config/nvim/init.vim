@@ -72,7 +72,7 @@ set clipboard=unnamed
 " Read file if it changed somewhere
 set autoread
 " Write files in any case, we have big undo anyway
-set autowriteall
+"set autowriteall
 " Key press timeout
 set timeoutlen=500
 " Hide nonactive buffers
@@ -80,7 +80,7 @@ set hidden
 " Write swap file every 100ms
 set updatetime=100
 " Disable line wrapping
-set nowrap
+"set nowrap
 " }}}
 " Visual {{{
 " Indenting on file type

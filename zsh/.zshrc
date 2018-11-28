@@ -8,6 +8,8 @@ ENABLE_CORRECTION="false"
 COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd.mm.yyyy"
+ZSH_DISABLE_COMPFIX="true"
+GO111MODULE=on
 
 plugins=(
   git
@@ -36,7 +38,7 @@ addToPath ~/.npm-global/bin
 addToPath ~/go/bin
 
 export EDITOR=nvim
-export ZSH="/Users/xdefrag/.oh-my-zsh"
+export ZSH="~/.oh-my-zsh"
 export LANG=en_US.UTF-8
 export GOBIN=~/go/bin
 
