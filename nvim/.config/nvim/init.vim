@@ -74,7 +74,8 @@ set clipboard=unnamed
 " Read file if it changed somewhere
 set autoread
 " Write files in any case, we have big undo anyway
-set autowrite
+" Breaks gocode somehow
+"set autowrite
 " Key press timeout
 set timeoutlen=500
 " Hide nonactive buffers

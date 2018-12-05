@@ -41,21 +41,21 @@ draw_bold_text_with_bright_colors: true
 font:
   # The normal (roman) font face to use.
   normal:
-    family: GohuFont
+    family: Iosevka Term
     # Style can be specified to pick a specific face.
-    # style: Regular
+    style: Regular
 
   # The bold font face
   bold:
-    family: GohuFont
+    family: Iosevka Term
     # Style can be specified to pick a specific face.
-    # style: Bold
+    style: Bold
 
   # The italic font face
   italic:
-    family: GohuFont
+    family: Iosevka Term
     # Style can be specified to pick a specific face.
-    # style: Italic
+    style: Italic
 
   # Point size of the font
   size: 14.0
@@ -80,7 +80,7 @@ font:
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
   # false.
-  use_thin_strokes: false
+  use_thin_strokes: true
 
 # Should display the render timer
 render_timer: false
@@ -383,3 +383,4 @@ key_bindings:
   - { key: F11,      mods: Command, chars: "\x1b[23;3~"                  }
   - { key: F12,      mods: Command, chars: "\x1b[24;3~"                  }
   - { key: NumpadEnter,             chars: "\n"                          }
+  - { key: A,        mods: Alt,     chars: "\x1ba"                       }
