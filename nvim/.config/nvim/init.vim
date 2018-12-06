@@ -366,6 +366,11 @@ endif
 augroup NCM2
   autocmd BufEnter * call ncm2#enable_for_buffer()
 augroup END
+
+let g:ncm2#complete_delay = 0
+let g:ncm2#popup_delay = 0
+let g:ncm2#matcher = "prefix"
+let g:ncm2#sorter = "alphanum"
 " }}}
 " DLV {{{
 let g:delve_breakpoint_sign_highlight = 'Normal'
