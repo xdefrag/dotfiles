@@ -6,7 +6,7 @@ set shiftwidth=8
 set foldmethod=syntax
 
 let g:go_gocode_propose_source = 0
-let g:go_gocode_unimported_packages = 0
+let g:go_gocode_unimported_packages = 1
 let g:go_test_show_name = 0
 let g:go_info_mode = 'guru'
 let g:go_fmt_command = 'goimports'
@@ -18,6 +18,8 @@ let g:go_decls_mode = 'fzf'
 let g:go_list_type = 'quickfix'
 let g:go_template_autocreate = 0
 let g:go_fmt_fail_silently = 0
+let s:parse_guru_output = 'fzf'
+let g:go_decls_includes = "func,type"
 
 " Croutch for gocode
 augroup gocodecroutch
