@@ -41,6 +41,7 @@ Plug 'ncm2/ncm2-ultisnips'                                         " Snippets
 Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }             " Tern
 Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                            " VimScript
 Plug 'ncm2/ncm2-go', { 'for' : 'go' }                              " Golang
+Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                             " Python
 
 call plug#end()
 " }}}
