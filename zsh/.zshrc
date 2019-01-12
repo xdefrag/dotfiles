@@ -66,3 +66,4 @@ HEROKU_AC_ZSH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/zsh_setup && test 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.cargo ] && source ~/.cargo/env
 [ -f ~/.phpbrew ] && source ~/.phpbrew/bashrc
+export PATH="/usr/local/sbin:$PATH"
