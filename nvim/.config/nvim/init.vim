@@ -11,6 +11,7 @@ Plug 'godlygeek/tabular'                                         " Text align
 Plug 'airblade/vim-gitgutter'                                    " Git state in SignColumn
 Plug 'junegunn/rainbow_parentheses.vim'                          " Rainbows without ponies
 Plug 'airblade/vim-rooter'                                       " Finding root of app
+Plug 'aquach/vim-http-client'                                    " HTTP client
 
 Plug 'editorconfig/editorconfig-vim'                             " Editorconfig rules support
 Plug 'mhinz/vim-startify'                                        " Start screen and session manager
@@ -399,5 +400,12 @@ let g:ale_fixers = {
 " }}}
 " dadbod {{{
 cnoreabbrev DBT DB postgresql://testing:testing@0.0.0.0:5432
+" }}}
+" HTTP Client {{{
+let g:http_client_bind_hotkey = 0
+let g:http_client_result_vsplit = 0
+let g:http_client_focus_output_window = 0
+
+nnoremap <leader>h :HTTPClientDoRequest<CR>
 " }}}
 " vim:foldmethod=marker:foldlevel=0

@@ -12,14 +12,15 @@ let g:go_info_mode = 'guru'
 let g:go_fmt_command = 'goimports'
 let g:go_updatetime = 100
 let g:go_metalinter_autosave = 0
-let g:go_list_autoclose = 1
-let g:go_term_enabled = 1
+" let g:go_list_autoclose = 1
+" let g:go_term_enabled = 1
 let g:go_decls_mode = 'fzf'
 let g:go_list_type = 'quickfix'
-let g:go_template_autocreate = 0
-let g:go_fmt_fail_silently = 0
+" let g:go_template_autocreate = 0
+" let g:go_fmt_fail_silently = 0
 let s:parse_guru_output = 'fzf'
 let g:go_decls_includes = "func,type"
+let g:go_jump_to_error = 0
 
 " Croutch for gocode
 augroup gocodecroutch
@@ -28,15 +29,21 @@ augroup gocodecroutch
 augroup END
 " }}}
 " Keys {{{
-nnoremap <leader>T :GoTestFunc<CR>
-nnoremap <leader>t :GoTest<CR>
+nnoremap <leader>t :GoTest!<CR>
 nnoremap <leader>i :GoImport<Space>
-nnoremap <leader>I :GoImportAs<Space>
 nnoremap <leader>a :GoAlternate<CR>
 nnoremap <leader>b :GoBuild<CR>
 
 nnoremap <leader>p :DlvToggleBreakpoint<CR>
 nnoremap <leader>d :DlvTest<CR>
+
+nnoremap <leader>gi :GoIfErr<CR>
+nnoremap <leader>gf :GoFillStruct<CR>
+nnoremap <leader>gt :GoTests<CR>
+nnoremap <leader>ga :GoAddTags db<CR>
+
+nnoremap <leader>e :GoDeclsDir<CR>
+nnoremap <leader>r :GoReferrers<CR>
 " }}}
 " ALE {{{
 let b:ale_go_golangci_lint_options = "--fast"

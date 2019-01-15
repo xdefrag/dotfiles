@@ -9,7 +9,6 @@ COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd.mm.yyyy"
 ZSH_DISABLE_COMPFIX="true"
-GO111MODULE=on
 
 plugins=(
   git
@@ -43,12 +42,16 @@ export LANG=en_US.UTF-8
 export GOPATH=~/go
 export GOBIN=~/go/bin
 
+export GO111MODULE=on
+
 alias v=nvim
 alias vi=nvim
 alias vim=nvim
 
 alias k=kubectl
 alias kgp=kubectl get pods
+
+alias e=etcdctl
 
 alias p=pass
 alias df=df -h
