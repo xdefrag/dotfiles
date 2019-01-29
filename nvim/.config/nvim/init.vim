@@ -1,49 +1,51 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
 
-Plug 'xdefrag/vim-beelzebub'                                     " Best colorscheme
+Plug 'xdefrag/vim-beelzebub'                                            " Best colorscheme
 
-Plug 'tpope/vim-commentary'                                      " Easy commenting
-Plug 'tpope/vim-unimpaired'                                      " Shortcuts with [ and ]
-Plug 'tpope/vim-surround'                                        " Controls surrounding characters
-Plug 'tpope/vim-repeat'                                          " Dot support for bunch of plugins
-Plug 'godlygeek/tabular'                                         " Text align
-Plug 'airblade/vim-gitgutter'                                    " Git state in SignColumn
-Plug 'junegunn/rainbow_parentheses.vim'                          " Rainbows without ponies
-Plug 'airblade/vim-rooter'                                       " Finding root of app
-Plug 'aquach/vim-http-client'                                    " HTTP client
+Plug 'tpope/vim-commentary'                                             " Easy commenting
+Plug 'tpope/vim-unimpaired'                                             " Shortcuts with [ and ]
+Plug 'tpope/vim-surround'                                               " Controls surrounding characters
+Plug 'tpope/vim-repeat'                                                 " Dot support for bunch of plugins
+Plug 'godlygeek/tabular'                                                " Text align
+Plug 'airblade/vim-gitgutter'                                           " Git state in SignColumn
+Plug 'junegunn/rainbow_parentheses.vim'                                 " Rainbows without ponies
+Plug 'airblade/vim-rooter'                                              " Finding root of app
+Plug 'aquach/vim-http-client'                                           " HTTP client
 
-Plug 'editorconfig/editorconfig-vim'                             " Editorconfig rules support
-Plug 'mhinz/vim-startify'                                        " Start screen and session manager
-Plug '/usr/local/opt/fzf'                                        " FuzzyFinder
-Plug 'junegunn/fzf.vim'                                          " FuzzyFinder interface
-Plug 'SirVer/ultisnips'                                          " Snippets engine
-Plug 'honza/vim-snippets'                                        " Snippets
-Plug 'tpope/vim-fugitive'                                        " Git
-Plug 'mbbill/undotree'                                           " What it says, yep
-Plug 'majutsushi/tagbar'                                         " Code tree
-Plug 'tpope/vim-dadbod'                                          " DB interface
+Plug 'editorconfig/editorconfig-vim'                                    " Editorconfig rules support
+Plug 'mhinz/vim-startify'                                               " Start screen and session manager
+Plug '/usr/local/opt/fzf'                                               " FuzzyFinder
+Plug 'junegunn/fzf.vim'                                                 " FuzzyFinder interface
+Plug 'SirVer/ultisnips'                                                 " Snippets engine
+Plug 'honza/vim-snippets'                                               " Snippets
+Plug 'tpope/vim-fugitive'                                               " Git
+Plug 'mbbill/undotree'                                                  " What it says, yep
+Plug 'majutsushi/tagbar'                                                " Code tree
+Plug 'tpope/vim-dadbod'                                                 " DB interface
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  } " Markdown preview
+Plug 'jiangmiao/auto-pairs'                                             " Auto pairing
 
 Plug 'w0rp/ale'
 
-Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' } " Golang magic plugin for everything
-Plug 'sebdah/vim-delve', { 'for' : 'go' }                        " Go debug
-Plug 'buoto/gotests-vim', { 'for' : 'go' }                       " Table test generator
+Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }        " Golang magic plugin for everything
+Plug 'sebdah/vim-delve', { 'for' : 'go' }                               " Go debug
+Plug 'buoto/gotests-vim', { 'for' : 'go' }                              " Table test generator
 
-Plug 'ElmCast/elm-vim', { 'for': 'elm' }                         " Elm tools
+Plug 'ElmCast/elm-vim', { 'for': 'elm' }                                " Elm tools
 
-Plug 'roxma/nvim-yarp'                                           " Remote plugin framework
-Plug 'ncm2/ncm2'                                                 " Completion
-Plug 'ncm2/ncm2-bufword'                                         " Buffer
-Plug 'ncm2/ncm2-tmux'                                            " Tmux
-Plug 'ncm2/ncm2-path'                                            " Path
-Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'              " Syntax
-Plug 'filipekiss/ncm2-look.vim', { 'for' : 'md' }                " Look
-Plug 'ncm2/ncm2-ultisnips'                                       " Snippets
-Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }           " Tern
-Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                          " VimScript
-Plug 'ncm2/ncm2-go', { 'for' : 'go' }                            " Golang
-Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                      " Python
+Plug 'roxma/nvim-yarp'                                                  " Remote plugin framework
+Plug 'ncm2/ncm2'                                                        " Completion
+Plug 'ncm2/ncm2-bufword'                                                " Buffer
+Plug 'ncm2/ncm2-tmux'                                                   " Tmux
+Plug 'ncm2/ncm2-path'                                                   " Path
+Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'                     " Syntax
+Plug 'filipekiss/ncm2-look.vim', { 'for' : 'md' }                       " Look
+Plug 'ncm2/ncm2-ultisnips'                                              " Snippets
+Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                  " Tern
+Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                 " VimScript
+Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                   " Golang
+Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                             " Python
 
 call plug#end()
 " }}}
@@ -211,6 +213,7 @@ inoremap jk <Esc>
 
 " Don't press shift everytime
 nnoremap ; :
+vnoremap ; :
 
 " Line nav
 nnoremap L $
@@ -349,8 +352,8 @@ nnoremap <silent><leader>fs :Snippets<CR>
 " Ultisnips {{{
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets/'
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<C-tab>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsListSnippets="<C-k>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " }}}
