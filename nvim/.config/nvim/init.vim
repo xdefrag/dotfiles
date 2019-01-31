@@ -25,6 +25,7 @@ Plug 'majutsushi/tagbar'                                                " Code t
 Plug 'tpope/vim-dadbod'                                                 " DB interface
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  } " Markdown preview
 Plug 'jiangmiao/auto-pairs'                                             " Auto pairing
+Plug 'easymotion/vim-easymotion'                                        " Easymotion
 
 Plug 'w0rp/ale'
 
@@ -276,8 +277,8 @@ inoremap <C-Y> <Esc>Pa
 inoremap <C-X><C-S> <Esc>:w<CR>a
 
 " folds
-nnoremap h zc
-nnoremap l zo
+" nnoremap h zc
+" nnoremap l zo
 
 " nops
 noremap <Esc> <nop>
@@ -410,5 +411,19 @@ let g:http_client_result_vsplit = 0
 let g:http_client_focus_output_window = 0
 
 nnoremap <leader>h :HTTPClientDoRequest<CR>
+" }}}
+" Easymotion {{{
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_do_mapping = 0
+
+map gf <Plug>(easymotion-f)
+map gl <Plug>(easymotion-bd-jk)
+map gw <Plug>(easymotion-bd-w)
+
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
 " }}}
 " vim:foldmethod=marker:foldlevel=0
