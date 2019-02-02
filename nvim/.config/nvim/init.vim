@@ -2,6 +2,9 @@
 call plug#begin('~/.cache/nvim/plugins')
 
 Plug 'xdefrag/vim-beelzebub'                                     " Best colorscheme
+Plug 'Lokaltog/vim-monotone'
+Plug 'robertmeta/nofrils'
+Plug 'olivertaylor/vacme'
 
 Plug 'tpope/vim-commentary'                                      " Easy commenting
 Plug 'tpope/vim-unimpaired'                                      " Shortcuts with [ and ]
@@ -211,6 +214,7 @@ inoremap jk <Esc>
 
 " Don't press shift everytime
 nnoremap ; :
+vnoremap ; :
 
 " Line nav
 nnoremap L $
@@ -349,8 +353,8 @@ nnoremap <silent><leader>fs :Snippets<CR>
 " Ultisnips {{{
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets/'
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<C-tab>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsListSnippets="<C-h>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 " }}}

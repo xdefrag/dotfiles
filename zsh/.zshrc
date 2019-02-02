@@ -23,6 +23,7 @@ plugins=(
   npm
   nvm
   osx
+  autojump
 )
 
 addToPath() {
