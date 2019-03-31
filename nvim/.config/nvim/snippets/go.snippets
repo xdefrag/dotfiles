@@ -27,3 +27,11 @@ snippet mockgen
 snippet mockctrl
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
+
+snippet np-clint
+	var conn *grpc.ClientConn
+	if conn, err = grpc.Dial(addr, grpc.WithInsecure(), grpc.WithUnaryInterceptor(
+		access.GRPCAccessClientInterceptor(viper.GetString("access.token")),
+	)); err != nil {
+		return nil, err
+	}

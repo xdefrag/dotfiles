@@ -6,6 +6,7 @@ Plug 'Lokaltog/vim-monotone'                                            " O
 Plug 'robertmeta/nofrils'                                               " L
 Plug 'olivertaylor/vacme'                                               " O
 Plug 'jnurmine/Zenburn'                                                 " R
+Plug 'arcticicestudio/nord-vim'                                         " S
 
 Plug 'tpope/vim-commentary'                                             " Easy commenting
 Plug 'tpope/vim-unimpaired'                                             " Shortcuts with [ and ]
@@ -57,12 +58,20 @@ Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                  " Tern
 Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                 " VimScript
 Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                   " Golang
 Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                             " Python
+Plug 'ncm2/ncm2-pyclang'                                                " C/C++
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': './install.sh'
+    \ }                                                                 " LSP
+
+Plug 'wakatime/vim-wakatime'
 
 call plug#end()
 " }}}
 " Colors {{{
-set background=dark
-colorscheme beelzebub
+"set background=dark
+colorscheme nofrils-dark
 " }}}
 " Options {{{
 " Leader keys
@@ -383,6 +392,7 @@ if executable('rg')
 endif
 " }}}
 " NCM2 {{{
+let g:AutoPairsMapCR=0
 augroup NCM2
   autocmd BufEnter * call ncm2#enable_for_buffer()
 augroup END
@@ -391,6 +401,22 @@ let g:ncm2#complete_delay = 0
 let g:ncm2#popup_delay = 0
 let g:ncm2#matcher = "prefix"
 let g:ncm2#sorter = "alphanum"
+
+let g:ncm2_pyclang#library_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
+" }}}
+" LSP {{{
+let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
+
+map <Leader>ll :call LanguageClient_contextMenu()<CR>
+map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
+map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
+map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
+map <Leader>lb :call LanguageClient#textDocument_references()<CR>
+map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
+
+let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
 " }}}
 " DLV {{{
 let g:delve_breakpoint_sign_highlight = 'Normal'
@@ -399,7 +425,7 @@ let g:delve_tracepoint_sign_highlight = 'Normal'
 let g:delve_tracepoint_sign = 'T'
 " }}}
 " Ale {{{
-let g:ale_linters_explicit = 1
+" let g:ale_linters_explicit = 1
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
@@ -412,9 +438,9 @@ let g:ale_set_highlights = 0
 "let g:ale_fix_on_save = 1
 
 
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\}
+" let g:ale_fixers = {
+" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+" \}
 " }}}
 " dadbod {{{
 cnoreabbrev DBT DB postgresql://testing:testing@0.0.0.0:5432
@@ -436,9 +462,6 @@ map gw <Plug>(easymotion-bd-w)
 
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
 " }}}
 " Goyo {{{
 let g:goyo_width = 100
