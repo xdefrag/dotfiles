@@ -37,10 +37,10 @@
 (use-package general)
 (use-package helm
   :config (helm-mode 1)
-  :bind (("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files)
-         ("C-x r b" . helm-filtered-bookmarks)
-         ("C-x C-b". helm-buffers-list)))
+  :general ("M-x" 'helm-M-x
+            "C-x C-f" 'helm-find-files
+            "C-x r b" 'helm-filtered-bookmarks
+            "C-x C-b" 'helm-buffers-list))
 (use-package rg)
 (use-package company
   :config
@@ -53,21 +53,12 @@
 (use-package flycheck
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
-;; (use-package magit
-;;   :bind
-;;   ("C-x g" . magit-status)
-;;  :config
-;;   (use-package evil-magit)
-;;   (use-package with-editor)
-;;   (setq magit-push-always-verify nil)
-;;   (setq git-commit-summary-max-length 50)
-;;   (with-eval-after-load 'magit-remote
-;;     (magit-define-popup-action 'magit-push-popup ?P
-;;       'magit-push-implicitly--desc
-;;       'magit-push-implicitly ?p t))
-;;   (add-hook 'with-editor-mode-hook 'evil-insert-state))
-;; (use-package ghub)
-;; (use-package forge)
+(use-package magit
+  :config
+  (use-package ghub)
+  (use-package forge)
+  :general ("C-x C-g" 'magit-status))
+
 ;; (use-package projectile
 ;;   :bind
 ;;   ("C-c v" . 'rg-project)
@@ -83,10 +74,14 @@
 ;;   :config (global-subword-mode 1))
 ;; (use-package yasnippet
 ;;   :config
-  ;; (yas-global-mode 1))
+;; (yas-global-mode 1))
 (use-package evil
   :config
+  (use-package evil-surround)
+  (use-package evil-commentary)
   (evil-mode 1)
+  (global-evil-surround-mode 1)
+  (evil-commentary-mode)
   :general
   (:states 'insert
            (general-chord "jk") 'evil-force-normal-state
@@ -97,12 +92,6 @@
            "C-j" 'evil-window-bottom
            "C-k" 'evil-window-up
            "C-l" 'evil-window-right))
-(use-package evil-surround
-  :config
-  (global-evil-surround-mode 1))
-(use-package evil-commentary
-  :config
-  (evil-commentary-mode))
 
 ;; (global-set-key (kbd "M-x") 'helm-M-x)
 (define-key global-map (kbd "RET") 'newline-and-indent)
@@ -112,14 +101,12 @@
 (menu-bar-mode 0)
 (scroll-bar-mode -1)
 (set-window-scroll-bars (minibuffer-window) nil nil)
-
+(setq ring-bell-function 'ignore)
+(setq visible-bell nil)
 ;; (setq frame-title-format '((:eval (projectile-project-name))))
-
 (global-prettify-symbols-mode t)
-;; (global-hl-line-mode)
-
 (setq inhibit-startup-message t
-inhibit-startup-echo-area-message t)
+      inhibit-startup-echo-area-message t)
 (setq standard-indent 2)
 (setq scroll-step 1)
 (setq-default indent-tabs-mode nil)
