@@ -37,6 +37,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 addToPath ~/.npm-global/bin
 addToPath ~/go/bin
 addToPath /usr/local/sbin
+addToPath ~/.local/bin
 
 export EDITOR=nvim
 export ZSH="/Users/xdefrag/.oh-my-zsh"
