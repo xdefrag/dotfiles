@@ -50,3 +50,11 @@ snippet np-repo
 	count, err := Count(ctx, qb, r.db)
 
 	return $2, count, err
+
+snippet np-clint
+	var conn *grpc.ClientConn
+	if conn, err = grpc.Dial(addr, grpc.WithInsecure(), grpc.WithUnaryInterceptor(
+		access.GRPCAccessClientInterceptor(viper.GetString("access.token")),
+	)); err != nil {
+		return nil, err
+	}
