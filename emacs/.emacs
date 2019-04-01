@@ -98,6 +98,24 @@
   :config (global-evil-surround-mode 1))
 (use-package evil-commentary
   :config (evil-commentary-mode))
+(use-package org
+  :config
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . org-mode))
+  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cb" 'org-iswitchb))
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
 (use-package lsp-mode
   :config
   (add-hook 'prog-mode-hook #'lsp)
@@ -111,6 +129,13 @@
   (setq lsp-haskell-process-path-hie "hie-wrapper")
   (lsp-haskell-set-completion-snippets t)
   (add-hook 'haskell-mode-hook #'lsp))
+(use-package go-fill-struct)
+(use-package go-impl)
+(use-package go-add-tags)
+(use-package go-gen-test)
+(use-package gotest)
+
+(use-package pocket-reader)
 
 (use-package minimal-theme)
 (use-package nordless-theme)
@@ -161,7 +186,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (helm-rg helm-projectile yasnippet-snippets yasnippet company-lsp lsp-haskell lsp-ui lsp-mode nordless-theme wakatime-mode minimal general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck dumb-jump company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
+    (evil-org pocket-reader go-add-tags go-tag-add go-gen-test go-add-tag gotest go-impl go-fill-struct helm-rg helm-projectile yasnippet-snippets yasnippet company-lsp lsp-haskell lsp-ui lsp-mode nordless-theme wakatime-mode minimal general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck dumb-jump company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
