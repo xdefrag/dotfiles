@@ -50,6 +50,8 @@
                     "C-j" 'company-complete
                     "C-n" 'company-select-next
                     "C-p" 'company-select-previous))
+(use-package company-lsp
+  :config (push 'company-lsp company-backends))
 (use-package flycheck
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
@@ -57,6 +59,7 @@
   :config
   (use-package ghub)
   (use-package forge)
+  (use-package evil-magit)
   :general ("C-x C-g" 'magit-status))
 
 ;; (use-package projectile
@@ -77,11 +80,7 @@
 ;; (yas-global-mode 1))
 (use-package evil
   :config
-  (use-package evil-surround)
-  (use-package evil-commentary)
   (evil-mode 1)
-  (global-evil-surround-mode 1)
-  (evil-commentary-mode)
   :general
   (:states 'insert
            (general-chord "jk") 'evil-force-normal-state
@@ -92,8 +91,25 @@
            "C-j" 'evil-window-bottom
            "C-k" 'evil-window-up
            "C-l" 'evil-window-right))
+(use-package evil-surround
+  :config (global-evil-surround-mode 1))
+(use-package evil-commentary
+  :config (evil-commentary-mode))
 
-;; (global-set-key (kbd "M-x") 'helm-M-x)
+(use-package lsp-mode
+  :config (add-hook 'prog-mode-hook #'lsp))
+(use-package lsp-ui
+  :config
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  (add-hook 'prog-mode-hook 'flycheck-mode))
+(use-package lsp-haskell
+  :config
+  (setq lsp-haskell-process-path-hie "hie-wrapper")
+  (add-hook 'haskell-mode-hook #'lsp))
+
+(use-package minimal-theme)
+(use-package nordless-theme)
+
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 (set-frame-font "Monoid 14" nil t)
@@ -123,15 +139,23 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector ["black" "light gray" "dark gray" "light slate gray"])
  '(column-number-mode t)
- '(custom-enabled-themes (quote (minimal)))
+ '(custom-enabled-themes (quote (nordless)))
  '(custom-safe-themes
    (quote
-    ("39dd7106e6387e0c45dfce8ed44351078f6acd29a345d8b22e7b8e54ac25bac4" "cc0dbb53a10215b696d391a90de635ba1699072745bf653b53774706999208e3" "4780d7ce6e5491e2c1190082f7fe0f812707fc77455616ab6f8b38e796cbffa9" default)))
+    ("406251a3b514a1b353dfba5e8986037ae354ee2b090039c1168fb985fef17aa7" "3e335d794ed3030fefd0dbd7ff2d3555e29481fe4bbb0106ea11c660d6001767" "39dd7106e6387e0c45dfce8ed44351078f6acd29a345d8b22e7b8e54ac25bac4" "cc0dbb53a10215b696d391a90de635ba1699072745bf653b53774706999208e3" "4780d7ce6e5491e2c1190082f7fe0f812707fc77455616ab6f8b38e796cbffa9" default)))
  '(gofmt-command "goimports")
+ '(lsp-ui-doc-delay 0)
+ '(lsp-ui-doc-enable t)
+ '(lsp-ui-doc-position (quote at-point))
+ '(lsp-ui-doc-use-childframe t)
+ '(lsp-ui-doc-use-webkit t)
+ '(lsp-ui-flycheck-enable t)
+ '(lsp-ui-sideline-delay 0)
+ '(lsp-ui-sideline-show-code-actions nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck dumb-jump company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
+    (company-lsp lsp-haskell lsp-ui lsp-mode nordless-theme wakatime-mode minimal general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck dumb-jump company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -139,6 +163,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background "#2E3440" :foreground "#D8DEE9"))))
+ '(lsp-ui-sideline-code-action ((t nil))))
 (provide '.emacs)
 ;;; .emacs ends here
