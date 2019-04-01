@@ -38,12 +38,12 @@
 (use-package helm
   :config
   (helm-mode 1)
+  (use-package rg)
   (use-package helm-rg)
   :general ("M-x" 'helm-M-x
             "C-x C-f" 'helm-find-files
             "C-x r b" 'helm-filtered-bookmarks
             "C-x C-b" 'helm-buffers-list))
-(use-package rg)
 (use-package yasnippet
   :config
   (use-package yasnippet-snippets)
@@ -124,7 +124,7 @@
 (set-window-scroll-bars (minibuffer-window) nil nil)
 (setq ring-bell-function 'ignore)
 (setq visible-bell nil)
-;; (setq frame-title-format '((:eval (projectile-project-name))))
+(setq frame-title-format '((:eval (projectile-project-name))))
 (global-prettify-symbols-mode t)
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
