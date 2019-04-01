@@ -36,22 +36,32 @@
   :config (key-chord-mode 1))
 (use-package general)
 (use-package helm
-  :config (helm-mode 1)
+  :config
+  (helm-mode 1)
+  (use-package helm-rg)
   :general ("M-x" 'helm-M-x
             "C-x C-f" 'helm-find-files
             "C-x r b" 'helm-filtered-bookmarks
             "C-x C-b" 'helm-buffers-list))
 (use-package rg)
+(use-package yasnippet
+  :config
+  (use-package yasnippet-snippets)
+  (yas-global-mode 1)
+  :general
+  (:states 'insert :keymaps 'yas-keymap
+          "C-j" 'yas-next-field-or-maybe-expand
+          "C-k" 'yas-prev-field))
 (use-package company
   :config
   (add-hook 'after-init-hook 'global-company-mode)
   (setq company-idle-delay 0)
   :general (:states 'insert
-                    "C-j" 'company-complete
                     "C-n" 'company-select-next
                     "C-p" 'company-select-previous))
 (use-package company-lsp
-  :config (push 'company-lsp company-backends))
+  :config
+  (push 'company-lsp company-backends))
 (use-package flycheck
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
@@ -61,23 +71,16 @@
   (use-package forge)
   (use-package evil-magit)
   :general ("C-x C-g" 'magit-status))
-
-;; (use-package projectile
-;;   :bind
-;;   ("C-c v" . 'rg-project)
-;;   :config
-;;   (define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
-;;   (evil-define-key 'motion ag-mode-map (kbd "C-p") 'projectile-find-file)
-;;   (evil-define-key 'motion rspec-mode-map (kbd "C-p") 'projectile-find-file)
-;;   (setq projectile-completion-system 'ivy)
-;;   (setq projectile-switch-project-action 'projectile-dired)
-;;   (setq projectile-require-project-root nil))
-;; (use-package undo-tree)
-;; (use-package subword
-;;   :config (global-subword-mode 1))
-;; (use-package yasnippet
-;;   :config
-;; (yas-global-mode 1))
+(use-package projectile
+  :config
+  (use-package helm-projectile
+    :config (helm-projectile-on))
+  (setq projectile-project-search-path '("~/Code/", "~/go/src/github.com/xdefrag/"))
+  :general (:states '(visual motion) :keymap 'projectile-mode-map
+                    "C-c p" 'projectile-command-map))
+(use-package undo-tree)
+(use-package subword
+  :config (global-subword-mode 1))
 (use-package evil
   :config
   (evil-mode 1)
@@ -95,9 +98,10 @@
   :config (global-evil-surround-mode 1))
 (use-package evil-commentary
   :config (evil-commentary-mode))
-
 (use-package lsp-mode
-  :config (add-hook 'prog-mode-hook #'lsp))
+  :config
+  (add-hook 'prog-mode-hook #'lsp)
+  (setq lsp-enable-snippet t))
 (use-package lsp-ui
   :config
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
@@ -105,6 +109,7 @@
 (use-package lsp-haskell
   :config
   (setq lsp-haskell-process-path-hie "hie-wrapper")
+  (lsp-haskell-set-completion-snippets t)
   (add-hook 'haskell-mode-hook #'lsp))
 
 (use-package minimal-theme)
@@ -139,6 +144,7 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector ["black" "light gray" "dark gray" "light slate gray"])
  '(column-number-mode t)
+ '(company-lsp-enable-snippet t)
  '(custom-enabled-themes (quote (nordless)))
  '(custom-safe-themes
    (quote
@@ -155,7 +161,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (company-lsp lsp-haskell lsp-ui lsp-mode nordless-theme wakatime-mode minimal general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck dumb-jump company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
+    (helm-rg helm-projectile yasnippet-snippets yasnippet company-lsp lsp-haskell lsp-ui lsp-mode nordless-theme wakatime-mode minimal general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck dumb-jump company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
