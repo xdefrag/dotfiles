@@ -25,3 +25,5 @@
 
 ; [commit]
 ;   gpgsign = true
+[url "https://git-home:UFjF35M4f_ZxMZKZsDaK@gitlab.sudo.team"]
+	insteadOf = https://gitlab.sudo.team

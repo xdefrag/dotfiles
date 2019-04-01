@@ -1,7 +1,11 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
 
-Plug 'xdefrag/vim-beelzebub'                                            " Best colorscheme
+Plug 'xdefrag/vim-beelzebub'                                            " C
+Plug 'Lokaltog/vim-monotone'                                            " O
+Plug 'robertmeta/nofrils'                                               " L
+Plug 'olivertaylor/vacme'                                               " O
+Plug 'jnurmine/Zenburn'                                                 " R
 
 Plug 'tpope/vim-commentary'                                             " Easy commenting
 Plug 'tpope/vim-unimpaired'                                             " Shortcuts with [ and ]
@@ -29,6 +33,14 @@ Plug 'easymotion/vim-easymotion'                                        " Easymo
 Plug 'haya14busa/incsearch.vim'                                         " Insearch
 Plug 'haya14busa/incsearch-fuzzy.vim'                                   " Incsearch fuzzy
 Plug 'haya14busa/incsearch-easymotion.vim'                              " Easymotion integration for incsearch
+Plug 'lilydjwg/colorizer'                                               " Mark colors like rgb(0, 0, 99) or #000099
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/goyo.vim'                                                " Distraction free mode
+Plug 'tpope/vim-projectionist'                                          " Project config
+Plug 'metakirby5/codi.vim'                                              " Repl scratchpad
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+
+Plug 'wakatime/vim-wakatime'
 
 Plug 'w0rp/ale'
 
@@ -51,11 +63,16 @@ Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                 " VimScr
 Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                   " Golang
 Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                             " Python
 
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': './install.sh'
+    \ }
+
 call plug#end()
 " }}}
 " Colors {{{
-set background=dark
-colorscheme beelzebub
+" set background=dark
+colorscheme nofrils-dark
 " }}}
 " Options {{{
 " Leader keys
@@ -167,10 +184,10 @@ set wildignore+=*/node_modules/*,*/vendor/*
 " Folds {{{
 " Enabling folding feature
 set foldenable
-" Start folding on 2 level nesting
-set foldlevelstart=2
+" Start folding
+set foldlevelstart=5
 " Max next folding
-set foldnestmax=10
+set foldnestmax=20
 " Indent based folding
 set foldmethod=indent
 " }}}
@@ -223,11 +240,21 @@ vnoremap ; :
 nnoremap L $
 nnoremap H ^
 
+" Tabs
+nnoremap <C-p> :tabprev<CR>
+nnoremap <C-n> :tabnext<CR>
+
 " Window split navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Split resize
+" nnoremap <silent>  :resize -10<CR>
+" nnoremap <silent>  :resize +10<CR>
+" nnoremap <silent>  :vertical resize -10<CR>
+" nnoremap <silent>  :vertical resize +10<CR>
 
 " No highlighting
 nnoremap <silent> <BS> :noh<CR>
@@ -381,6 +408,20 @@ let g:ncm2#popup_delay = 0
 " let g:ncm2#matcher = "prefix"
 let g:ncm2#sorter = "alphanum"
 " }}}
+" LSP {{{
+let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
+
+map <Leader>ll :call LanguageClient_contextMenu()<CR>
+map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
+map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
+map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
+map <Leader>lb :call LanguageClient#textDocument_references()<CR>
+map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
+
+let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
+" }}}
 " DLV {{{
 let g:delve_breakpoint_sign_highlight = 'Normal'
 let g:delve_breakpoint_sign = 'B'
@@ -422,12 +463,6 @@ let g:EasyMotion_do_mapping = 0
 map gf <Plug>(easymotion-f)
 map gl <Plug>(easymotion-bd-jk)
 map gw <Plug>(easymotion-bd-w)
-
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
 " }}}
 " Incsearch {{{
 function! s:incsearch_config(...) abort
@@ -457,5 +492,8 @@ endfunction
 noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 
 command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+" Goyo {{{
+let g:goyo_width = 100
+let g:goyo_height = 100
 " }}}
 " vim:foldmethod=marker:foldlevel=0

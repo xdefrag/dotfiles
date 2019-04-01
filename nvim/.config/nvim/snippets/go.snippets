@@ -27,3 +27,26 @@ snippet mockgen
 snippet mockctrl
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
+
+snippet np-repo
+	qb := r.qb.Select().From("${1}")
+
+	for _, o := range opts {
+		qb = o.Apply(qb)
+	}
+
+	var ${2} []${3}
+	sql, args, err := qb.Columns(
+		${4}
+	).OrderBy("created_at DESC").ToSql()
+	if err != nil {
+		return nil, 0, err
+	}
+
+	if err = r.db.SelectContext(ctx, &$2, sql, args...); err != nil {
+		return nil, 0, err
+	}
+
+	count, err := Count(ctx, qb, r.db)
+
+	return $2, count, err

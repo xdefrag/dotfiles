@@ -23,10 +23,10 @@ let g:go_decls_includes = "func,type"
 let g:go_jump_to_error = 0
 
 " Croutch for gocode
-augroup gocodecroutch
-  autocmd!
-  autocmd BufWritePost *.go silent! :GoBuild -i
-augroup END
+" augroup gocodecroutch
+"   autocmd!
+"   autocmd BufWritePost *.go silent! :GoBuild -i
+" augroup END
 " }}}
 " Keys {{{
 nnoremap <leader>t :GoTest!<CR>
@@ -44,6 +44,8 @@ nnoremap <leader>ga :GoAddTags db<CR>
 
 nnoremap <leader>e :GoDeclsDir<CR>
 nnoremap <leader>r :GoReferrers<CR>
+
+nnoremap <leader>gh :GoDoc<CR>
 " }}}
 " ALE {{{
 let b:ale_go_golangci_lint_options = "--fast"

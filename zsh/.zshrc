@@ -6,9 +6,7 @@ DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="true"
 ENABLE_CORRECTION="false"
 COMPLETION_WAITING_DOTS="true"
-DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="dd.mm.yyyy"
-ZSH_DISABLE_COMPFIX="true"
 
 plugins=(
   git
@@ -37,6 +35,9 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 addToPath ~/.npm-global/bin
 addToPath ~/go/bin
 addToPath /usr/local/sbin
+addToPath ~/.local/bin
+addToPath /usr/local/opt/make/libexec/gnubin
+addToPath ~/.cabal/bin
 
 export EDITOR=nvim
 export ZSH="/Users/xdefrag/.oh-my-zsh"
@@ -65,7 +66,21 @@ source $ZSH/oh-my-zsh.sh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# heroku autocomplete setup
+# Codi
+# Usage: codi [filetype] [filename]
+codi() {
+  local syntax="${1:-python}"
+  shift
+  vim -c \
+    "let g:startify_disable_at_vimenter = 1 |\
+    set bt=nofile ls=0 noru nonu nornu |\
+    hi ColorColumn ctermbg=NONE |\
+    hi VertSplit ctermbg=NONE |\
+    hi NonText ctermfg=0 |\
+    Codi $syntax" "$@"
+}
+
+# Heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
