@@ -70,7 +70,7 @@
   (use-package ghub)
   (use-package forge)
   (use-package evil-magit)
-  :general ("C-x C-g" 'magit-status))
+  :general ("C-c g" 'magit-status))
 (use-package projectile
   :config
   (use-package helm-projectile
