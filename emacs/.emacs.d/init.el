@@ -1,9 +1,17 @@
 ;;; package --- provides EMACS config.
 ;;; Commentary:
 
+;;; Code:
+(load-file "~/.emacs.d/sensible-defaults.el")
+(sensible-defaults/use-all-settings)
+(sensible-defaults/use-all-keybindings)
+(sensible-defaults/backup-to-temp-directory)
+
+(setq user-full-name "Stanislaw Mnizhek"
+      user-mail-address "me@stanislawmnizhek.ru")
+
 (require 'package)
 
-;;; Code:
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
@@ -100,6 +108,9 @@
   :config (evil-commentary-mode))
 (use-package org
   :config
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-src-window-setup 'current-window)
   (add-to-list 'auto-mode-alist '("\\.md\\'" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
   (global-set-key "\C-cl" 'org-store-link)
@@ -134,8 +145,22 @@
 (use-package go-add-tags)
 (use-package go-gen-test)
 (use-package gotest)
+(use-package paredit
+  :config
+  (add-hook 'lisp-mode-hook #'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  (add-hook 'scheme-mode-hook #'paredit-mode))
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
 
-(use-package pocket-reader)
+(use-package minions
+  :config
+  (setq minions-mode-line-lighter ""
+        minions-mode-line-delimiters '("" . ""))
+  (minions-mode 1))
 
 (use-package minimal-theme)
 (use-package nordless-theme)
@@ -147,19 +172,13 @@
 (menu-bar-mode 0)
 (scroll-bar-mode -1)
 (set-window-scroll-bars (minibuffer-window) nil nil)
+;; (setq-default mode-line-format nil)
 (setq ring-bell-function 'ignore)
-(setq visible-bell nil)
+(setq scroll-conservatively 100)
 (setq frame-title-format '((:eval (projectile-project-name))))
 (global-prettify-symbols-mode t)
-(setq inhibit-startup-message t
-      inhibit-startup-echo-area-message t)
-(setq standard-indent 2)
-(setq scroll-step 1)
-(setq-default indent-tabs-mode nil)
-(setq make-backup-files t)
-(setq version-control t)
-(setq backup-directory-alist (quote ((".*" . "~/.cache/emacs/"))))
-(setq-default fill-column 80)
+(global-hl-line-mode)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -175,18 +194,16 @@
    (quote
     ("406251a3b514a1b353dfba5e8986037ae354ee2b090039c1168fb985fef17aa7" "3e335d794ed3030fefd0dbd7ff2d3555e29481fe4bbb0106ea11c660d6001767" "39dd7106e6387e0c45dfce8ed44351078f6acd29a345d8b22e7b8e54ac25bac4" "cc0dbb53a10215b696d391a90de635ba1699072745bf653b53774706999208e3" "4780d7ce6e5491e2c1190082f7fe0f812707fc77455616ab6f8b38e796cbffa9" default)))
  '(gofmt-command "goimports")
- '(lsp-ui-doc-delay 0)
+ '(lsp-ui-doc-delay 0.5)
  '(lsp-ui-doc-enable t)
  '(lsp-ui-doc-position (quote at-point))
  '(lsp-ui-doc-use-childframe t)
  '(lsp-ui-doc-use-webkit t)
  '(lsp-ui-flycheck-enable t)
- '(lsp-ui-sideline-delay 0)
- '(lsp-ui-sideline-show-code-actions nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (evil-org pocket-reader go-add-tags go-tag-add go-gen-test go-add-tag gotest go-impl go-fill-struct helm-rg helm-projectile yasnippet-snippets yasnippet company-lsp lsp-haskell lsp-ui lsp-mode nordless-theme wakatime-mode minimal general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck dumb-jump company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
+    (minions rainbow-delimiters paredit evil-org go-add-tags go-tag-add go-gen-test go-add-tag gotest go-impl go-fill-struct helm-rg helm-projectile yasnippet-snippets yasnippet company-lsp lsp-haskell lsp-ui lsp-mode nordless-theme wakatime-mode minimal general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -196,5 +213,5 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:background "#2E3440" :foreground "#D8DEE9"))))
  '(lsp-ui-sideline-code-action ((t nil))))
-(provide '.emacs)
-;;; .emacs ends here
+(provide 'init.el)
+;;; init.el ends here
