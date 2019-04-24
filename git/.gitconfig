@@ -1,29 +1,10 @@
-[core]
-  filemods = false
-  editor = nvim
-
-[diff]
-  tool = vimdiff
-
-[merge]
-  tool = vimdiff3
-  conflicttyle = diff3
-
-[mergetool "vimdiff"]
-  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
-[push]
-  default = current
-
 [user]
-  name = Stanislaw Mnizhek
-  email = me@stanislawmnizhek.ru
-  ; signingkey = 304AA853E4E3C9F3A68FB4AE684B38F633FF2FCA
+  name = Stanislaw Karkavin
+  email = me@xdefrag.dev
+  signingkey = B877A828254FB464758CBDC4298430524711C0B6
 
-; [gpg]
-;   program = gpg
+[gpg]
+  program = gpg
 
-; [commit]
-;   gpgsign = true
-[url "https://git-home:UFjF35M4f_ZxMZKZsDaK@gitlab.sudo.team"]
-	insteadOf = https://gitlab.sudo.team
+[commit]
+  gpgsign = true
