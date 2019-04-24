@@ -7,8 +7,8 @@
 (sensible-defaults/use-all-keybindings)
 (sensible-defaults/backup-to-temp-directory)
 
-(setq user-full-name "Stanislaw Mnizhek"
-      user-mail-address "me@stanislawmnizhek.ru")
+(setq user-full-name "Stanislaw Karkavin"
+      user-mail-address "me@xdefrag.dev")
 
 (require 'package)
 
@@ -42,80 +42,68 @@
     (exec-path-from-shell-initialize)))
 (use-package use-package-chords
   :config (key-chord-mode 1))
+
 (use-package general)
+
 (use-package helm
-  :config
-  (helm-mode 1)
-  (use-package rg)
-  (use-package helm-rg)
-  :general ("M-x" 'helm-M-x
-            "C-x C-f" 'helm-find-files
-            "C-x r b" 'helm-filtered-bookmarks
-            "C-x C-b" 'helm-buffers-list))
+  :init (helm-mode 1))
+(use-package helm-rg)
+
 (use-package yasnippet
-  :config
-  (use-package yasnippet-snippets)
-  (yas-global-mode 1)
-  :general
-  (:states 'insert :keymaps 'yas-keymap
-          "C-j" 'yas-next-field-or-maybe-expand
-          "C-k" 'yas-prev-field))
+  :init (yas-global-mode 1))
+(use-package yasnippet-snippets)
+
 (use-package company
+  :init (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-idle-delay 0)
-  :general (:states 'insert
-                    "C-n" 'company-select-next
-                    "C-p" 'company-select-previous))
+  (setq company-idle-delay 0))
 (use-package company-lsp
-  :config
-  (push 'company-lsp company-backends))
+  :init (push 'company-lsp company-backends))
+
 (use-package flycheck
+  :init (add-hook 'after-init-hook #'global-flycheck-mode))
+(use-package flycheck-golangci-lint
+  :hook (go-mode . flycheck-golangci-lint-setup)
   :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
-(use-package magit
-  :config
-  (use-package ghub)
-  (use-package forge)
-  (use-package evil-magit)
-  :general ("C-c g" 'magit-status))
+  (setq flycheck-golangci-lint-tests nil)
+  ;; (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
+  )
+
+(use-package magit)
+(use-package ghub)
+(use-package forge)
+
 (use-package projectile
+  :init (projectile-mode +1)
   :config
-  (use-package helm-projectile
-    :config (helm-projectile-on))
-  (setq projectile-project-search-path '("~/Code/", "~/go/src/github.com/xdefrag/"))
-  :general (:states '(visual motion) :keymap 'projectile-mode-map
-                    "C-c p" 'projectile-command-map))
-(use-package undo-tree)
+  (setq projectile-project-search-path '("~/Code/" "~/go/src/github.com/xdefrag/")))
+(use-package helm-projectile
+  :init (helm-projectile-on))
+
 (use-package subword
-  :config (global-subword-mode 1))
+  :init (global-subword-mode 1))
+
 (use-package evil
-  :config
-  (evil-mode 1)
-  :general
-  (:states 'insert
-           (general-chord "jk") 'evil-force-normal-state
-           (general-chord "jj") 'evil-force-normal-state)
-  (:states '(visual motion)
-           ";" 'evil-ex
-           "C-h" 'evil-window-left
-           "C-j" 'evil-window-bottom
-           "C-k" 'evil-window-up
-           "C-l" 'evil-window-right))
+  :init
+  (setq evil-want-keybinding nil)
+  (evil-mode 1))
+(use-package evil-collection
+  :init (evil-collection-init))
 (use-package evil-surround
-  :config (global-evil-surround-mode 1))
+  :init (global-evil-surround-mode 1))
 (use-package evil-commentary
-  :config (evil-commentary-mode))
+  :init (evil-commentary-mode))
+(use-package evil-magit)
+
 (use-package org
   :config
+  (setq org-directory "~/Dropbox/org")
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
   (setq org-src-window-setup 'current-window)
+  (setq org-agenda-files (list org-directory))
   (add-to-list 'auto-mode-alist '("\\.md\\'" . org-mode))
-  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-  (global-set-key "\C-cl" 'org-store-link)
-  (global-set-key "\C-ca" 'org-agenda)
-  (global-set-key "\C-cb" 'org-iswitchb))
+  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode)))
 (use-package evil-org
   :ensure t
   :after org
@@ -123,28 +111,39 @@
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook
             (lambda ()
-              (evil-org-set-key-theme)))
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+              (evil-org-set-key-theme))))
 
 (use-package lsp-mode
   :config
   (add-hook 'prog-mode-hook #'lsp)
-  (setq lsp-enable-snippet t))
-(use-package lsp-ui
+  (setq lsp-enable-snippet t)
+  (add-hook 'prog-mode-hook 'flycheck-mode)
+  (setenv "GO111MODULE" "on")
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (setenv "LDFLAGS" "-L/usr/local/opt/llvm/lib")
+  (setenv "CPPFLAGS" "-I/usr/local/opt/llvm/include"))
+(use-package helm-lsp
   :config
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  (add-hook 'prog-mode-hook 'flycheck-mode))
+  (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol))
 (use-package lsp-haskell
   :config
   (setq lsp-haskell-process-path-hie "hie-wrapper")
   (lsp-haskell-set-completion-snippets t)
-  (add-hook 'haskell-mode-hook #'lsp))
+  (add-hook 'haskell-mode-hook #'lsp)
+  (add-hook 'before-save-hook 'lsp-format-buffer))
+
+(use-package dap-mode
+  :init
+  (dap-mode 1)
+  (dap-ui-mode 1))
+
 (use-package go-fill-struct)
 (use-package go-impl)
 (use-package go-add-tags)
 (use-package go-gen-test)
 (use-package gotest)
+
 (use-package paredit
   :config
   (add-hook 'lisp-mode-hook #'paredit-mode)
@@ -157,61 +156,143 @@
   (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
 
 (use-package minions
+  :init (minions-mode 1)
   :config
   (setq minions-mode-line-lighter ""
-        minions-mode-line-delimiters '("" . ""))
-  (minions-mode 1))
+        minions-mode-line-delimiters '("" . "")))
+
+(use-package password-store)
+(use-package pass)
+(use-package helm-pass)
+(use-package auth-source-pass
+  :init (auth-source-pass-enable))
+
+(use-package elfeed)
+(use-package elfeed-org
+  :init (elfeed-org)
+  :config
+  (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
+
+(use-package mu4e
+  :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
+  :config
+  (setq mu4e-maildir "~/.mail"
+	mu4e-trash-folder "/dev/Trash"
+	mu4e-drafts-folder "/dev/Drafts"
+	mu4e-sent-folder "/dev/Sent"
+	mu4e-sent-messages-behavior 'delete
+	message-kill-buffer-on-exit t)
+  (add-hook 'message-send-hook
+	    (lambda ()
+	      (unless (yes-or-no-p "Sure you want to send this?")
+		(signal 'quit nil)))))
+(use-package smtpmail
+  :config
+  (setq message-send-mail-function 'smtpmail-send-it
+	send-mail-function 'smtpmail-send-it
+	smtpmail-debug-info t
+	smtpmail-debug-verb t
+	smtpmail-default-smtp-server "smtp.fastmail.com"
+	smtpmail-smtp-server "smtp.fastmail.com"
+	smtpmail-smtp-service 465
+	smtpmail-stream-type 'ssl
+	smtpmail-smtp-user user-mail-address
+	smtpmail-queue-dir "~/.mail/queued-mail"))
+(use-package mu4e-alert
+  :init
+  (mu4e-alert-enable-mode-line-display))
+
+
+(use-package dashboard
+  :init (dashboard-setup-startup-hook)
+  ;; :config
+  ;; (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
+  ;; (setq dashboard-startup-banner [VALUE])
+  )
 
 (use-package minimal-theme)
 (use-package nordless-theme)
-
-(define-key global-map (kbd "RET") 'newline-and-indent)
 
 (set-frame-font "Monoid 14" nil t)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode -1)
 (set-window-scroll-bars (minibuffer-window) nil nil)
-;; (setq-default mode-line-format nil)
 (setq ring-bell-function 'ignore)
 (setq scroll-conservatively 100)
 (setq frame-title-format '((:eval (projectile-project-name))))
 (global-prettify-symbols-mode t)
 (global-hl-line-mode)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector ["black" "light gray" "dark gray" "light slate gray"])
- '(column-number-mode t)
- '(company-lsp-enable-snippet t)
- '(custom-enabled-themes (quote (nordless)))
- '(custom-safe-themes
-   (quote
-    ("406251a3b514a1b353dfba5e8986037ae354ee2b090039c1168fb985fef17aa7" "3e335d794ed3030fefd0dbd7ff2d3555e29481fe4bbb0106ea11c660d6001767" "39dd7106e6387e0c45dfce8ed44351078f6acd29a345d8b22e7b8e54ac25bac4" "cc0dbb53a10215b696d391a90de635ba1699072745bf653b53774706999208e3" "4780d7ce6e5491e2c1190082f7fe0f812707fc77455616ab6f8b38e796cbffa9" default)))
- '(gofmt-command "goimports")
- '(lsp-ui-doc-delay 0.5)
- '(lsp-ui-doc-enable t)
- '(lsp-ui-doc-position (quote at-point))
- '(lsp-ui-doc-use-childframe t)
- '(lsp-ui-doc-use-webkit t)
- '(lsp-ui-flycheck-enable t)
- '(menu-bar-mode nil)
- '(package-selected-packages
-   (quote
-    (minions rainbow-delimiters paredit evil-org go-add-tags go-tag-add go-gen-test go-add-tag gotest go-impl go-fill-struct helm-rg helm-projectile yasnippet-snippets yasnippet company-lsp lsp-haskell lsp-ui lsp-mode nordless-theme wakatime-mode minimal general use-package-chords evil-commentary minimal-theme forge ghub evil-magit flycheck company rg evil-surround projectile helm evil-mode use-package evil-visual-mark-mode)))
- '(show-paren-mode t)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:background "#2E3440" :foreground "#D8DEE9"))))
- '(lsp-ui-sideline-code-action ((t nil))))
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;; keys - main with leader
+(general-define-key
+ :states '(normal visual motion)
+ :keymaps '(override)
+ :prefix "SPC"
+ "SPC" 'helm-M-x
+ "ff" 'helm-find-files
+ "fb" 'helm-buffers-list
+ "fg" 'helm-rg
+ "gs" 'magit-status
+ "oa" 'org-agenda
+ "ol" 'org-store-link
+ "oi" (lambda ()
+	(interactive)
+	(find-file (format "%s/index.org" org-directory)))
+ "p" 'projectile-command-map
+ "e" 'elfeed
+ "m" 'mu4e
+ "cc" (lambda ()
+	(interactive)
+	(find-file user-init-file))
+ "cu" (lambda ()
+	(interactive)
+	(load-file user-init-file))
+ "le" 'flycheck-list-errors
+ "a" 'projectile-toggle-between-implementation-and-test)
+
+;; keys - normal
+(general-define-key
+ :states '(normal visual motion)
+ ";" 'evil-ex
+ "C-h" 'evil-window-left
+ "C-j" 'evil-window-bottom
+ "C-k" 'evil-window-up
+ "C-l" 'evil-window-right
+ "j" 'evil-next-visual-line
+ "k" 'evil-previous-visual-line
+ "gr" 'lsp-find-references
+ "gi" 'lsp-goto-implementation
+ "go" 'lsp-describe-thing-at-point
+ "gp" 'lsp-code-actions-at-point)
+
+;; org-mode
+(general-define-key
+ :states '(normal visual motion)
+ :keymaps '(org-mode-map override)
+ :prefix "SPC"
+ "s" 'org-schedule
+ "d" 'org-deadline)
+
+;; keys - insert
+(general-define-key
+ :states 'insert
+ (general-chord "jj") 'evil-force-normal-state
+ (general-chord "jk") 'evil-force-normal-state)
+
+(general-define-key
+ :states '(insert)
+ :keymap '(yas-keymap)
+ "C-j" 'yas-next-field-or-maybe-expand
+ "C-k" 'yas-prev-field)
+
+(general-define-key
+ :states '(insert)
+ :keymaps '(company-mode-map)
+ "C-n" 'company-select-next
+ "C-p" 'company-select-previous)
+
 (provide 'init.el)
 ;;; init.el ends here
