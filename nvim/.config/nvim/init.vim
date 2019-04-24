@@ -41,8 +41,6 @@ Plug 'tpope/vim-projectionist'                                          " Projec
 Plug 'metakirby5/codi.vim'                                              " Repl scratchpad
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 
-Plug 'wakatime/vim-wakatime'
-
 Plug 'w0rp/ale'
 
 Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }        " Golang magic plugin for everything
