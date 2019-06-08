@@ -42,6 +42,8 @@
     (exec-path-from-shell-initialize)))
 (use-package use-package-chords
   :config (key-chord-mode 1))
+(use-package add-node-modules-path
+  :config (add-hook 'js-mode-hook #'add-node-modules-path))
 
 (use-package general)
 
@@ -68,6 +70,18 @@
   (setq flycheck-golangci-lint-tests nil)
   ;; (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
   )
+(use-package eslintd-fix
+  :config
+  (add-hook 'js-mode-hook 'eslintd-fix-mode))
+
+(use-package import-js
+  :config
+  (eval-after-load 'js-mode
+    (run-import-js))
+  (add-hook 'after-save-hook
+	    (lambda ()
+	      (interactive)
+	      (when (eq major-mode 'js-mode) (import-js-fix)))))
 
 (use-package magit)
 (use-package ghub)
@@ -130,8 +144,7 @@
   :config
   (setq lsp-haskell-process-path-hie "hie-wrapper")
   (lsp-haskell-set-completion-snippets t)
-  (add-hook 'haskell-mode-hook #'lsp)
-  (add-hook 'before-save-hook 'lsp-format-buffer))
+  (add-hook 'haskell-mode-hook #'lsp))
 
 (use-package dap-mode
   :init

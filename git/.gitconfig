@@ -1,10 +1,12 @@
 [user]
-  name = Stanislaw Karkavin
-  email = me@xdefrag.dev
-  signingkey = B877A828254FB464758CBDC4298430524711C0B6
+	name = Stanislaw Karkavin
+	email = me@xdefrag.dev
+	signingkey = B877A828254FB464758CBDC4298430524711C0B6
 
 [gpg]
-  program = gpg
+	program = gpg
 
 [commit]
-  gpgsign = true
+	gpgsign = true
+[github]
+	user = xdefrag

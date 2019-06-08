@@ -68,13 +68,6 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': './install.sh'
     \ }                                                                 " LSP
 
-Plug 'wakatime/vim-wakatime'
-
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': './install.sh'
-    \ }
-
 call plug#end()
 " }}}
 " Colors {{{

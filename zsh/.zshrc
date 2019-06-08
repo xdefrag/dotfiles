@@ -67,10 +67,6 @@ source $ZSH/oh-my-zsh.sh
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# C++ OSX brew llvm linking
-export LDFLAGS="-L/usr/local/opt/llvm/lib"
-export CPPFLAGS="-I/usr/local/opt/llvm/include"
-
 # Heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
@@ -78,3 +74,8 @@ HEROKU_AC_ZSH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/zsh_setup && test 
 [ -f ~/.cargo ] && source ~/.cargo/env
 [ -f ~/.phpbrew ] && source ~/.phpbrew/bashrc
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# Homebrew llvm
+addToPath "/usr/local/opt/llvm/bin"
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
