@@ -7,6 +7,7 @@ Plug 'robertmeta/nofrils'                                               " L
 Plug 'olivertaylor/vacme'                                               " O
 Plug 'jnurmine/Zenburn'                                                 " R
 Plug 'arcticicestudio/nord-vim'                                         " S
+Plug 'whatyouhide/vim-gotham'
 
 Plug 'tpope/vim-commentary'                                             " Easy commenting
 Plug 'tpope/vim-unimpaired'                                             " Shortcuts with [ and ]
@@ -72,7 +73,7 @@ call plug#end()
 " }}}
 " Colors {{{
 "set background=dark
-colorscheme nofrils-dark
+colorscheme gotham
 " }}}
 " Options {{{
 " Leader keys
@@ -410,20 +411,6 @@ let g:ncm2#popup_delay = 0
 let g:ncm2#sorter = "alphanum"
 
 let g:ncm2_pyclang#library_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
-" }}}
-" LSP {{{
-let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
-
-map <Leader>ll :call LanguageClient_contextMenu()<CR>
-map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
-map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
-map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
-map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
-map <Leader>lb :call LanguageClient#textDocument_references()<CR>
-map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
-map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
-
-let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
 " }}}
 " LSP {{{
 let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
