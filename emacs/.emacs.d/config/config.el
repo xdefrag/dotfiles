@@ -70,6 +70,16 @@
 (use-package treemacs-magit
   :after treemacs magit)
 
+(use-package shr)
+(use-package json-reformat)
+(use-package http
+  :after json-reformat
+  :config
+  (add-to-list 'http-pretty-callback-alist
+               '("application/json" . (lambda () (json-reformat-region (point-min) (point-max)))))
+  (add-to-list 'http-pretty-callback-alist
+               '("text/html" . (lambda () (shr-render-region (point-min) (point-max))))))
+
 (use-package yasnippet
   :init (yas-global-mode 1))
 (use-package yasnippet-snippets
@@ -78,15 +88,15 @@
 (use-package company
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (setq company-idle-delay 1))
+  (setq company-idle-delay 1
+        company-minimum-prefix-length 2))
 (use-package company-lsp
   :after company
   :init
   (push 'company-lsp company-backends)
   :config
   '(company-lsp-async t)
-  '(company-lsp-enable-snippet t)
-  '(company-lsp-enable-recompletion t))
+  '(company-lsp-enable-snippet t))
 
 (use-package flycheck
   :init (add-hook 'after-init-hook #'global-flycheck-mode))
@@ -117,7 +127,12 @@
 (use-package projectile
   :init (projectile-mode +1)
   :config
-  (setq projectile-project-search-path '("~/Code/" "~/go/src/github.com/xdefrag/")))
+  (setq projectile-project-search-path '("~/Code/" "~/go/src/github.com/xdefrag/"))
+  (projectile-register-project-type 'npm '("package.json")
+                  :compile "npm install"
+                  :test "npm test"
+                  :run "npm start"
+                  :test-suffix "-test"))
 (use-package helm-projectile
   :after projectile helm
   :init (helm-projectile-on))
@@ -140,6 +155,9 @@
   :init (evil-commentary-mode))
 (use-package evil-magit
   :after evil magit)
+(use-package evil-easymotion
+  :after evil
+  :config (evilem-default-keybindings "SPC"))
 
 (use-package org
   :config
@@ -160,17 +178,20 @@
 
 (use-package lsp-mode
   :config
+  (setq lsp-enable-snippet t
+        gofmt-command "goimports")
   (add-hook 'prog-mode-hook #'lsp)
-  (setq lsp-enable-snippet t)
   (add-hook 'prog-mode-hook 'flycheck-mode)
-  (setenv "GO111MODULE" "on")
-  (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save)
+  (setenv "GO111MODULE" "on")
   (setenv "LDFLAGS" "-L/usr/local/opt/llvm/lib")
   (setenv "CPPFLAGS" "-I/usr/local/opt/llvm/include"))
-;; (use-package lsp-ui
-;;   :after lsp-mode
-;;   :hook ('lsp-ui-mode . lsp))
+(use-package lsp-ui
+  :config
+  (setq lsp-ui-doc-enable nil
+        lsp-ui-peek-enable nil
+        lsp-ui-sideline-enable nil
+        lsp-ui-peek-always-show nil))
 (use-package helm-lsp
   :after lsp-mode helm
   :config
@@ -180,6 +201,7 @@
 (use-package lsp-haskell
   :after lsp-mode
   :config
+  (setq lsp-enable-snippet t)
   (setq lsp-haskell-process-path-hie "hie-wrapper")
   (lsp-haskell-set-completion-snippets t)
   (add-hook 'haskell-mode-hook #'lsp))
@@ -264,10 +286,14 @@
 
 (use-package dashboard
   :init (dashboard-setup-startup-hook)
-  ;; :config
-  ;; (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
-  ;; (setq dashboard-startup-banner [VALUE])
-  )
+  :config
+  (setq dashboard-banner-logo-title "")
+  (setq dashboard-startup-banner 3)
+  (setq dashboard-set-footer nil)
+  (setq show-week-agenda-p t)
+  (setq dashboard-items '((agenda . 5)
+                          (projects . 5)
+                          (recents  . 5))))
 
 ;; (use-package minimal-theme)
 ;; (use-package nordless-theme)
@@ -275,6 +301,7 @@
 
 ;; (load-theme 'gotham t)
 (set-frame-font "Monoid 14" nil t)
+(blink-cursor-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode -1)
@@ -301,17 +328,17 @@
 	(interactive)
 	(find-file (format "%s/index.org" org-directory)))
  "p" 'projectile-command-map
+ "t" 'projectile-test-project
+ "a" 'projectile-toggle-between-implementation-and-test
+ "r" 'projectile-run-project
+ "b" 'projectile-compile-project
+ "s" 'projectile-run-eshell
  "e" 'elfeed
  "m" 'mu4e
  "n" 'treemacs
- "cc" (lambda ()
-	(interactive)
-	(find-file user-init-file))
- "cu" (lambda ()
-	(interactive)
-	(load-file user-init-file))
- "le" 'flycheck-list-errors
- "a" 'projectile-toggle-between-implementation-and-test)
+ "h" 'help-command
+ "le" 'lsp-treemacs-errors-list
+ "ls" 'lsp-treemacs-symbols)
 
 ;; keys - normal
 (general-define-key
@@ -324,14 +351,6 @@
  "gi" 'lsp-goto-implementation
  "go" 'lsp-describe-thing-at-point
  "gp" 'lsp-code-actions-at-point)
-
-;; org-mode
-(general-define-key
- :states '(normal visual motion)
- :keymaps '(org-mode-map override)
- :prefix "SPC"
- "s" 'org-schedule
- "d" 'org-deadline)
 
 ;; keys - insert
 (general-define-key
