@@ -1,7 +1,7 @@
 ;; Copied from https://dougie.io/emacs/indentation/#tldr-the-full-configuration
 
 ;; Create a variable for our preferred tab width
-(setq custom-tab-width 2)
+(setq custom-tab-width 8)
 
 ;; Two callable functions for enabling/disabling tabs in Emacs
 (defun disable-tabs () (setq indent-tabs-mode nil))
@@ -12,6 +12,7 @@
 
 ;; Hooks to Enable Tabs
 (add-hook 'prog-mode-hook 'enable-tabs)
+
 ;; Hooks to Disable Tabs
 (add-hook 'lisp-mode-hook 'disable-tabs)
 (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
