@@ -12,6 +12,18 @@
 (setq user-full-name "Stanislaw Karkavin"
       user-mail-address "me@xdefrag.dev")
 
+(set-frame-font "Monoid 14" nil t)
+(blink-cursor-mode 0)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode -1)
+(set-window-scroll-bars (minibuffer-window) nil nil)
+(setq ring-bell-function 'ignore)
+(setq scroll-conservatively 100)
+(setq frame-title-format '((:eval (projectile-project-name))))
+(global-prettify-symbols-mode t)
+(global-hl-line-mode)
+
 (require 'package)
 
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
@@ -31,6 +43,12 @@
 ;; ensure t by default.
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
+
+;; (use-package minimal-theme)
+;; (use-package nordless-theme)
+(use-package gotham-theme)
+
+;; (load-theme 'gotham t)
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
@@ -179,7 +197,12 @@
 (use-package lsp-mode
   :config
   (setq lsp-enable-snippet t
-        gofmt-command "goimports")
+        gofmt-command "goimports"
+        lsp-eldoc-render-all t
+        lsp-signature-render-all t
+        lsp-enable-indentation t
+        lsp-enable-on-type-formatting t
+        lsp-before-save-edits t)
   (add-hook 'prog-mode-hook #'lsp)
   (add-hook 'prog-mode-hook 'flycheck-mode)
   (add-hook 'before-save-hook 'gofmt-before-save)
@@ -295,22 +318,15 @@
                           (projects . 5)
                           (recents  . 5))))
 
-;; (use-package minimal-theme)
-;; (use-package nordless-theme)
-(use-package gotham-theme)
+(use-package nyan-mode
+  :config
+  (setq nyan-animate-nyancat t
+        nyan-wavy-trail t))
 
-;; (load-theme 'gotham t)
-(set-frame-font "Monoid 14" nil t)
-(blink-cursor-mode 0)
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode -1)
-(set-window-scroll-bars (minibuffer-window) nil nil)
-(setq ring-bell-function 'ignore)
-(setq scroll-conservatively 100)
-(setq frame-title-format '((:eval (projectile-project-name))))
-(global-prettify-symbols-mode t)
-(global-hl-line-mode)
+(use-package emmet-mode
+  :config
+  (add-hook 'sgml-mode-hook 'emmet-mode)
+  (add-hook 'css-mode-hook  'emmet-mode))
 
 ;; keys - main with leader
 (general-define-key
@@ -355,14 +371,23 @@
 ;; keys - insert
 (general-define-key
  :states 'insert
+ :keymaps '(override)
  (general-chord "jj") 'evil-force-normal-state
- (general-chord "jk") 'evil-force-normal-state)
+ (general-chord "jk") 'evil-force-normal-state
+ "C-s" 'yas-insert-snippet)
 
 (general-define-key
  :states '(insert)
  :keymaps '(company-mode-map)
  "C-n" 'company-select-next
  "C-p" 'company-select-previous)
+
+(eval-after-load "evil"
+  '(progn
+     (define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
+     (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
+     (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
+     (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
 
 (provide 'init.el)
 ;;; init.el ends here
