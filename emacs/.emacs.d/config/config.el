@@ -198,6 +198,9 @@
             (lambda ()
               (evil-org-set-key-theme))))
 
+(use-package org-bullets
+  :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
 (use-package lsp-mode
   :config
   (setq lsp-enable-snippet t
