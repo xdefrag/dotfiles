@@ -106,15 +106,19 @@
 (use-package company
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (setq company-idle-delay 1
+  (setq company-idle-delay 0.5
         company-minimum-prefix-length 2))
 (use-package company-lsp
   :after company
   :init
-  (push 'company-lsp company-backends)
+  (add-to-list 'company-backends 'company-lsp)
   :config
   '(company-lsp-async t)
   '(company-lsp-enable-snippet t))
+(use-package company-emoji
+  :after company
+  :init
+  (add-to-list 'company-backends 'company-emoji))
 
 (use-package flycheck
   :init (add-hook 'after-init-hook #'global-flycheck-mode))
@@ -327,6 +331,11 @@
   :config
   (add-hook 'sgml-mode-hook 'emmet-mode)
   (add-hook 'css-mode-hook  'emmet-mode))
+
+(use-package emojify
+  :config
+  (add-hook 'after-init-hook #'global-emojify-mode)
+  (setq emojify-company-tooltips-p t))
 
 ;; keys - main with leader
 (general-define-key
