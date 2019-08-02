@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: component-mapper
+# group: ashley
+# key: compmap
+# --
+public static ComponentMapper<$1> ${1:$(s-lower-camel-case (s-chop-suffix "Component" yas-text))} = ComponentMapper.getFor($1.class);

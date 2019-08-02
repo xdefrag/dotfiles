@@ -100,12 +100,14 @@
 
 (use-package yasnippet
   :init (yas-global-mode 1))
-(use-package yasnippet-snippets
-  :after yasnippet)
+(use-package yasnippet-snippets)
+(use-package java-snippets)
+(use-package go-snippets)
 
 (use-package company
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
+  (add-to-list 'company-backends 'company-omnisharp)
   (setq company-idle-delay 0.5
         company-minimum-prefix-length 2))
 (use-package company-lsp
@@ -145,6 +147,12 @@
 (use-package magit)
 (use-package ghub)
 (use-package forge)
+(use-package diff-hl
+  :after magit
+  :init (global-diff-hl-mode)
+  :config
+  (diff-hl-flydiff-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 (use-package projectile
   :init (projectile-mode +1)
@@ -213,6 +221,7 @@
   (add-hook 'prog-mode-hook #'lsp)
   (add-hook 'prog-mode-hook 'flycheck-mode)
   (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'before-save-hook 'lsp-format-buffer)
   (setenv "GO111MODULE" "on")
   (setenv "LDFLAGS" "-L/usr/local/opt/llvm/lib")
   (setenv "CPPFLAGS" "-I/usr/local/opt/llvm/include"))
@@ -238,19 +247,36 @@
 (use-package lsp-java
   :after lsp-mode
   :config
-  (setq lsp-java-jdt-download-url "http://download.eclipse.org/che/che-ls-jdt/snapshots/che-jdt-language-server-latest.tar.gz")
-  (add-hook 'java-mode-hook #'lsp))
+  (setq lsp-java-vmargs
+      (list
+         "-noverify"
+         "-Xmx1G"
+         "-XX:+UseG1GC"
+         "-XX:+UseStringDeduplication"
+         "-javaagent:/Users/xdefrag/lombok.jar"
+         "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
+  (add-hook 'java-mode-hook #'lsp)
+  (add-hook 'before-save-hook 'lsp-java-organize-imports))
 
 (use-package dap-mode
   :init
   (dap-mode 1)
-  (dap-ui-mode 1))
+  (dap-ui-mode 1)
+  :config
+  (require 'dap-java)
+  (require 'dap-go))
 
 (use-package go-fill-struct)
 (use-package go-impl)
 (use-package go-add-tags)
 (use-package go-gen-test)
 (use-package gotest)
+
+(use-package omnisharp
+  :config
+  (setq omnisharp-auto-complete-want-documentation nil)
+  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+  (add-hook 'before-save-hook 'omnisharp-fix-usings))
 
 (use-package paredit
   :config
@@ -379,6 +405,18 @@
  "gi" 'lsp-goto-implementation
  "go" 'lsp-describe-thing-at-point
  "gp" 'lsp-code-actions-at-point)
+
+(general-define-key
+ :states '(normal visual motion)
+ :keymaps '(omnisharp-mode-map override)
+ "gu" 'omnisharp-find-usages
+ "gi" 'omnisharp-find-implementations
+ "gd" 'omnisharp-go-to-definition
+ "gr" 'omnisharp-run-code-action-refactoring
+ "gf" 'omnisharp-fix-code-issue-at-point
+ "gF" 'omnisharp-fix-usings
+ "gR" 'omnisharp-rename
+ "go" 'omnisharp-current-type-documentation)
 
 ;; keys - insert
 (general-define-key

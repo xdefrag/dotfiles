@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: entities
+# group: ashley
+# key: entities
+# expand-env: ((yas-indent-line 'auto) (yas-wrap-around-region 't))
+# --
+entities = engine.getEntitiesFor(Family.${0:$$(yas-choose-value '("one" "all"))}($1).get());

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: getter-setter
+# group: lombok
+# key: gs
+# --
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter

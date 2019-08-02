@@ -39,6 +39,8 @@ addToPath ~/.local/bin
 addToPath /usr/local/opt/make/libexec/gnubin
 addToPath ~/.cabal/bin
 addToPath /usr/local/opt/llvm/bin
+addToPath /usr/local/opt/texinfo/bin
+addToPath /Library/TeX/texbin
 
 export EDITOR=nvim
 export ZSH="/Users/xdefrag/.oh-my-zsh"
