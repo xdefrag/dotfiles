@@ -288,6 +288,8 @@
   (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
+(use-package origami
+  :init (global-origami-mode 1))
 
 (use-package minions
   :init (minions-mode 1)
@@ -409,7 +411,7 @@
 (general-define-key
  :states '(normal visual motion)
  :keymaps '(omnisharp-mode-map override)
- "gu" 'omnisharp-find-usages
+ "gu" 'omnisharp-helm-find-usages
  "gi" 'omnisharp-find-implementations
  "gd" 'omnisharp-go-to-definition
  "gr" 'omnisharp-run-code-action-refactoring
@@ -417,6 +419,13 @@
  "gF" 'omnisharp-fix-usings
  "gR" 'omnisharp-rename
  "go" 'omnisharp-current-type-documentation)
+ 
+(general-define-key
+ :states '(normal visual motion)
+ :keymaps '(omnisharp-mode-map override)
+ :prefix "SPC"
+ "le" 'omnisharp-solution-errors
+ "lf" 'omnisharp-helm-find-symbols))
 
 ;; keys - insert
 (general-define-key
