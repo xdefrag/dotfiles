@@ -32,6 +32,7 @@ addToPath() {
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+addToPath /usr/local/opt/openal-soft/bin
 addToPath ~/.npm-global/bin
 addToPath ~/go/bin
 addToPath /usr/local/sbin
@@ -41,6 +42,7 @@ addToPath ~/.cabal/bin
 addToPath /usr/local/opt/llvm/bin
 addToPath /usr/local/opt/texinfo/bin
 addToPath /Library/TeX/texbin
+addToPath /Library/Frameworks/Mono.framework/Versions/Current/Commands
 
 export EDITOR=nvim
 export ZSH="/Users/xdefrag/.oh-my-zsh"
@@ -81,3 +83,8 @@ HEROKU_AC_ZSH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/zsh_setup && test 
 addToPath "/usr/local/opt/llvm/bin"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
+
+export LDFLAGS="-L/usr/local/opt/openal-soft/lib"
+export CPPFLAGS="-I/usr/local/opt/openal-soft/include"
+
+export PKG_CONFIG_PATH="/usr/local/opt/openal-soft/lib/pkgconfig"

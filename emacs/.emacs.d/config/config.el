@@ -247,14 +247,14 @@
 (use-package lsp-java
   :after lsp-mode
   :config
-  (setq lsp-java-vmargs
-      (list
-         "-noverify"
-         "-Xmx1G"
-         "-XX:+UseG1GC"
-         "-XX:+UseStringDeduplication"
-         "-javaagent:/Users/xdefrag/lombok.jar"
-         "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
+  ;; (setq lsp-java-vmargs
+  ;;     (list
+  ;;        "-noverify"
+  ;;        "-Xmx1G"
+  ;;        "-XX:+UseG1GC"
+  ;;        "-XX:+UseStringDeduplication"
+  ;;        "-javaagent:/Users/xdefrag/lombok.jar"
+  ;;        "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
   (add-hook 'java-mode-hook #'lsp)
   (add-hook 'before-save-hook 'lsp-java-organize-imports))
 
@@ -276,7 +276,9 @@
   :config
   (setq omnisharp-auto-complete-want-documentation nil)
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'before-save-hook 'omnisharp-fix-usings))
+  (add-hook 'before-save-hook 'omnisharp-fix-usings)
+  (add-hook 'before-save-hook 'omnisharp-code-format-entire-file))
+
 
 (use-package paredit
   :config
@@ -304,12 +306,12 @@
 (use-package auth-source-pass
   :init (auth-source-pass-enable))
 
-(use-package elfeed)
-(use-package elfeed-org
-  :after elfeed
-  :init (elfeed-org)
-  :config
-  (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
+;; (use-package elfeed)
+;; (use-package elfeed-org
+;;   :after elfeed
+;;   :init (elfeed-org)
+;;   :config
+;;   (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
 
 (use-package mu4e
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
@@ -389,28 +391,32 @@
  "r" 'projectile-run-project
  "b" 'projectile-compile-project
  "s" 'projectile-run-eshell
- "e" 'elfeed
+ ;; "e" 'elfeed
  "m" 'mu4e
  "n" 'treemacs
  "h" 'help-command
- "le" 'lsp-treemacs-errors-list
- "ls" 'lsp-treemacs-symbols)
+ "i" 'helm-imenu
+ "I" 'helm-imenu-in-all-buffers
+ "le" 'lsp-treemacs-errors-list)
 
 ;; keys - normal
 (general-define-key
  :states '(normal visual motion)
  :keymaps '(override)
+ "zA" 'origami-toggle-all-nodes
+ "zC" 'origami-close-all-nodes
  ";" 'evil-ex
  "j" 'evil-next-visual-line
  "k" 'evil-previous-visual-line
- "gr" 'lsp-find-references
+ "gu" 'lsp-find-references
  "gi" 'lsp-goto-implementation
  "go" 'lsp-describe-thing-at-point
- "gp" 'lsp-code-actions-at-point)
+ "gp" 'lsp-code-actions-at-point
+ "gR" 'lsp-rename)
 
 (general-define-key
  :states '(normal visual motion)
- :keymaps '(omnisharp-mode-map override)
+ :keymaps '(omnisharp-mode-map)
  "gu" 'omnisharp-helm-find-usages
  "gi" 'omnisharp-find-implementations
  "gd" 'omnisharp-go-to-definition
@@ -422,10 +428,9 @@
  
 (general-define-key
  :states '(normal visual motion)
- :keymaps '(omnisharp-mode-map override)
+ :keymaps '(omnisharp-mode-map)
  :prefix "SPC"
- "le" 'omnisharp-solution-errors
- "lf" 'omnisharp-helm-find-symbols))
+ "le" 'omnisharp-solution-errors)
 
 ;; keys - insert
 (general-define-key
