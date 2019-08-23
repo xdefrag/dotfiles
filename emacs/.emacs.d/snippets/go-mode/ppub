@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: ppub
+# group: patterns
+# key: ppub
+# --
+type Message struct {
+    // Contents
+}
+
+
+type Subscription struct {
+	ch chan<- Message
+
+	Inbox chan Message
+}
+
+func (s *Subscription) Publish(msg Message) error {
+	if _, ok := <-s.ch; !ok {
+		return errors.New("Topic has been closed")
+	}
+
+	s.ch <- msg
+
+	return nil
+}

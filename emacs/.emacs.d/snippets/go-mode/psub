@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: psub
+# group: patterns
+# key: psub
+# --
+type Topic struct {
+	Subscribers    []Session
+	MessageHistory []Message
+}
+
+func (t *Topic) Subscribe(uid uint64) (Subscription, error) {
+    // Get session and create one if it's the first
+
+    // Add session to the Topic & MessageHistory
+
+    // Create a subscription
+}
+
+func (t *Topic) Unsubscribe(Subscription) error {
+	// Implementation
+}
+
+func (t *Topic) Delete() error {
+	// Implementation
+}

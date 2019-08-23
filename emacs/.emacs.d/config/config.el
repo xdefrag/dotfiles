@@ -2,15 +2,17 @@
 ;;; Commentary:
 
 ;;; Code:
+(setq user-full-name "Stanislaw Karkavin"
+      user-mail-address "me@xdefrag.dev")
+
 (load-file "~/.emacs.d/config/sensible-defaults.el/sensible-defaults.el")
 (sensible-defaults/use-all-settings)
 (sensible-defaults/use-all-keybindings)
 (sensible-defaults/backup-to-temp-directory)
 
-(load-file "~/.emacs.d/config/tab.el")
+(add-hook 'after-init-hook 'toggle-frame-fullscreen)
 
-(setq user-full-name "Stanislaw Karkavin"
-      user-mail-address "me@xdefrag.dev")
+(load-file "~/.emacs.d/config/tab.el")
 
 (set-frame-font "Monoid 14" nil t)
 (blink-cursor-mode 0)
@@ -18,13 +20,20 @@
 (menu-bar-mode 0)
 (scroll-bar-mode -1)
 (set-window-scroll-bars (minibuffer-window) nil nil)
-(setq ring-bell-function 'ignore)
-(setq scroll-conservatively 100)
-(setq frame-title-format '((:eval (projectile-project-name))))
 (global-prettify-symbols-mode t)
 (global-hl-line-mode)
 
+(setq-default
+              ;; mode-line-format nil
+              electric-indent-inhibit t
+              ring-bell-function 'ignore
+              scroll-conservatively 100
+              frame-title-format '((:eval (projectile-project-name))))
+
 (require 'package)
+(setq-default
+   load-prefer-newer t
+   package-enable-at-startup nil)
 
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -40,21 +49,21 @@
 (eval-when-compile
   (require 'use-package))
 
-;; ensure t by default.
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-;; (use-package minimal-theme)
-;; (use-package nordless-theme)
-(use-package gotham-theme)
-
-;; (load-theme 'gotham t)
+(use-package minimal-theme
+  :disabled)
+(use-package nordless-theme
+  :disabled)
+(use-package gotham-theme
+  :init (load-theme 'gotham t))
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
   :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
+  (setq auto-package-update-delete-old-versions t
+        auto-package-update-hide-results t)
   (auto-package-update-maybe))
 (use-package exec-path-from-shell
   :config
@@ -69,18 +78,32 @@
 (use-package s)
 (use-package dash)
 
-(global-undo-tree-mode 1)
+(use-package which-key
+  :config
+  (setq which-key-show-early-on-C-h t)
+  (which-key-mode))
+
+(use-package helpful)
 
 (use-package general)
 
 (use-package helm
-  :init (helm-mode 1))
+  :init (helm-mode 1)
+  :config
+  (setq-default helm-boring-buffer-regexp-list (list
+                                        (rx "*")
+                                        (rx "OmniServer")
+                                        (rx "magit"))
+        helm-display-header-line nil
+        helm-mode-line-string nil))
+
 (use-package helm-rg
   :after helm)
 
 (use-package treemacs
   :config
-  (setq treemacs-no-png-images t))
+  (setq treemacs-no-png-images t
+        treemacs-space-between-root-nodes nil))
 (use-package treemacs-evil
   :after treemacs evil)
 (use-package treemacs-projectile
@@ -99,7 +122,9 @@
                '("text/html" . (lambda () (shr-render-region (point-min) (point-max))))))
 
 (use-package yasnippet
-  :init (yas-global-mode 1))
+  :init (yas-global-mode 1)
+  :config
+  (define-key yas-minor-mode-map (kbd "SPC") yas-maybe-expand))
 (use-package yasnippet-snippets)
 (use-package java-snippets)
 (use-package go-snippets)
@@ -107,16 +132,19 @@
 (use-package company
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (add-to-list 'company-backends 'company-omnisharp)
-  (setq company-idle-delay 0.5
-        company-minimum-prefix-length 2))
+  (add-to-list 'company-backends '(company-lsp
+                                   company-omnisharp
+                                   company-lua
+                                   company-yasnippet))
+  (setq company-idle-delay 0
+        company-minimum-prefix-length 1))
 (use-package company-lsp
   :after company
   :init
-  (add-to-list 'company-backends 'company-lsp)
   :config
   '(company-lsp-async t)
   '(company-lsp-enable-snippet t))
+(use-package company-lua)
 (use-package company-emoji
   :after company
   :init
@@ -157,18 +185,10 @@
 (use-package projectile
   :init (projectile-mode +1)
   :config
-  (setq projectile-project-search-path '("~/Code/" "~/go/src/github.com/xdefrag/"))
-  (projectile-register-project-type 'npm '("package.json")
-                  :compile "npm install"
-                  :test "npm test"
-                  :run "npm start"
-                  :test-suffix "-test"))
+  (setq projectile-project-search-path '("~/Code/" "~/go/src/github.com/xdefrag/")))
 (use-package helm-projectile
   :after projectile helm
   :init (helm-projectile-on))
-
-(use-package subword
-  :init (global-subword-mode 1))
 
 (use-package evil
   :init
@@ -186,6 +206,7 @@
 (use-package evil-magit
   :after evil magit)
 (use-package evil-easymotion
+  :disabled
   :after evil
   :config (evilem-default-keybindings "SPC"))
 
@@ -279,6 +300,7 @@
   (add-hook 'before-save-hook 'omnisharp-fix-usings)
   (add-hook 'before-save-hook 'omnisharp-code-format-entire-file))
 
+(use-package lua-mode)
 
 (use-package paredit
   :config
@@ -290,8 +312,8 @@
   (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
-(use-package origami
-  :init (global-origami-mode 1))
+(use-package vimish-fold
+  :init (vimish-fold-global-mode 1))
 
 (use-package minions
   :init (minions-mode 1)
@@ -306,12 +328,14 @@
 (use-package auth-source-pass
   :init (auth-source-pass-enable))
 
-;; (use-package elfeed)
-;; (use-package elfeed-org
-;;   :after elfeed
-;;   :init (elfeed-org)
-;;   :config
-;;   (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
+(use-package elfeed
+  :disabled)
+(use-package elfeed-org
+  :disabled
+  :after elfeed
+  :init (elfeed-org)
+  :config
+  (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
 
 (use-package mu4e
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
@@ -343,19 +367,16 @@
   :init
   (mu4e-alert-enable-mode-line-display))
 
+(use-package kubernetes
+  :disabled
+  :commands (kubernetes-overview))
 
-(use-package dashboard
-  :init (dashboard-setup-startup-hook)
-  :config
-  (setq dashboard-banner-logo-title "")
-  (setq dashboard-startup-banner 3)
-  (setq dashboard-set-footer nil)
-  (setq show-week-agenda-p t)
-  (setq dashboard-items '((agenda . 5)
-                          (projects . 5)
-                          (recents  . 5))))
+(use-package kubernetes-evil
+  :disabled
+  :after kubernetes)
 
 (use-package nyan-mode
+  :disabled
   :config
   (setq nyan-animate-nyancat t
         nyan-wavy-trail t))
@@ -376,8 +397,9 @@
  :keymaps '(override)
  :prefix "SPC"
  "SPC" 'helm-M-x
+ "q" 'kill-current-buffer
  "ff" 'helm-find-files
- "fb" 'helm-buffers-list
+ "fb" 'helm-mini
  "fg" 'helm-rg
  "gs" 'magit-status
  "oa" 'org-agenda
@@ -390,21 +412,18 @@
  "a" 'projectile-toggle-between-implementation-and-test
  "r" 'projectile-run-project
  "b" 'projectile-compile-project
- "s" 'projectile-run-eshell
- ;; "e" 'elfeed
+ "s" 'projectile-run-term
  "m" 'mu4e
  "n" 'treemacs
- "h" 'help-command
+ "h" 'helpful-command
  "i" 'helm-imenu
  "I" 'helm-imenu-in-all-buffers
- "le" 'lsp-treemacs-errors-list)
+ "e" 'flycheck-list-errors)
 
 ;; keys - normal
 (general-define-key
  :states '(normal visual motion)
  :keymaps '(override)
- "zA" 'origami-toggle-all-nodes
- "zC" 'origami-close-all-nodes
  ";" 'evil-ex
  "j" 'evil-next-visual-line
  "k" 'evil-previous-visual-line
@@ -426,12 +445,6 @@
  "gR" 'omnisharp-rename
  "go" 'omnisharp-current-type-documentation)
  
-(general-define-key
- :states '(normal visual motion)
- :keymaps '(omnisharp-mode-map)
- :prefix "SPC"
- "le" 'omnisharp-solution-errors)
-
 ;; keys - insert
 (general-define-key
  :states 'insert
@@ -453,5 +466,5 @@
      (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
      (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
 
-(provide 'init.el)
-;;; init.el ends here
+(provide 'config.el)
+;;; config.el ends here

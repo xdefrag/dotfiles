@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: pobserver
+# group: patterns
+# key: pobs
+# --
+type (
+	Event struct {
+		// Event data
+	}
+
+	Observer interface {
+		OnNotify(Event) error
+	}
+
+	Notifier interface {
+		Register(Observer) error
+		Deregister(Observer) error
+		Notify(Event) error
+	}
+)

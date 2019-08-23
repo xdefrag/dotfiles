@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: ppool
+# group: patterns
+# key: ppool
+# --
+type ${2:Pool} chan *${1:Object}
+
+func New(total int) *$2 {
+	${2:$(s-downcase (s-left 1 yas-text))} := make($2, total)
+
+	for i := 0; i < total; i++ {
+		${2:$(s-downcase (s-left 1 yas-text))} <- new($1)
+	}
+
+	return &${2:$(s-downcase (s-left 1 yas-text))}
+}

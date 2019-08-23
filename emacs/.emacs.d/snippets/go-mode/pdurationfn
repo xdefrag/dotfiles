@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: pdurationfn
+# group: patterns
+# key: pdurfn
+# --
+defer Duration(time.Now(), ${1:"op"})

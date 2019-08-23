@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: psingleton
+# group: patterns
+# key: psing
+# --
+type ${1:singleton} ${2:map[string]string}
+
+var (
+    once sync.Once
+
+    instance $1
+)
+
+func New() $1 {
+	once.Do(func() {
+		instance = make($1)
+	})
+
+	return instance
+}
