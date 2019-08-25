@@ -135,6 +135,7 @@
   (add-to-list 'company-backends '(company-lsp
                                    company-omnisharp
                                    company-lua
+                                   company-elisp
                                    company-yasnippet))
   (setq company-idle-delay 0
         company-minimum-prefix-length 1))
@@ -147,6 +148,7 @@
 (use-package company-lua)
 (use-package company-emoji
   :after company
+  :disabled
   :init
   (add-to-list 'company-backends 'company-emoji))
 
@@ -300,6 +302,11 @@
   (add-hook 'before-save-hook 'omnisharp-fix-usings)
   (add-hook 'before-save-hook 'omnisharp-code-format-entire-file))
 
+(use-package fsharp-mode
+  :config
+  (autoload 'fsharp-mode "fsharp-mode"     "Major mode for editing F# code." t)
+  (add-to-list 'auto-mode-alist '("\\.fs[iylx]?$" . fsharp-mode)))
+
 (use-package lua-mode)
 
 (use-package paredit
@@ -314,6 +321,8 @@
   (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
 (use-package vimish-fold
   :init (vimish-fold-global-mode 1))
+(use-package evil-vimish-fold
+  :init (evil-vimish-fold-mode 1))
 
 (use-package minions
   :init (minions-mode 1)
@@ -387,9 +396,10 @@
   (add-hook 'css-mode-hook  'emmet-mode))
 
 (use-package emojify
+  :disabled
   :config
   (add-hook 'after-init-hook #'global-emojify-mode)
-  (setq emojify-company-tooltips-p t))
+  (setq emojify-company-tooltips-p nil))
 
 ;; keys - main with leader
 (general-define-key
@@ -444,6 +454,12 @@
  "gF" 'omnisharp-fix-usings
  "gR" 'omnisharp-rename
  "go" 'omnisharp-current-type-documentation)
+
+(general-define-key
+ :states '(normal visual motion)
+ :keymaps '(fsharp-mode-map)
+ "gd" 'fsharp-ac/gotodefn-at-point
+ "ge" 'fsharp-eval-region)
  
 ;; keys - insert
 (general-define-key
