@@ -2,6 +2,8 @@
 ;;; Commentary:
 
 ;;; Code:
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 (setq user-full-name "Stanislaw Karkavin"
       user-mail-address "me@xdefrag.dev")
 
@@ -34,10 +36,11 @@
 (setq-default
    load-prefer-newer t
    package-enable-at-startup nil)
-
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+
+(setenv "SHELL" "/bin/zsh")
 
 (package-initialize)
 
@@ -57,7 +60,10 @@
 (use-package nordless-theme
   :disabled)
 (use-package gotham-theme
+  :disabled
   :init (load-theme 'gotham t))
+(use-package nofrils-acme-theme
+  :init (load-theme 'nofrils-acme))
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
@@ -187,7 +193,7 @@
 (use-package projectile
   :init (projectile-mode +1)
   :config
-  (setq projectile-project-search-path '("~/Code/" "~/go/src/github.com/xdefrag/")))
+  (setq projectile-project-search-path '("~/Code/")))
 (use-package helm-projectile
   :after projectile helm
   :init (helm-projectile-on))
@@ -281,6 +287,11 @@
   (add-hook 'java-mode-hook #'lsp)
   (add-hook 'before-save-hook 'lsp-java-organize-imports))
 
+(use-package cider
+  :config
+  (add-hook 'clojure-mode-hook #'cider-mode))
+(use-package helm-cider)
+
 (use-package dap-mode
   :init
   (dap-mode 1)
@@ -309,16 +320,25 @@
 
 (use-package lua-mode)
 
-(use-package paredit
+(use-package lispy
   :config
-  (add-hook 'lisp-mode-hook #'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  (add-hook 'scheme-mode-hook #'paredit-mode))
+  (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+  (add-hook 'lisp-mode-hook (lambda () (lispy-mode 1)))
+  (add-hook 'scheme-mode-hook (lambda () (lispy-mode 1)))
+  (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
+  (lispy-set-key-theme '(lispy c-digit operators prettify atom-motions additional additional-motions additional-insert additional-wrap commentary text-objects slurp/barf-lispy wrap c-w)))
+
+(use-package lispyville
+  :config
+  (add-hook 'lispy-mode-hook #'lispyville-mode))
+
 (use-package rainbow-delimiters
   :config
   (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
+  (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'clojure-mode-hook #'paredit-mode))
+
 (use-package vimish-fold
   :init (vimish-fold-global-mode 1))
 (use-package evil-vimish-fold
@@ -347,6 +367,7 @@
   (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
 
 (use-package mu4e
+  :disabled
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
   :config
   (setq mu4e-maildir "~/.mail"
@@ -360,6 +381,7 @@
 	      (unless (yes-or-no-p "Sure you want to send this?")
 		(signal 'quit nil)))))
 (use-package smtpmail
+  :disabled
   :config
   (setq message-send-mail-function 'smtpmail-send-it
 	send-mail-function 'smtpmail-send-it
@@ -372,6 +394,7 @@
 	smtpmail-smtp-user user-mail-address
 	smtpmail-queue-dir "~/.mail/queued-mail"))
 (use-package mu4e-alert
+  :disabled
   :after mu4e
   :init
   (mu4e-alert-enable-mode-line-display))
@@ -460,7 +483,7 @@
  :keymaps '(fsharp-mode-map)
  "gd" 'fsharp-ac/gotodefn-at-point
  "ge" 'fsharp-eval-region)
- 
+
 ;; keys - insert
 (general-define-key
  :states 'insert

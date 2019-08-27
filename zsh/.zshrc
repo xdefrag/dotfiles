@@ -45,7 +45,7 @@ addToPath /Library/TeX/texbin
 addToPath /Library/Frameworks/Mono.framework/Versions/Current/Commands
 
 export EDITOR=nvim
-export ZSH="/Users/xdefrag/.oh-my-zsh"
+export ZSH="/Users/stanislaw.karkavin/.oh-my-zsh"
 export LANG=en_US.UTF-8
 export GOPATH=~/go
 export GOBIN=~/go/bin
@@ -88,3 +88,8 @@ export LDFLAGS="-L/usr/local/opt/openal-soft/lib"
 export CPPFLAGS="-I/usr/local/opt/openal-soft/include"
 
 export PKG_CONFIG_PATH="/usr/local/opt/openal-soft/lib/pkgconfig"
+
+export LDFLAGS="-L/usr/local/opt/libxml2/lib"
+export CPPFLAGS="-I/usr/local/opt/libxml2/include"
+
+export PKG_CONFIG_PATH="/usr/local/opt/libxml2/lib/pkgconfig"
