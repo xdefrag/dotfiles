@@ -297,6 +297,11 @@
   (add-hook 'clojure-mode-hook #'cider-mode))
 (use-package helm-cider)
 
+(use-package vimish-fold
+  :init (vimish-fold-global-mode 1))
+(use-package evil-vimish-fold
+  :init (evil-vimish-fold-mode 1))
+
 (use-package dap-mode
   :init
   (dap-mode 1)
@@ -344,11 +349,6 @@
   (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'clojure-mode-hook #'paredit-mode))
 
-(use-package vimish-fold
-  :init (vimish-fold-global-mode 1))
-(use-package evil-vimish-fold
-  :init (evil-vimish-fold-mode 1))
-
 (use-package minions
   :init (minions-mode 1)
   :config
@@ -371,6 +371,10 @@
   :config
   (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
 
+(use-package hackernews)
+
+(use-package leetcode)
+
 (use-package mu4e
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
   :config
@@ -381,9 +385,9 @@
 	    mu4e-sent-messages-behavior 'delete
 	    message-kill-buffer-on-exit t)
   (add-hook 'message-send-hook
-	    (lambda ()
-	      (unless (yes-or-no-p "Sure you want to send this?")
-		(signal 'quit nil)))))
+	        (lambda ()
+	          (unless (yes-or-no-p "Sure you want to send this?")
+		        (signal 'quit nil)))))
 (use-package smtpmail
   :config
   (setq message-send-mail-function 'smtpmail-send-it
@@ -451,7 +455,7 @@
  "s" 'projectile-run-term
  "m" 'mu4e
  "n" 'treemacs
- "h" 'helpful
+ "h" 'helpful-command
  "i" 'helm-imenu
  "I" 'helm-imenu-in-all-buffers
  "e" 'flycheck-list-errors)
@@ -466,8 +470,8 @@
  "gu" 'lsp-find-references
  "gi" 'lsp-goto-implementation
  "go" 'lsp-describe-thing-at-point
- "gp" 'lsp-code-actions-at-point
- "gR" 'lsp-rename)
+ "gR" 'lsp-rename
+ "gr" 'lsp-execute-code-action)
 
 (general-define-key
  :states '(normal visual motion)
