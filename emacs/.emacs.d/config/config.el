@@ -2,7 +2,7 @@
 ;;; Commentary:
 
 ;;; Code:
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (setq user-full-name "Stanislaw Karkavin"
       user-mail-address "me@xdefrag.dev")
@@ -56,14 +56,15 @@
 (setq use-package-always-ensure t)
 
 (use-package minimal-theme
-  :disabled)
+  :disabled
+  :init (load-theme 'minimal-light t))
 (use-package nordless-theme
   :disabled)
 (use-package gotham-theme
   :disabled
   :init (load-theme 'gotham t))
 (use-package nofrils-acme-theme
-  :init (load-theme 'nofrils-acme))
+  :init (load-theme 'nofrils-acme t))
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
@@ -214,7 +215,6 @@
 (use-package evil-magit
   :after evil magit)
 (use-package evil-easymotion
-  :disabled
   :after evil
   :config (evilem-default-keybindings "SPC"))
 
@@ -286,6 +286,11 @@
   ;;        "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
   (add-hook 'java-mode-hook #'lsp)
   (add-hook 'before-save-hook 'lsp-java-organize-imports))
+
+(use-package slime
+  :config
+  (setq inferior-lisp-program "/usr/local/Cellar/sbcl/1.5.6/bin/sbcl")
+  (setq slime-contribs '(slime-fancy)))
 
 (use-package cider
   :config
@@ -367,21 +372,19 @@
   (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
 
 (use-package mu4e
-  :disabled
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
   :config
   (setq mu4e-maildir "~/.mail"
-	mu4e-trash-folder "/dev/Trash"
-	mu4e-drafts-folder "/dev/Drafts"
-	mu4e-sent-folder "/dev/Sent"
-	mu4e-sent-messages-behavior 'delete
-	message-kill-buffer-on-exit t)
+	    mu4e-trash-folder "/dev/Trash"
+	    mu4e-drafts-folder "/dev/Drafts"
+	    mu4e-sent-folder "/dev/Sent"
+	    mu4e-sent-messages-behavior 'delete
+	    message-kill-buffer-on-exit t)
   (add-hook 'message-send-hook
 	    (lambda ()
 	      (unless (yes-or-no-p "Sure you want to send this?")
 		(signal 'quit nil)))))
 (use-package smtpmail
-  :disabled
   :config
   (setq message-send-mail-function 'smtpmail-send-it
 	send-mail-function 'smtpmail-send-it
@@ -438,8 +441,8 @@
  "oa" 'org-agenda
  "ol" 'org-store-link
  "oi" (lambda ()
-	(interactive)
-	(find-file (format "%s/index.org" org-directory)))
+	    (interactive)
+	    (find-file (format "%s/index.org" org-directory)))
  "p" 'projectile-command-map
  "t" 'projectile-test-project
  "a" 'projectile-toggle-between-implementation-and-test
@@ -448,7 +451,7 @@
  "s" 'projectile-run-term
  "m" 'mu4e
  "n" 'treemacs
- "h" 'helpful-command
+ "h" 'helpful
  "i" 'helm-imenu
  "I" 'helm-imenu-in-all-buffers
  "e" 'flycheck-list-errors)
@@ -504,6 +507,49 @@
      (define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
      (define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
      (define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)))
+
+(defun brew-upgrade ()
+  "Update all brew packages."
+  (interactive)
+  (shell-command "brew update")
+  (async-shell-command "brew upgrade"))
+
+(defun brew-install-essentials ()
+  "Install all progn essentials."
+  (interactive)
+  (setq packages (list "go" "node" "autojump" "stow" "luajit" "tmux" "p7zip" "fd" "mu" "offlineimap" "yabai" "skhd" "ripgrep" "openssl"))
+  (-map (lambda (pkg) (shell-command (s-concat "brew install " pkg))) packages))
+
+(defun go-install-essentials ()
+  "Install Go essentials."
+  (interactive)
+  (setq packages
+        (list
+         "github.com/xdefrag/ska/cmd/ska"
+         "github.com/klauspost/asmfmt/cmd/asmfmt"
+         "github.com/go-delve/delve/cmd/dlv"
+         "github.com/kisielk/errcheck"
+         "github.com/davidrjenni/reftools/cmd/fillstruct"
+         "github.com/mdempsky/gocode"
+         "github.com/stamblerre/gocode"
+         "github.com/rogpeppe/godef"
+         "github.com/zmb3/gogetdoc"
+         "golang.org/x/tools/cmd/goimports"
+         "golang.org/x/lint/golint"
+         "golang.org/x/tools/gopls@latest"
+         "github.com/alecthomas/gometalinter"
+         "github.com/golangci/golangci-lint/cmd/golangci-lint"
+         "github.com/fatih/gomodifytags"
+         "golang.org/x/tools/cmd/gorename"
+         "github.com/jstemmer/gotags"
+         "golang.org/x/tools/cmd/guru"
+         "github.com/josharian/impl"
+         "honnef.co/go/tools/cmd/keyify"
+         "github.com/fatih/motion"
+         "github.com/koron/iferr"
+         "github.com/d4l3k/go-pry"
+         "github.com/motemen/gore/cmd/gore"))
+  (-map (lambda (pkg) (shell-command (s-concat "go install " pkg))) packages))
 
 (provide 'config.el)
 ;;; config.el ends here
