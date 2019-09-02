@@ -65,6 +65,12 @@
   :init (load-theme 'gotham t))
 (use-package nofrils-acme-theme
   :init (load-theme 'nofrils-acme t))
+(use-package sublime-themes
+  :disabled)
+(use-package doom-themes
+  :disabled)
+(use-package plan9-theme
+  :disabled)
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
