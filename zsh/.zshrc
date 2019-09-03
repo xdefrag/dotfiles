@@ -45,7 +45,7 @@ addToPath /Library/TeX/texbin
 addToPath /Library/Frameworks/Mono.framework/Versions/Current/Commands
 
 export EDITOR=nvim
-export ZSH="/Users/xdefrag/.oh-my-zsh"
+export ZSH="/Users/stanislaw.karkavin/.oh-my-zsh"
 export LANG=en_US.UTF-8
 export GOPATH=~/go
 export GOBIN=~/go/bin

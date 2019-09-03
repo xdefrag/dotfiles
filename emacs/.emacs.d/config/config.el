@@ -129,9 +129,7 @@
                '("text/html" . (lambda () (shr-render-region (point-min) (point-max))))))
 
 (use-package yasnippet
-  :init (yas-global-mode 1)
-  :config
-  (define-key yas-minor-mode-map (kbd "SPC") yas-maybe-expand))
+  :init (yas-global-mode 1))
 (use-package yasnippet-snippets)
 (use-package java-snippets)
 (use-package go-snippets)
@@ -191,10 +189,20 @@
   (diff-hl-flydiff-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
+(use-package ejc-sql
+  :config
+  (add-hook 'ejc-sql-minor-mode-hook
+          (lambda ()
+            (auto-complete-mode t)
+            (ejc-ac-setup)
+            (ejc-eldoc-setup))))
+
 (use-package projectile
   :init (projectile-mode +1)
   :config
-  (setq projectile-project-search-path '("~/Code/")))
+  (setq projectile-project-search-path '("~/Code/"))
+  (setq projectile-use-native-indexing t)
+  (setq projectile-enable-caching t))
 (use-package helm-projectile
   :after projectile helm
   :init (helm-projectile-on))
@@ -285,7 +293,8 @@
   ;;        "-javaagent:/Users/xdefrag/lombok.jar"
   ;;        "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
   (add-hook 'java-mode-hook #'lsp)
-  (add-hook 'before-save-hook 'lsp-java-organize-imports))
+  ;; (add-hook 'before-save-hook 'lsp-java-organize-imports)
+  )
 
 (use-package slime
   :config
@@ -320,8 +329,9 @@
   :config
   (setq omnisharp-auto-complete-want-documentation nil)
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'before-save-hook 'omnisharp-fix-usings)
-  (add-hook 'before-save-hook 'omnisharp-code-format-entire-file))
+  ;; (add-hook 'before-save-hook 'omnisharp-fix-usings)
+  ;; (add-hook 'before-save-hook 'omnisharp-code-format-entire-file)
+  )
 
 (use-package fsharp-mode
   :config
@@ -375,6 +385,10 @@
 
 (use-package leetcode)
 
+(use-package md4rd
+  :config
+  (setq md4rd-subs-active '(golang csharp fsharp clojure lisp haskell functionalprogramming commandline gamedev monogame dotnet emacs orgmode)))
+
 (use-package mu4e
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
   :config
@@ -415,7 +429,6 @@
   :after kubernetes)
 
 (use-package nyan-mode
-  :disabled
   :config
   (setq nyan-animate-nyancat t
         nyan-wavy-trail t))
@@ -441,6 +454,7 @@
  "ff" 'helm-find-files
  "fb" 'helm-mini
  "fg" 'helm-rg
+ "fr" 'helm-resume
  "gs" 'magit-status
  "oa" 'org-agenda
  "ol" 'org-store-link
@@ -554,6 +568,14 @@
          "github.com/d4l3k/go-pry"
          "github.com/motemen/gore/cmd/gore"))
   (-map (lambda (pkg) (shell-command (s-concat "go install " pkg))) packages))
+
+;; (defun go-pry ()
+;;   (interactive)
+;;   (let (current-file buffer-file-name)
+;;     (progn
+;;       (split-window-horizontally)
+;;       (other-window 1)
+;;       (comint-run (str "go-pry run " buffer-file-name)))))
 
 (provide 'config.el)
 ;;; config.el ends here

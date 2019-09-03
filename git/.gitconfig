@@ -1,14 +1,15 @@
 [user]
 	name = Stanislaw Karkavin
-	email = me@xdefrag.dev
-	# signingkey = B877A828254FB464758CBDC4298430524711C0B6
-
-[gpg]
-	program = gpg
-
-# [commit]
-	# gpgsign = true
+	email = stanislav.karkavin@devim.team
+	; signingkey = B877A828254FB464758CBDC4298430524711C0B6
+[alias]
+	sta = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
+	stu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f"
+; [gpg]
+	; program = gpg
+; [commit]
+	; gpgsign = true
 [github]
 	user = xdefrag
 [url "git@gitlab.devim.team:"]
-    insteadOf = https://gitlab.devim.team/
+	insteadOf = https://gitlab.devim.team/
