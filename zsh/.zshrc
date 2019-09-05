@@ -45,7 +45,10 @@ addToPath /Library/TeX/texbin
 addToPath /Library/Frameworks/Mono.framework/Versions/Current/Commands
 
 export EDITOR=nvim
-export ZSH="/Users/stanislaw.karkavin/.oh-my-zsh"
+
+[ -d /Users/stanislaw.karkavin ] && export ZSH="/Users/stanislaw.karkavin/.oh-my-zsh"
+[ -d /Users/xdefrag ] && export ZSH="/Users/xdefrag/.oh-my-zsh"
+
 export LANG=en_US.UTF-8
 export GOPATH=~/go
 export GOBIN=~/go/bin
@@ -93,3 +96,24 @@ export LDFLAGS="-L/usr/local/opt/libxml2/lib"
 export CPPFLAGS="-I/usr/local/opt/libxml2/include"
 
 export PKG_CONFIG_PATH="/usr/local/opt/libxml2/lib/pkgconfig"
+
+# jenv config
+export PATH="/Users/xdefrag/.jenv/shims:${PATH}"
+export JENV_SHELL=zsh
+export JENV_LOADED=1
+unset JAVA_HOME
+source '/usr/local/Cellar/jenv/0.5.2/libexec/libexec/../completions/jenv.zsh'
+jenv rehash 2>/dev/null
+jenv() {
+  typeset command
+  command="$1"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+  case "$command" in
+  enable-plugin|rehash|shell|shell-options)
+    eval `jenv "sh-$command" "$@"`;;
+  *)
+    command jenv "$command" "$@";;
+  esac
+}
