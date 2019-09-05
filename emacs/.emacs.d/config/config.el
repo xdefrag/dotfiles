@@ -73,7 +73,7 @@
 (use-package doom-themes
   :disabled)
 (use-package plan9-theme
-  :init (load-theme 'plan9))
+  :init (load-theme 'plan9 t))
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
@@ -251,6 +251,18 @@
   (add-hook 'evil-org-mode-hook
             (lambda ()
               (evil-org-set-key-theme))))
+
+(use-package oauth2)
+
+(use-package org-caldav
+  :config
+  (setq org-caldav-url 'google
+        org-caldav-calendar-id "mycoldwinter@gmail.com"
+        org-caldav-inbox (format "%s/google-calendar.org" org-directory)
+        org-caldav-files (list org-directory)
+        org-icalendar-timezone "Europe/Moscow"
+        org-caldav-oauth2-client-id ""
+        org-caldav-oauth2-client-secret ""))
 
 (use-package org-bullets
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
