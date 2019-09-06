@@ -16,8 +16,9 @@
 
 (load-file "~/.emacs.d/config/tab.el")
 
-(set-frame-font "IBM Plex Mono 20" nil t)
+(set-frame-font "IBM Plex Mono 18" nil t)
 ;; (set-frame-font "Monoid 14" nil t)
+;; (set-frame-font "GohuFont 14" nil t)
 (blink-cursor-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -62,8 +63,9 @@
   :disabled)
 (use-package gotham-theme
   :disabled)
-(use-package nofrils-acme-theme
-  :disabled)
+(use-package nofrils-acme-theme)
+  :disabled
+  :init (load-theme 'nofrils-acme t))
 (use-package sublime-themes
   :disabled)
 (use-package doom-themes
@@ -248,6 +250,18 @@
             (lambda ()
               (evil-org-set-key-theme))))
 
+(use-package oauth2)
+
+(use-package org-caldav
+  :config
+  (setq org-caldav-url 'google
+        org-caldav-calendar-id "mycoldwinter@gmail.com"
+        org-caldav-inbox (format "%s/google-calendar.org" org-directory)
+        org-caldav-files (list org-directory)
+        org-icalendar-timezone "Europe/Moscow"
+        org-caldav-oauth2-client-id ""
+        org-caldav-oauth2-client-secret ""))
+
 (use-package org-bullets
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
@@ -308,6 +322,7 @@
 
 (use-package cider
   :config
+  (setq cider-repl-display-help-banner nil)
   (add-hook 'clojure-mode-hook #'cider-mode))
 (use-package helm-cider)
 
@@ -322,7 +337,8 @@
   (dap-ui-mode 1)
   :config
   (require 'dap-java)
-  (require 'dap-go))
+  (require 'dap-go)
+  (dap-go-setup))
 
 (use-package go-fill-struct)
 (use-package go-impl)
@@ -450,6 +466,34 @@
   :config
   (add-hook 'after-init-hook #'global-emojify-mode)
   (setq emojify-company-tooltips-p nil))
+
+(use-package adoc-mode
+  :config
+  (defun increment-clojure-cookbook ()
+    "When reading the Clojure cookbook, find the next section, and
+close the buffer. If the next section is a sub-directory or in
+the next chapter, open Dired so you can find it manually."
+    (interactive)
+    (let* ((cur (buffer-name))
+	       (split-cur (split-string cur "[-_]"))
+	       (chap (car split-cur))
+	       (rec (car (cdr split-cur)))
+	       (rec-num (string-to-number rec))
+	       (next-rec-num (1+ rec-num))
+	       (next-rec-s (number-to-string next-rec-num))
+	       (next-rec (if (< next-rec-num 10)
+		                 (concat "0" next-rec-s)
+		               next-rec-s))
+	       (target (file-name-completion (concat chap "-" next-rec) "")))
+      (progn 
+        (if (equal target nil)
+	        (dired (file-name-directory (buffer-file-name)))
+	      (find-file target))
+        (kill-buffer cur))))
+  ;; (define-key adoc-mode-map (kbd "M-+") 'increment-clojure-cookbook)
+  (add-to-list 'auto-mode-alist (cons "\\.txt\\'" 'adoc-mode))
+  (add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
+  (add-hook 'adoc-mode-hook 'cider-mode))
 
 ;; keys - main with leader
 (general-define-key
@@ -583,6 +627,14 @@
 ;;       (split-window-horizontally)
 ;;       (other-window 1)
 ;;       (comint-run (str "go-pry run " buffer-file-name)))))
+
+(defun dap-debug-adv ()
+  "Advanced debug with layouts."
+  (interactive)
+  (dap-debug)
+  (dap-ui-locals)
+  (dap-ui-inspect)
+  (dap-hydra))
 
 (provide 'config.el)
 ;;; config.el ends here
