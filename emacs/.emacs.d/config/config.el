@@ -16,7 +16,8 @@
 
 (load-file "~/.emacs.d/config/tab.el")
 
-(set-frame-font "Monoid 14" nil t)
+(set-frame-font "IBM Plex Mono 20" nil t)
+;; (set-frame-font "Monoid 14" nil t)
 (blink-cursor-mode 0)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -56,21 +57,19 @@
 (setq use-package-always-ensure t)
 
 (use-package minimal-theme
-  :disabled
-  :init (load-theme 'minimal-light t))
+  :disabled)
 (use-package nordless-theme
   :disabled)
 (use-package gotham-theme
-  :disabled
-  :init (load-theme 'gotham t))
+  :disabled)
 (use-package nofrils-acme-theme
-  :init (load-theme 'nofrils-acme t))
+  :disabled)
 (use-package sublime-themes
   :disabled)
 (use-package doom-themes
   :disabled)
 (use-package plan9-theme
-  :disabled)
+  :init (load-theme 'plan9 t))
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
@@ -433,6 +432,8 @@
 (use-package kubernetes-evil
   :disabled
   :after kubernetes)
+
+(use-package protobuf-mode)
 
 (use-package nyan-mode
   :config
