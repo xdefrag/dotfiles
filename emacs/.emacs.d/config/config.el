@@ -58,14 +58,12 @@
 (setq use-package-always-ensure t)
 
 (use-package minimal-theme
-  :disabled
-  :init (load-theme 'minimal-light t))
+  :disabled)
 (use-package nordless-theme
   :disabled)
 (use-package gotham-theme
-  :disabled
-  :init (load-theme 'gotham t))
-(use-package nofrils-acme-theme
+  :disabled)
+(use-package nofrils-acme-theme)
   :disabled
   :init (load-theme 'nofrils-acme t))
 (use-package sublime-themes
@@ -454,6 +452,8 @@
 (use-package kubernetes-evil
   :disabled
   :after kubernetes)
+
+(use-package protobuf-mode)
 
 (use-package nyan-mode
   :config
