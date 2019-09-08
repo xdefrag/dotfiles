@@ -322,6 +322,10 @@
   (setq inferior-lisp-program "/usr/local/Cellar/sbcl/1.5.6/bin/sbcl")
   (setq slime-contribs '(slime-fancy)))
 
+(use-package geiser
+  :config
+  (setq geiser-active-implementations '(mit)))
+
 (use-package cider
   :config
   (setq cider-repl-display-help-banner nil)
