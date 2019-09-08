@@ -377,12 +377,32 @@
   :config
   (add-hook 'lispy-mode-hook #'lispyville-mode))
 
+(use-package parinfer
+  :ensure t
+  :bind
+  (("C-," . parinfer-toggle-mode))
+  :init
+  (progn
+    (setq parinfer-extensions
+          '(defaults       ; should be included.
+            pretty-parens  ; different paren styles for different modes.
+            evil           ; If you use Evil.
+            lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
+            paredit        ; Introduce some paredit commands.
+            smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+            smart-yank))   ; Yank behavior depend on mode.
+    (add-hook 'clojure-mode-hook #'parinfer-mode)
+    (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
+    (add-hook 'common-lisp-mode-hook #'parinfer-mode)
+    (add-hook 'scheme-mode-hook #'parinfer-mode)
+    (add-hook 'lisp-mode-hook #'parinfer-mode)))
+
 (use-package rainbow-delimiters
   :config
   (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojure-mode-hook #'paredit-mode))
+  (add-hook 'clojure-mode-hook #'raibow-delimiters-mode))
 
 (use-package minions
   :init (minions-mode 1)
@@ -534,6 +554,7 @@ the next chapter, open Dired so you can find it manually."
  ";" 'evil-ex
  "j" 'evil-next-visual-line
  "k" 'evil-previous-visual-line
+ "E" 'evil-end-of-line
  "gu" 'lsp-find-references
  "gi" 'lsp-goto-implementation
  "go" 'lsp-describe-thing-at-point
@@ -588,7 +609,21 @@ the next chapter, open Dired so you can find it manually."
 (defun brew-install-essentials ()
   "Install all progn essentials."
   (interactive)
-  (setq packages (list "go" "node" "autojump" "stow" "luajit" "tmux" "p7zip" "fd" "mu" "offlineimap" "yabai" "skhd" "ripgrep" "openssl"))
+  (setq packages (list
+                  "go"
+                  "node"
+                  "autojump"
+                  "stow"
+                  "luajit"
+                  "tmux"
+                  "p7zip"
+                  "fd"
+                  "mu"
+                  "offlineimap"
+                  "yabai"
+                  "skhd"
+                  "ripgrep"
+                  "openssl"))
   (-map (lambda (pkg) (shell-command (s-concat "brew install " pkg))) packages))
 
 (defun go-install-essentials ()
