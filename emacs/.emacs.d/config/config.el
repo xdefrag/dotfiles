@@ -63,7 +63,7 @@
   :disabled)
 (use-package gotham-theme
   :disabled)
-(use-package nofrils-acme-theme)
+(use-package nofrils-acme-theme
   :disabled
   :init (load-theme 'nofrils-acme t))
 (use-package sublime-themes
@@ -453,8 +453,6 @@
   :disabled
   :after kubernetes)
 
-(use-package protobuf-mode)
-
 (use-package nyan-mode
   :config
   (setq nyan-animate-nyancat t
@@ -489,7 +487,7 @@ the next chapter, open Dired so you can find it manually."
 		                 (concat "0" next-rec-s)
 		               next-rec-s))
 	       (target (file-name-completion (concat chap "-" next-rec) "")))
-      (progn 
+      (progn
         (if (equal target nil)
 	        (dired (file-name-directory (buffer-file-name)))
 	      (find-file target))
