@@ -104,10 +104,7 @@
 (use-package helm
   :init (helm-mode 1)
   :config
-  (setq-default helm-boring-buffer-regexp-list (list)
-                                        (rx "*")
-                                        (rx "OmniServer")
-                                        (rx "magit")
+  (setq-default helm-boring-buffer-regexp-list (list (rx "*") (rx "OmniServer") (rx "magit"))
         helm-display-header-line nil
         helm-mode-line-string nil))
 
@@ -355,9 +352,8 @@
   :config
   (setq omnisharp-auto-complete-want-documentation nil)
   (add-hook 'csharp-mode-hook 'omnisharp-mode))
-  ;; (add-hook 'before-save-hook 'omnisharp-fix-usings)
-  ;; (add-hook 'before-save-hook 'omnisharp-code-format-entire-file)
-  
+;; (add-hook 'before-save-hook 'omnisharp-fix-usings)
+;; (add-hook 'before-save-hook 'omnisharp-code-format-entire-file)
 
 (use-package fsharp-mode
   :config
@@ -516,9 +512,6 @@ the next chapter, open Dired so you can find it manually."
  "gs" 'magit-status
  "oa" 'org-agenda
  "ol" 'org-store-link
- "oi" (lambda ())
-      (interactive)
-      (find-file (format "%s/index.org" org-directory))
  "p" 'projectile-command-map
  "t" 'projectile-test-project
  "a" 'projectile-toggle-between-implementation-and-test
@@ -578,7 +571,7 @@ the next chapter, open Dired so you can find it manually."
  "C-n" 'company-select-next
  "C-p" 'company-select-previous
  "C-l" 'company-complete
- "C-o" 'yas-maybe-expand
+ "C-o" 'yas-expand
  "C-s" 'yas-insert-snippet
  "C-a" 'aya-create)
 
