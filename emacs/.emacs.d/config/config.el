@@ -104,10 +104,10 @@
 (use-package helm
   :init (helm-mode 1)
   :config
-  (setq-default helm-boring-buffer-regexp-list (list
+  (setq-default helm-boring-buffer-regexp-list (list)
                                         (rx "*")
                                         (rx "OmniServer")
-                                        (rx "magit"))
+                                        (rx "magit")
         helm-display-header-line nil
         helm-mode-line-string nil))
 
@@ -138,6 +138,7 @@
 (use-package yasnippet
   :init (yas-global-mode 1))
 (use-package yasnippet-snippets)
+(use-package auto-yasnippet)
 (use-package java-snippets)
 (use-package go-snippets)
 
@@ -170,9 +171,9 @@
   :after flycheck
   :hook (go-mode . flycheck-golangci-lint-setup)
   :config
-  (setq flycheck-golangci-lint-tests nil)
+  (setq flycheck-golangci-lint-tests nil))
   ;; (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
-  )
+  
 (use-package eslintd-fix
   :config
   (add-hook 'js-mode-hook #'eslintd-fix-mode t))
@@ -182,9 +183,9 @@
   ;; (eval-after-load 'js-mode
   ;;   (run-import-js))
   (add-hook 'after-save-hook
-	    (lambda ()
-	      (interactive)
-	      (when (eq major-mode 'js-mode) (import-js-fix)))))
+      (lambda ()
+        (interactive)
+        (when (eq major-mode 'js-mode) (import-js-fix)))))
 
 (use-package magit)
 (use-package ghub)
@@ -311,9 +312,9 @@
   ;;        "-XX:+UseStringDeduplication"
   ;;        "-javaagent:/Users/xdefrag/lombok.jar"
   ;;        "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
-  (add-hook 'java-mode-hook #'lsp)
+  (add-hook 'java-mode-hook #'lsp))
   ;; (add-hook 'before-save-hook 'lsp-java-organize-imports)
-  )
+  
 
 (use-package slime
   :config
@@ -353,10 +354,10 @@
 (use-package omnisharp
   :config
   (setq omnisharp-auto-complete-want-documentation nil)
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+  (add-hook 'csharp-mode-hook 'omnisharp-mode))
   ;; (add-hook 'before-save-hook 'omnisharp-fix-usings)
   ;; (add-hook 'before-save-hook 'omnisharp-code-format-entire-file)
-  )
+  
 
 (use-package fsharp-mode
   :config
@@ -365,32 +366,19 @@
 
 (use-package lua-mode)
 
-(use-package lispy
-  :config
-  (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-  (add-hook 'lisp-mode-hook (lambda () (lispy-mode 1)))
-  (add-hook 'scheme-mode-hook (lambda () (lispy-mode 1)))
-  (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
-  (lispy-set-key-theme '(lispy c-digit operators prettify atom-motions additional additional-motions additional-insert additional-wrap commentary text-objects slurp/barf-lispy wrap c-w)))
-
-(use-package lispyville
-  :config
-  (add-hook 'lispy-mode-hook #'lispyville-mode))
-
 (use-package parinfer
-  :ensure t
   :bind
   (("C-," . parinfer-toggle-mode))
-  :init
+  :config
+  (setq parinfer-auto-switch-indent-mode t)
   (progn
     (setq parinfer-extensions
-          '(defaults       ; should be included.
-            pretty-parens  ; different paren styles for different modes.
-            evil           ; If you use Evil.
-            lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
-            paredit        ; Introduce some paredit commands.
-            smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
-            smart-yank))   ; Yank behavior depend on mode.
+           '(defaults       ; should be included.
+             pretty-parens  ; different paren styles for different modes.
+             evil           ; If you use Evil.
+             paredit        ; Introduce some paredit commands.
+             smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
+             smart-yank))   ; Yank behavior depend on mode.
     (add-hook 'clojure-mode-hook #'parinfer-mode)
     (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
     (add-hook 'common-lisp-mode-hook #'parinfer-mode)
@@ -398,6 +386,7 @@
     (add-hook 'lisp-mode-hook #'parinfer-mode)))
 
 (use-package rainbow-delimiters
+  :disabled ; Parinfer looks good, maybe best choice will be stick with it.
   :config
   (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
@@ -410,10 +399,6 @@
   (setq minions-mode-line-lighter ""
         minions-mode-line-delimiters '("" . "")))
 
-(use-package password-store)
-(use-package pass)
-(use-package helm-pass
-  :after pass helm)
 (use-package auth-source-pass
   :init (auth-source-pass-enable))
 
@@ -438,27 +423,27 @@
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
   :config
   (setq mu4e-maildir "~/.mail"
-	    mu4e-trash-folder "/dev/Trash"
-	    mu4e-drafts-folder "/dev/Drafts"
-	    mu4e-sent-folder "/dev/Sent"
-	    mu4e-sent-messages-behavior 'delete
-	    message-kill-buffer-on-exit t)
+      mu4e-trash-folder "/dev/Trash"
+      mu4e-drafts-folder "/dev/Drafts"
+      mu4e-sent-folder "/dev/Sent"
+      mu4e-sent-messages-behavior 'delete
+      message-kill-buffer-on-exit t)
   (add-hook 'message-send-hook
-	        (lambda ()
-	          (unless (yes-or-no-p "Sure you want to send this?")
-		        (signal 'quit nil)))))
+          (lambda ()
+            (unless (yes-or-no-p "Sure you want to send this?"))
+            (signal 'quit nil))))
 (use-package smtpmail
   :config
-  (setq message-send-mail-function 'smtpmail-send-it
-	send-mail-function 'smtpmail-send-it
-	smtpmail-debug-info t
-	smtpmail-debug-verb t
-	smtpmail-default-smtp-server "smtp.fastmail.com"
-	smtpmail-smtp-server "smtp.fastmail.com"
-	smtpmail-smtp-service 465
-	smtpmail-stream-type 'ssl
-	smtpmail-smtp-user user-mail-address
-	smtpmail-queue-dir "~/.mail/queued-mail"))
+  (setq message-send-mail-function 'smtpmail-send-it)
+  send-mail-function 'smtpmail-send-it
+  smtpmail-debug-info t
+  smtpmail-debug-verb t
+  smtpmail-default-smtp-server "smtp.fastmail.com"
+  smtpmail-smtp-server "smtp.fastmail.com"
+  smtpmail-smtp-service 465
+  smtpmail-stream-type 'ssl
+  smtpmail-smtp-user user-mail-address
+  smtpmail-queue-dir "~/.mail/queued-mail")
 (use-package mu4e-alert
   :disabled
   :after mu4e
@@ -496,21 +481,21 @@
 close the buffer. If the next section is a sub-directory or in
 the next chapter, open Dired so you can find it manually."
     (interactive)
-    (let* ((cur (buffer-name))
-	       (split-cur (split-string cur "[-_]"))
-	       (chap (car split-cur))
-	       (rec (car (cdr split-cur)))
-	       (rec-num (string-to-number rec))
-	       (next-rec-num (1+ rec-num))
-	       (next-rec-s (number-to-string next-rec-num))
-	       (next-rec (if (< next-rec-num 10)
-		                 (concat "0" next-rec-s)
-		               next-rec-s))
-	       (target (file-name-completion (concat chap "-" next-rec) "")))
+    (let* ((cur (buffer-name)))
+         (split-cur (split-string cur "[-_]"))
+         (chap (car split-cur))
+         (rec (car (cdr split-cur)))
+         (rec-num (string-to-number rec))
+         (next-rec-num (1+ rec-num))
+         (next-rec-s (number-to-string next-rec-num))
+         (next-rec (if (< next-rec-num 10)
+                     (concat "0" next-rec-s))
+                   next-rec-s)
+         (target (file-name-completion (concat chap "-" next-rec) ""))
       (progn
         (if (equal target nil)
-	        (dired (file-name-directory (buffer-file-name)))
-	      (find-file target))
+          (dired (file-name-directory (buffer-file-name))))
+        (find-file target)
         (kill-buffer cur))))
   ;; (define-key adoc-mode-map (kbd "M-+") 'increment-clojure-cookbook)
   (add-to-list 'auto-mode-alist (cons "\\.txt\\'" 'adoc-mode))
@@ -531,9 +516,9 @@ the next chapter, open Dired so you can find it manually."
  "gs" 'magit-status
  "oa" 'org-agenda
  "ol" 'org-store-link
- "oi" (lambda ()
-	    (interactive)
-	    (find-file (format "%s/index.org" org-directory)))
+ "oi" (lambda ())
+      (interactive)
+      (find-file (format "%s/index.org" org-directory))
  "p" 'projectile-command-map
  "t" 'projectile-test-project
  "a" 'projectile-toggle-between-implementation-and-test
@@ -584,14 +569,18 @@ the next chapter, open Dired so you can find it manually."
  :states 'insert
  :keymaps '(override)
  (general-chord "jj") 'evil-force-normal-state
- (general-chord "jk") 'evil-force-normal-state
- "C-s" 'yas-insert-snippet)
+ (general-chord "jk") 'evil-force-normal-state)
+ 
 
 (general-define-key
  :states '(insert)
  :keymaps '(company-mode-map)
  "C-n" 'company-select-next
- "C-p" 'company-select-previous)
+ "C-p" 'company-select-previous
+ "C-l" 'company-complete
+ "C-o" 'yas-maybe-expand
+ "C-s" 'yas-insert-snippet
+ "C-a" 'aya-create)
 
 (eval-after-load "evil"
   '(progn
