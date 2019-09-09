@@ -2,7 +2,7 @@
 ;;; Commentary:
 
 ;;; Code:
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (setq user-full-name "Stanislaw Karkavin"
       user-mail-address "me@xdefrag.dev")
@@ -63,9 +63,8 @@
   :disabled)
 (use-package gotham-theme
   :disabled)
-(use-package nofrils-acme-theme)
-  :disabled
-  :init (load-theme 'nofrils-acme t))
+(use-package nofrils-acme-theme
+  :disabled)
 (use-package sublime-themes
   :disabled)
 (use-package doom-themes
@@ -249,9 +248,7 @@
   (add-hook 'evil-org-mode-hook
             (lambda ()
               (evil-org-set-key-theme))))
-
 (use-package oauth2)
-
 (use-package org-caldav
   :config
   (setq org-caldav-url 'google
@@ -261,7 +258,6 @@
         org-icalendar-timezone "Europe/Moscow"
         org-caldav-oauth2-client-id ""
         org-caldav-oauth2-client-secret ""))
-
 (use-package org-bullets
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
@@ -466,34 +462,6 @@
   :config
   (add-hook 'after-init-hook #'global-emojify-mode)
   (setq emojify-company-tooltips-p nil))
-
-(use-package adoc-mode
-  :config
-  (defun increment-clojure-cookbook ()
-    "When reading the Clojure cookbook, find the next section, and
-close the buffer. If the next section is a sub-directory or in
-the next chapter, open Dired so you can find it manually."
-    (interactive)
-    (let* ((cur (buffer-name))
-	       (split-cur (split-string cur "[-_]"))
-	       (chap (car split-cur))
-	       (rec (car (cdr split-cur)))
-	       (rec-num (string-to-number rec))
-	       (next-rec-num (1+ rec-num))
-	       (next-rec-s (number-to-string next-rec-num))
-	       (next-rec (if (< next-rec-num 10)
-		                 (concat "0" next-rec-s)
-		               next-rec-s))
-	       (target (file-name-completion (concat chap "-" next-rec) "")))
-      (progn 
-        (if (equal target nil)
-	        (dired (file-name-directory (buffer-file-name)))
-	      (find-file target))
-        (kill-buffer cur))))
-  ;; (define-key adoc-mode-map (kbd "M-+") 'increment-clojure-cookbook)
-  (add-to-list 'auto-mode-alist (cons "\\.txt\\'" 'adoc-mode))
-  (add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
-  (add-hook 'adoc-mode-hook 'cider-mode))
 
 ;; keys - main with leader
 (general-define-key

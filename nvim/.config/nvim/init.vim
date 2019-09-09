@@ -1,12 +1,12 @@
 " Plugins {{{
 call plug#begin('~/.cache/nvim/plugins')
 
-Plug 'xdefrag/vim-beelzebub'                                            " C
-Plug 'Lokaltog/vim-monotone'                                            " O
-Plug 'robertmeta/nofrils'                                               " L
-Plug 'olivertaylor/vacme'                                               " O
-Plug 'jnurmine/Zenburn'                                                 " R
-Plug 'arcticicestudio/nord-vim'                                         " S
+" Plug 'xdefrag/vim-beelzebub'                                            " C
+" Plug 'Lokaltog/vim-monotone'                                            " O
+" Plug 'robertmeta/nofrils'                                               " L
+" Plug 'olivertaylor/vacme'                                               " O
+" Plug 'jnurmine/Zenburn'                                                 " R
+" Plug 'arcticicestudio/nord-vim'                                         " S
 Plug 'whatyouhide/vim-gotham'
 
 Plug 'tpope/vim-commentary'                                             " Easy commenting
@@ -15,59 +15,59 @@ Plug 'tpope/vim-surround'                                               " Contro
 Plug 'tpope/vim-repeat'                                                 " Dot support for bunch of plugins
 Plug 'godlygeek/tabular'                                                " Text align
 Plug 'airblade/vim-gitgutter'                                           " Git state in SignColumn
-Plug 'junegunn/rainbow_parentheses.vim'                                 " Rainbows without ponies
-Plug 'airblade/vim-rooter'                                              " Finding root of app
-Plug 'aquach/vim-http-client'                                           " HTTP client
+" Plug 'junegunn/rainbow_parentheses.vim'                                 " Rainbows without ponies
+" Plug 'airblade/vim-rooter'                                              " Finding root of app
+" Plug 'aquach/vim-http-client'                                           " HTTP client
 
 Plug 'editorconfig/editorconfig-vim'                                    " Editorconfig rules support
-Plug 'mhinz/vim-startify'                                               " Start screen and session manager
-Plug '/usr/local/opt/fzf'                                               " FuzzyFinder
-Plug 'junegunn/fzf.vim'                                                 " FuzzyFinder interface
-Plug 'SirVer/ultisnips'                                                 " Snippets engine
-Plug 'honza/vim-snippets'                                               " Snippets
-Plug 'tpope/vim-fugitive'                                               " Git
-Plug 'mbbill/undotree'                                                  " What it says, yep
-Plug 'majutsushi/tagbar'                                                " Code tree
-Plug 'tpope/vim-dadbod'                                                 " DB interface
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  } " Markdown preview
+" Plug 'mhinz/vim-startify'                                               " Start screen and session manager
+" Plug '/usr/local/opt/fzf'                                               " FuzzyFinder
+" Plug 'junegunn/fzf.vim'                                                 " FuzzyFinder interface
+" Plug 'SirVer/ultisnips'                                                 " Snippets engine
+" Plug 'honza/vim-snippets'                                               " Snippets
+" Plug 'tpope/vim-fugitive'                                               " Git
+" Plug 'mbbill/undotree'                                                  " What it says, yep
+" Plug 'majutsushi/tagbar'                                                " Code tree
+" Plug 'tpope/vim-dadbod'                                                 " DB interface
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  } " Markdown preview
 Plug 'jiangmiao/auto-pairs'                                             " Auto pairing
 Plug 'easymotion/vim-easymotion'                                        " Easymotion
 Plug 'haya14busa/incsearch.vim'                                         " Insearch
 Plug 'haya14busa/incsearch-fuzzy.vim'                                   " Incsearch fuzzy
 Plug 'haya14busa/incsearch-easymotion.vim'                              " Easymotion integration for incsearch
 Plug 'lilydjwg/colorizer'                                               " Mark colors like rgb(0, 0, 99) or #000099
-Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'junegunn/goyo.vim'                                                " Distraction free mode
-Plug 'tpope/vim-projectionist'                                          " Project config
-Plug 'metakirby5/codi.vim'                                              " Repl scratchpad
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+" Plug 'junegunn/rainbow_parentheses.vim'
+" Plug 'junegunn/goyo.vim'                                                " Distraction free mode
+" Plug 'tpope/vim-projectionist'                                          " Project config
+" Plug 'metakirby5/codi.vim'                                              " Repl scratchpad
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 
-Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }        " Golang magic plugin for everything
-Plug 'sebdah/vim-delve', { 'for' : 'go' }                               " Go debug
-Plug 'buoto/gotests-vim', { 'for' : 'go' }                              " Table test generator
+" Plug 'fatih/vim-go', { 'for': 'go', 'do' : ':GoUpdateBinaries' }        " Golang magic plugin for everything
+" Plug 'sebdah/vim-delve', { 'for' : 'go' }                               " Go debug
+" Plug 'buoto/gotests-vim', { 'for' : 'go' }                              " Table test generator
 
-Plug 'ElmCast/elm-vim', { 'for': 'elm' }                                " Elm tools
+" Plug 'ElmCast/elm-vim', { 'for': 'elm' }                                " Elm tools
 
-Plug 'roxma/nvim-yarp'                                                  " Remote plugin framework
-Plug 'ncm2/ncm2'                                                        " Completion
-Plug 'ncm2/ncm2-bufword'                                                " Buffer
-Plug 'ncm2/ncm2-tmux'                                                   " Tmux
-Plug 'ncm2/ncm2-path'                                                   " Path
-Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'                     " Syntax
-Plug 'filipekiss/ncm2-look.vim', { 'for' : 'md' }                       " Look
-Plug 'ncm2/ncm2-ultisnips'                                              " Snippets
-Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                  " Tern
-Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                 " VimScript
-Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                   " Golang
-Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                             " Python
-Plug 'ncm2/ncm2-pyclang'                                                " C/C++
+" Plug 'roxma/nvim-yarp'                                                  " Remote plugin framework
+" Plug 'ncm2/ncm2'                                                        " Completion
+" Plug 'ncm2/ncm2-bufword'                                                " Buffer
+" Plug 'ncm2/ncm2-tmux'                                                   " Tmux
+" Plug 'ncm2/ncm2-path'                                                   " Path
+" Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'                     " Syntax
+" Plug 'filipekiss/ncm2-look.vim', { 'for' : 'md' }                       " Look
+" Plug 'ncm2/ncm2-ultisnips'                                              " Snippets
+" Plug 'ncm2/ncm2-tern', { 'for': 'js', 'do' : 'npm i' }                  " Tern
+" Plug 'ncm2/ncm2-vim', { 'for' : 'vim' }                                 " VimScript
+" Plug 'ncm2/ncm2-go', { 'for' : 'go' }                                   " Golang
+" Plug 'ncm2/ncm2-jedi', { 'for' : 'python' }                             " Python
+" Plug 'ncm2/ncm2-pyclang'                                                " C/C++
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': './install.sh'
-    \ }                                                                 " LSP
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': './install.sh'
+"     \ }                                                                 " LSP
 
 call plug#end()
 " }}}
@@ -400,44 +400,44 @@ if executable('rg')
 endif
 " }}}
 " NCM2 {{{
-let g:AutoPairsMapCR=0
-augroup NCM2
-  autocmd BufEnter * call ncm2#enable_for_buffer()
-augroup END
+" let g:AutoPairsMapCR=0
+" augroup NCM2
+"   autocmd BufEnter * call ncm2#enable_for_buffer()
+" augroup END
 
-let g:ncm2#complete_delay = 0
-let g:ncm2#popup_delay = 0
-" let g:ncm2#matcher = "prefix"
-let g:ncm2#sorter = "alphanum"
+" let g:ncm2#complete_delay = 0
+" let g:ncm2#popup_delay = 0
+" " let g:ncm2#matcher = "prefix"
+" let g:ncm2#sorter = "alphanum"
 
-let g:ncm2_pyclang#library_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
+" let g:ncm2_pyclang#library_path = '/Library/Developer/CommandLineTools/usr/lib/libclang.dylib'
 " }}}
 " LSP {{{
-let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
+" let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
 
-map <Leader>ll :call LanguageClient_contextMenu()<CR>
-map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
-map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
-map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
-map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
-map <Leader>lb :call LanguageClient#textDocument_references()<CR>
-map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
-map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
+" map <Leader>ll :call LanguageClient_contextMenu()<CR>
+" map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
+" map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
+" map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+" map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
+" map <Leader>lb :call LanguageClient#textDocument_references()<CR>
+" map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+" map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
 
-let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
+" let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
 " }}}
 " DLV {{{
-let g:delve_breakpoint_sign_highlight = 'Normal'
-let g:delve_breakpoint_sign = 'B'
-let g:delve_tracepoint_sign_highlight = 'Normal'
-let g:delve_tracepoint_sign = 'T'
+" let g:delve_breakpoint_sign_highlight = 'Normal'
+" let g:delve_breakpoint_sign = 'B'
+" let g:delve_tracepoint_sign_highlight = 'Normal'
+" let g:delve_tracepoint_sign = 'T'
 " }}}
 " Ale {{{
 " let g:ale_linters_explicit = 1
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = 'E'
-let g:ale_sign_warning = 'W'
-let g:ale_set_highlights = 0
+" let g:ale_sign_column_always = 1
+" let g:ale_sign_error = 'E'
+" let g:ale_sign_warning = 'W'
+" let g:ale_set_highlights = 0
 "let g:ale_lint_on_text_changed = 'always'
 "let g:ale_lint_on_insert_leave = 'always'
 "let g:ale_lint_on_enter = 0
@@ -454,11 +454,11 @@ let g:ale_set_highlights = 0
 cnoreabbrev DBT DB postgresql://testing:testing@0.0.0.0:5432
 " }}}
 " HTTP Client {{{
-let g:http_client_bind_hotkey = 0
-let g:http_client_result_vsplit = 0
-let g:http_client_focus_output_window = 0
+" let g:http_client_bind_hotkey = 0
+" let g:http_client_result_vsplit = 0
+" let g:http_client_focus_output_window = 0
 
-nnoremap <leader>h :HTTPClientDoRequest<CR>
+" nnoremap <leader>h :HTTPClientDoRequest<CR>
 " }}}
 " Easymotion {{{
 let g:EasyMotion_smartcase = 1
