@@ -2,7 +2,7 @@
 ;;; Commentary:
 
 ;;; Code:
-;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (setq gc-cons-threshold 100000000)
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
@@ -67,7 +67,7 @@
   :disabled)
 (use-package gotham-theme
   :disabled)
-(use-package nofrils-acme-theme
+(use-package nofrils-acme-theme)
   :disabled
   :init (load-theme 'nofrils-acme t))
 (use-package sublime-themes
@@ -257,9 +257,20 @@
   (add-hook 'evil-org-mode-hook
             (lambda ()
               (evil-org-set-key-theme))))
-
 (use-package oauth2)
+<<<<<<< HEAD
 
+=======
+(use-package org-caldav
+  :config
+  (setq org-caldav-url 'google
+        org-caldav-calendar-id "mycoldwinter@gmail.com"
+        org-caldav-inbox (format "%s/google-calendar.org" org-directory)
+        org-caldav-files (list org-directory)
+        org-icalendar-timezone "Europe/Moscow"
+        org-caldav-oauth2-client-id ""
+        org-caldav-oauth2-client-secret ""))
+>>>>>>> ce34c379ba4652072a134416eed47f68a1568c4c
 (use-package org-bullets
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
