@@ -63,7 +63,7 @@
   :disabled)
 (use-package gotham-theme
   :disabled)
-(use-package nofrils-acme-theme)
+(use-package nofrils-acme-theme
   :disabled
   :init (load-theme 'nofrils-acme t))
 (use-package sublime-themes
@@ -112,14 +112,18 @@
   :after helm)
 
 (use-package treemacs
+  :disabled
   :config
   (setq treemacs-no-png-images t
         treemacs-space-between-root-nodes nil))
 (use-package treemacs-evil
+  :disabled
   :after treemacs evil)
 (use-package treemacs-projectile
+  :disabled
   :after treemacs projectile)
 (use-package treemacs-magit
+  :disabled
   :after treemacs magit)
 
 (use-package shr)
@@ -163,14 +167,16 @@
   (add-to-list 'company-backends 'company-emoji))
 
 (use-package flycheck
-  :init (add-hook 'after-init-hook #'global-flycheck-mode))
+  :config 
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  (setq flycheck-check-syntax-automatically '(save)))
 (use-package flycheck-golangci-lint
   :after flycheck
   :hook (go-mode . flycheck-golangci-lint-setup)
   :config
   (setq flycheck-golangci-lint-tests nil))
   ;; (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
-  
+
 (use-package eslintd-fix
   :config
   (add-hook 'js-mode-hook #'eslintd-fix-mode t))
@@ -194,13 +200,13 @@
   (diff-hl-flydiff-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-(use-package ejc-sql
-  :config
-  (add-hook 'ejc-sql-minor-mode-hook
-          (lambda ()
-            (auto-complete-mode t)
-            (ejc-ac-setup)
-            (ejc-eldoc-setup))))
+(use-package ejc-sql)
+  ;; :config
+  ;; (add-hook 'ejc-sql-minor-mode-hook
+  ;;         (lambda ()
+  ;;           (auto-complete-mode t)
+  ;;           (ejc-ac-setup)
+  ;;           (ejc-eldoc-setup))))
 
 (use-package projectile
   :init (projectile-mode +1)
@@ -266,13 +272,13 @@
         gofmt-command "goimports"
         lsp-eldoc-render-all t
         lsp-signature-render-all t
-        lsp-enable-indentation t
-        lsp-enable-on-type-formatting t
+        lsp-enable-indentation nil
+        lsp-enable-on-type-formatting nil
         lsp-before-save-edits t)
   (add-hook 'prog-mode-hook #'lsp)
   (add-hook 'prog-mode-hook 'flycheck-mode)
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (add-hook 'before-save-hook 'lsp-format-buffer)
+  ;; (add-hook 'before-save-hook 'gofmt-before-save)
+  ;; (add-hook 'before-save-hook 'lsp-format-buffer)
   (setenv "GO111MODULE" "on")
   (setenv "LDFLAGS" "-L/usr/local/opt/llvm/lib")
   (setenv "CPPFLAGS" "-I/usr/local/opt/llvm/include"))
@@ -287,6 +293,7 @@
   :config
   (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol))
 (use-package lsp-treemacs
+  :disabled
   :after lsp treemacs)
 (use-package lsp-haskell
   :after lsp-mode
@@ -308,7 +315,7 @@
   ;;        "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
   (add-hook 'java-mode-hook #'lsp))
   ;; (add-hook 'before-save-hook 'lsp-java-organize-imports)
-  
+
 
 (use-package slime
   :config
@@ -403,10 +410,6 @@
   :init (elfeed-org)
   :config
   (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
-
-(use-package hackernews)
-
-(use-package leetcode)
 
 (use-package md4rd
   :config
@@ -516,7 +519,7 @@ the next chapter, open Dired so you can find it manually."
  "b" 'projectile-compile-project
  "s" 'projectile-run-term
  "m" 'mu4e
- "n" 'treemacs
+ ;; "n" 'treemacs
  "h" 'helpful-command
  "i" 'helm-imenu
  "I" 'helm-imenu-in-all-buffers
@@ -530,6 +533,8 @@ the next chapter, open Dired so you can find it manually."
  "j" 'evil-next-visual-line
  "k" 'evil-previous-visual-line
  "E" 'evil-end-of-line
+ "B" 'evil-beginning-of-line
+ "C-m" 'other-frame
  "gu" 'lsp-find-references
  "gi" 'lsp-goto-implementation
  "go" 'lsp-describe-thing-at-point
@@ -560,7 +565,7 @@ the next chapter, open Dired so you can find it manually."
  :keymaps '(override)
  (general-chord "jj") 'evil-force-normal-state
  (general-chord "jk") 'evil-force-normal-state)
- 
+
 
 (general-define-key
  :states '(insert)
