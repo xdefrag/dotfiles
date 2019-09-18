@@ -330,6 +330,8 @@
   (add-hook 'clojure-mode-hook #'cider-mode))
 (use-package helm-cider)
 
+(use-package kibit-helper)
+
 (use-package vimish-fold
   :init (vimish-fold-global-mode 1))
 (use-package evil-vimish-fold
