@@ -179,7 +179,7 @@
 ;;   :hook (go-mode . flycheck-golangci-lint-setup)
 ;;   :config
 ;;   (setq flycheck-golangci-lint-tests nil))
-  ;; (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
+;;   (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
 
 (use-package eslintd-fix
   :config
@@ -204,13 +204,13 @@
   (diff-hl-flydiff-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-(use-package ejc-sql
-  :config
-  (add-hook 'ejc-sql-minor-mode-hook
-          (lambda ()
-            (auto-complete-mode t)
-            (ejc-ac-setup)
-            (ejc-eldoc-setup))))
+(use-package ejc-sql)
+  ;; :config
+  ;; (add-hook 'ejc-sql-minor-mode-hook
+  ;;         (lambda ()
+  ;;           (auto-complete-mode t)
+  ;;           (ejc-ac-setup)
+  ;;           (ejc-eldoc-setup))))
 
 (use-package projectile
   :init (projectile-mode +1)
@@ -530,6 +530,8 @@ the next chapter, open Dired so you can find it manually."
  "j" 'evil-next-visual-line
  "k" 'evil-previous-visual-line
  "E" 'evil-end-of-line
+ "B" 'evil-beginning-of-line
+ "C-m" 'other-frame
  "gu" 'lsp-find-references
  "gi" 'lsp-goto-implementation
  "go" 'lsp-describe-thing-at-point
