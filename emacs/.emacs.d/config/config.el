@@ -4,6 +4,10 @@
 ;;; Code:
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
+(setq gc-cons-threshold 100000000)
+(add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
+(add-hook 'focus-out-hook 'garbage-collect)
+
 (setq user-full-name "Stanislaw Karkavin"
       user-mail-address "me@xdefrag.dev")
 
@@ -167,15 +171,15 @@
   (add-to-list 'company-backends 'company-emoji))
 
 (use-package flycheck
-  :config 
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-  (setq flycheck-check-syntax-automatically '(save)))
-(use-package flycheck-golangci-lint
-  :after flycheck
-  :hook (go-mode . flycheck-golangci-lint-setup)
+  :init (add-hook 'after-init-hook #'global-flycheck-mode)
   :config
-  (setq flycheck-golangci-lint-tests nil))
-  ;; (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
+  (setq flycheck-check-syntax-automatically '(save)))
+;; (use-package flycheck-golangci-lint
+;;   :after flycheck
+;;   :hook (go-mode . flycheck-golangci-lint-setup)
+;;   :config
+;;   (setq flycheck-golangci-lint-tests nil))
+;;   (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
 
 (use-package eslintd-fix
   :config
@@ -211,7 +215,7 @@
 (use-package projectile
   :init (projectile-mode +1)
   :config
-  (setq projectile-project-search-path '("~/Code/"))
+  (setq projectile-project-search-path '("~/Code/" "~/Dropbox/"))
   (setq projectile-use-native-indexing t)
   (setq projectile-enable-caching t))
 (use-package helm-projectile
@@ -253,16 +257,7 @@
   (add-hook 'evil-org-mode-hook
             (lambda ()
               (evil-org-set-key-theme))))
-(use-package oauth2)
-(use-package org-caldav
-  :config
-  (setq org-caldav-url 'google
-        org-caldav-calendar-id "mycoldwinter@gmail.com"
-        org-caldav-inbox (format "%s/google-calendar.org" org-directory)
-        org-caldav-files (list org-directory)
-        org-icalendar-timezone "Europe/Moscow"
-        org-caldav-oauth2-client-id ""
-        org-caldav-oauth2-client-secret ""))
+
 (use-package org-bullets
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
@@ -272,13 +267,16 @@
         gofmt-command "goimports"
         lsp-eldoc-render-all t
         lsp-signature-render-all t
-        lsp-enable-indentation nil
-        lsp-enable-on-type-formatting nil
-        lsp-before-save-edits t)
+        lsp-enable-indentation t
+        lsp-enable-on-type-formatting t
+        lsp-before-save-edits t
+        lsp-prefer-flymake nil)
   (add-hook 'prog-mode-hook #'lsp)
   (add-hook 'prog-mode-hook 'flycheck-mode)
-  ;; (add-hook 'before-save-hook 'gofmt-before-save)
-  ;; (add-hook 'before-save-hook 'lsp-format-buffer)
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (add-hook 'before-save-hook 'lsp-format-buffer)
+  (add-hook 'go-mode-hook #'lsp-deferred)
+  (add-hook 'go-mode-hook 'flycheck-mode)
   (setenv "GO111MODULE" "on")
   (setenv "LDFLAGS" "-L/usr/local/opt/llvm/lib")
   (setenv "CPPFLAGS" "-I/usr/local/opt/llvm/include"))
@@ -314,7 +312,7 @@
   ;;        "-javaagent:/Users/xdefrag/lombok.jar"
   ;;        "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
   (add-hook 'java-mode-hook #'lsp))
-  ;; (add-hook 'before-save-hook 'lsp-java-organize-imports)
+  (add-hook 'before-save-hook 'lsp-java-organize-imports)
 
 
 (use-package slime
@@ -355,9 +353,9 @@
 (use-package omnisharp
   :config
   (setq omnisharp-auto-complete-want-documentation nil)
-  (add-hook 'csharp-mode-hook 'omnisharp-mode))
-;; (add-hook 'before-save-hook 'omnisharp-fix-usings)
-;; (add-hook 'before-save-hook 'omnisharp-code-format-entire-file)
+  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+  (add-hook 'before-save-hook 'omnisharp-fix-usings)
+  (add-hook 'before-save-hook 'omnisharp-code-format-entire-file))
 
 (use-package fsharp-mode
   :config
@@ -383,7 +381,8 @@
     (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
     (add-hook 'common-lisp-mode-hook #'parinfer-mode)
     (add-hook 'scheme-mode-hook #'parinfer-mode)
-    (add-hook 'lisp-mode-hook #'parinfer-mode)))
+    (add-hook 'lisp-mode-hook #'parinfer-mode)
+    (add-hook 'cider-mode-hook #'parinfer-mode)))
 
 (use-package rainbow-delimiters
   :disabled ; Parinfer looks good, maybe best choice will be stick with it.
@@ -410,10 +409,6 @@
   :init (elfeed-org)
   :config
   (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
-
-(use-package md4rd
-  :config
-  (setq md4rd-subs-active '(golang csharp fsharp clojure lisp haskell functionalprogramming commandline gamedev monogame dotnet emacs orgmode)))
 
 (use-package mu4e
   :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
@@ -627,7 +622,6 @@ the next chapter, open Dired so you can find it manually."
          "golang.org/x/tools/cmd/goimports"
          "golang.org/x/lint/golint"
          "golang.org/x/tools/gopls@latest"
-         "github.com/alecthomas/gometalinter"
          "github.com/golangci/golangci-lint/cmd/golangci-lint"
          "github.com/fatih/gomodifytags"
          "golang.org/x/tools/cmd/gorename"
