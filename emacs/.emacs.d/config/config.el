@@ -2,7 +2,7 @@
 ;;; Commentary:
 
 ;;; Code:
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;;(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (setq gc-cons-threshold 100000000)
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
@@ -204,14 +204,6 @@
   (diff-hl-flydiff-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-(use-package ejc-sql)
-  ;; :config
-  ;; (add-hook 'ejc-sql-minor-mode-hook
-  ;;         (lambda ()
-  ;;           (auto-complete-mode t)
-  ;;           (ejc-ac-setup)
-  ;;           (ejc-eldoc-setup))))
-
 (use-package projectile
   :init (projectile-mode +1)
   :config
@@ -243,13 +235,21 @@
 
 (use-package org
   :config
-  (setq org-directory "~/Dropbox/org")
-  (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
-  (setq org-src-window-setup 'current-window)
-  (setq org-agenda-files (list org-directory))
+  (setq org-directory "~/Dropbox/org"
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-src-window-setup 'current-window
+        org-agenda-files (list org-directory)
+        org-confirm-babel-evaluate nil
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-babel-clojure-backend 'cider)
   (add-to-list 'auto-mode-alist '("\\.md\\'" . org-mode))
-  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode)))
+  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((sql . t)
+     (clojure . t))))
 (use-package evil-org
   :after org evil
   :config
