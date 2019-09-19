@@ -1,4 +1,4 @@
-;;; package --- provides EMACS config.
+;;; config.el --- provides EMACS config.
 ;;; Commentary:
 
 ;;; Code:
@@ -409,31 +409,6 @@
   :config
   (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
 
-(use-package mu4e
-  :load-path "/usr/local/share/emacs/site-lisp/mu/mu4e"
-  :config
-  (setq mu4e-maildir "~/.mail"
-      mu4e-trash-folder "/dev/Trash"
-      mu4e-drafts-folder "/dev/Drafts"
-      mu4e-sent-folder "/dev/Sent"
-      mu4e-sent-messages-behavior 'delete
-      message-kill-buffer-on-exit t)
-  (add-hook 'message-send-hook
-          (lambda ()
-            (unless (yes-or-no-p "Sure you want to send this?"))
-            (signal 'quit nil))))
-(use-package smtpmail
-  :config
-  (setq message-send-mail-function 'smtpmail-send-it)
-  send-mail-function 'smtpmail-send-it
-  smtpmail-debug-info t
-  smtpmail-debug-verb t
-  smtpmail-default-smtp-server "smtp.fastmail.com"
-  smtpmail-smtp-server "smtp.fastmail.com"
-  smtpmail-smtp-service 465
-  smtpmail-stream-type 'ssl
-  smtpmail-smtp-user user-mail-address
-  smtpmail-queue-dir "~/.mail/queued-mail")
 (use-package mu4e-alert
   :disabled
   :after mu4e
@@ -642,13 +617,19 @@ the next chapter, open Dired so you can find it manually."
 ;;       (other-window 1)
 ;;       (comint-run (str "go-pry run " buffer-file-name)))))
 
-(defun dap-debug-adv ()
-  "Advanced debug with layouts."
-  (interactive)
-  (dap-debug)
-  (dap-ui-locals)
-  (dap-ui-inspect)
-  (dap-hydra))
+;;; external private things
+
+(defvar cal-cfg
+  (s-concat org-directory "/cal/cal.el")
+  "Calendars config.")
+(when (f-exists? cal-cfg)
+  (load-file cal-cfg))
+
+(defvar mail-cfg
+  (s-concat org-directory "/mail/mail.el")
+  "Mail config.")
+(when (f-exists? mail-cfg)
+  (load-file mail-cfg))
 
 (provide 'config.el)
 ;;; config.el ends here
