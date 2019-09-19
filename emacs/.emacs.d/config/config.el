@@ -131,14 +131,7 @@
   :after treemacs magit)
 
 (use-package shr)
-(use-package json-reformat)
-(use-package http
-  :after json-reformat
-  :config
-  (add-to-list 'http-pretty-callback-alist
-               '("application/json" . (lambda () (json-reformat-region (point-min) (point-max)))))
-  (add-to-list 'http-pretty-callback-alist
-               '("text/html" . (lambda () (shr-render-region (point-min) (point-max))))))
+(use-package json-mode)
 
 (use-package yasnippet
   :init (yas-global-mode 1))
@@ -249,7 +242,11 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((sql . t)
-     (clojure . t))))
+     (scheme . t)
+     (clojure . t)
+     (shell . t)
+     (js . t)
+     (http . t))))
 (use-package evil-org
   :after org evil
   :config
@@ -257,7 +254,7 @@
   (add-hook 'evil-org-mode-hook
             (lambda ()
               (evil-org-set-key-theme))))
-
+(use-package ob-http)
 (use-package org-bullets
   :config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
