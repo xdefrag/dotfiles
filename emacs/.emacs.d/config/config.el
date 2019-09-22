@@ -20,8 +20,8 @@
 
 (load-file "~/.emacs.d/config/tab.el")
 
-(set-frame-font "IBM Plex Mono 18" nil t)
-;; (set-frame-font "Monoid 14" nil t)
+;; (set-frame-font "IBM Plex Mono 18" nil t)
+(set-frame-font "Monoid 14" nil t)
 ;; (set-frame-font "GohuFont 14" nil t)
 (blink-cursor-mode 0)
 (tool-bar-mode 0)
@@ -40,8 +40,9 @@
 
 (require 'package)
 (setq-default
-   load-prefer-newer t
-   package-enable-at-startup nil)
+ load-prefer-newer t
+ package-enable-at-startup nil)
+
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
@@ -64,18 +65,20 @@
 (use-package minimal-theme
   :disabled)
 (use-package nordless-theme
-  :disabled)
+  :disabled
+  :config (load-theme 'nordless t))
 (use-package gotham-theme
   :disabled)
 (use-package nofrils-acme-theme
   :disabled
-  :init (load-theme 'nofrils-acme t))
+  :config (load-theme 'nofrils-acme t))
 (use-package sublime-themes
   :disabled)
 (use-package doom-themes
-  :disabled)
+  :config (load-theme 'doom-moonlight t))
 (use-package plan9-theme
-  :init (load-theme 'plan9 t))
+  :disabled
+  :config (load-theme 'plan9 t))
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
@@ -90,7 +93,7 @@
 (use-package use-package-chords
   :config (key-chord-mode 1))
 (use-package add-node-modules-path
-  :config (add-hook 'js-mode-hook #'add-node-modules-path))
+  :hook (js-mode . add-node-modules-path))
 
 (use-package f)
 (use-package s)
@@ -105,30 +108,28 @@
 
 (use-package general)
 
-(use-package helm
-  :init (helm-mode 1)
+(use-package spaceline
+  :init (setq powerline-default-separator 'slant)
   :config
-  (setq-default helm-boring-buffer-regexp-list (list (rx "*") (rx "OmniServer") (rx "magit"))
-        helm-display-header-line nil
-        helm-mode-line-string nil))
+  (spaceline-emacs-theme)
+  (spaceline-helm-mode t)
+  (spaceline-toggle-minor-modes-off)
+  (spaceline-toggle-buffer-size-off)
+  (spaceline-toggle-evil-state-on))
+
+(use-package helm
+  :config
+  (setq-default helm-boring-buffer-regexp-list
+                (list
+                 (rx "OmniServer")
+                 (rx "magit")
+                 (rx "*"))
+                helm-display-header-line nil
+                helm-mode-line-string nil)
+  (helm-mode 1))
 
 (use-package helm-rg
   :after helm)
-
-(use-package treemacs
-  :disabled
-  :config
-  (setq treemacs-no-png-images t
-        treemacs-space-between-root-nodes nil))
-(use-package treemacs-evil
-  :disabled
-  :after treemacs evil)
-(use-package treemacs-projectile
-  :disabled
-  :after treemacs projectile)
-(use-package treemacs-magit
-  :disabled
-  :after treemacs magit)
 
 (use-package shr)
 (use-package json-mode)
@@ -152,16 +153,10 @@
         company-minimum-prefix-length 1))
 (use-package company-lsp
   :after company
-  :init
   :config
   '(company-lsp-async t)
   '(company-lsp-enable-snippet t))
 (use-package company-lua)
-(use-package company-emoji
-  :after company
-  :disabled
-  :init
-  (add-to-list 'company-backends 'company-emoji))
 
 (use-package flycheck
   :init (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -175,17 +170,16 @@
 ;;   (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
 
 (use-package eslintd-fix
-  :config
-  (add-hook 'js-mode-hook #'eslintd-fix-mode t))
+  :hook (js-mode . #'eslintd-fix-mode))
 
 (use-package import-js
   :config
   ;; (eval-after-load 'js-mode
   ;;   (run-import-js))
-  (add-hook 'after-save-hook
-      (lambda ()
-        (interactive)
-        (when (eq major-mode 'js-mode) (import-js-fix)))))
+  (add-hook 'before-save-hook
+            (lambda ()
+              (interactive)
+              (when (eq major-mode 'js-mode) (import-js-fix)))))
 
 (use-package magit)
 (use-package ghub)
@@ -314,7 +308,7 @@
 
 (use-package slime
   :config
-  (setq inferior-lisp-program "/usr/local/Cellar/sbcl/1.5.6/bin/sbcl")
+  (setq inferior-lisp-program "/usr/local/bin/sbcl")
   (setq slime-contribs '(slime-fancy)))
 
 (use-package geiser
@@ -363,6 +357,14 @@
 
 (use-package lua-mode)
 
+(defconst my-lisp-mode-hooks
+  '(lisp-mode-hook
+    emacs-lisp-mode-hook
+    clojure-mode-hook
+    scheme-mode-hook
+    cider-mode-hook
+    ))
+
 (use-package parinfer
   :bind
   (("C-," . parinfer-toggle-mode))
@@ -370,47 +372,22 @@
   (setq parinfer-auto-switch-indent-mode t)
   (progn
     (setq parinfer-extensions
-           '(defaults       ; should be included.
-             pretty-parens  ; different paren styles for different modes.
+          '(defaults       ; should be included.
+             ;;pretty-parens  ; different paren styles for different modes.
              evil           ; If you use Evil.
              paredit        ; Introduce some paredit commands.
              smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
              smart-yank))   ; Yank behavior depend on mode.
-    (add-hook 'clojure-mode-hook #'parinfer-mode)
-    (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
-    (add-hook 'common-lisp-mode-hook #'parinfer-mode)
-    (add-hook 'scheme-mode-hook #'parinfer-mode)
-    (add-hook 'lisp-mode-hook #'parinfer-mode)
-    (add-hook 'cider-mode-hook #'parinfer-mode)))
+    )
+  :ghook my-lisp-mode-hooks)
 
 (use-package rainbow-delimiters
-  :disabled ; Parinfer looks good, maybe best choice will be stick with it.
-  :config
-  (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojure-mode-hook #'raibow-delimiters-mode))
-
-(use-package minions
-  :init (minions-mode 1)
-  :config
-  (setq minions-mode-line-lighter ""
-        minions-mode-line-delimiters '("" . "")))
+  :ghook my-lisp-mode-hooks)
 
 (use-package auth-source-pass
   :init (auth-source-pass-enable))
 
-(use-package elfeed
-  :disabled)
-(use-package elfeed-org
-  :disabled
-  :after elfeed
-  :init (elfeed-org)
-  :config
-  (setq rmh-elfeed-org-files (list (format "%s/elfeed.org" org-directory))))
-
 (use-package mu4e-alert
-  :disabled
   :after mu4e
   :init
   (mu4e-alert-enable-mode-line-display))
@@ -434,9 +411,7 @@
   (add-hook 'css-mode-hook  'emmet-mode))
 
 (use-package emojify
-  :disabled
   :config
-  (add-hook 'after-init-hook #'global-emojify-mode)
   (setq emojify-company-tooltips-p nil))
 
 (use-package adoc-mode
@@ -447,19 +422,19 @@ close the buffer. If the next section is a sub-directory or in
 the next chapter, open Dired so you can find it manually."
     (interactive)
     (let* ((cur (buffer-name)))
-         (split-cur (split-string cur "[-_]"))
-         (chap (car split-cur))
-         (rec (car (cdr split-cur)))
-         (rec-num (string-to-number rec))
-         (next-rec-num (1+ rec-num))
-         (next-rec-s (number-to-string next-rec-num))
-         (next-rec (if (< next-rec-num 10)
-                     (concat "0" next-rec-s))
-                   next-rec-s)
-         (target (file-name-completion (concat chap "-" next-rec) ""))
+      (split-cur (split-string cur "[-_]"))
+      (chap (car split-cur))
+      (rec (car (cdr split-cur)))
+      (rec-num (string-to-number rec))
+      (next-rec-num (1+ rec-num))
+      (next-rec-s (number-to-string next-rec-num))
+      (next-rec (if (< next-rec-num 10)
+                    (concat "0" next-rec-s))
+                next-rec-s)
+      (target (file-name-completion (concat chap "-" next-rec) ""))
       (progn
         (if (equal target nil)
-          (dired (file-name-directory (buffer-file-name))))
+            (dired (file-name-directory (buffer-file-name))))
         (find-file target)
         (kill-buffer cur))))
   ;; (define-key adoc-mode-map (kbd "M-+") 'increment-clojure-cookbook)
@@ -488,7 +463,6 @@ the next chapter, open Dired so you can find it manually."
  "b" 'projectile-compile-project
  "s" 'projectile-run-term
  "m" 'mu4e
- ;; "n" 'treemacs
  "h" 'helpful-command
  "i" 'helm-imenu
  "I" 'helm-imenu-in-all-buffers
@@ -522,19 +496,12 @@ the next chapter, open Dired so you can find it manually."
  "gR" 'omnisharp-rename
  "go" 'omnisharp-current-type-documentation)
 
-(general-define-key
- :states '(normal visual motion)
- :keymaps '(fsharp-mode-map)
- "gd" 'fsharp-ac/gotodefn-at-point
- "ge" 'fsharp-eval-region)
-
 ;; keys - insert
 (general-define-key
  :states 'insert
  :keymaps '(override)
  (general-chord "jj") 'evil-force-normal-state
  (general-chord "jk") 'evil-force-normal-state)
-
 
 (general-define-key
  :states '(insert)
