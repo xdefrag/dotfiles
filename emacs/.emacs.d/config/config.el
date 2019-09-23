@@ -179,7 +179,7 @@
   (add-hook 'before-save-hook
             (lambda ()
               (interactive)
-              (when (eq major-mode 'js-mode) (import-js-fix)))))
+              (when (eq major-mode 'js-mode) (import-js-fix))) nil t))
 
 (use-package magit)
 (use-package ghub)
@@ -264,8 +264,8 @@
         lsp-prefer-flymake nil)
   (add-hook 'prog-mode-hook #'lsp)
   (add-hook 'prog-mode-hook 'flycheck-mode)
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (add-hook 'before-save-hook 'lsp-format-buffer)
+  (add-hook 'before-save-hook 'gofmt-before-save nil t)
+  (add-hook 'before-save-hook 'lsp-format-buffer nil t)
   (add-hook 'go-mode-hook #'lsp-deferred)
   (add-hook 'go-mode-hook 'flycheck-mode)
   (setenv "GO111MODULE" "on")
@@ -302,8 +302,8 @@
   ;;        "-XX:+UseStringDeduplication"
   ;;        "-javaagent:/Users/xdefrag/lombok.jar"
   ;;        "-Xbootclasspath/a:/Users/xdefrag/lombok.jar"))
+  (add-hook 'before-save-hook 'lsp-java-organize-imports nil t)
   (add-hook 'java-mode-hook #'lsp))
-  (add-hook 'before-save-hook 'lsp-java-organize-imports)
 
 
 (use-package slime
@@ -347,8 +347,8 @@
   :config
   (setq omnisharp-auto-complete-want-documentation nil)
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'before-save-hook 'omnisharp-fix-usings)
-  (add-hook 'before-save-hook 'omnisharp-code-format-entire-file))
+  (add-hook 'before-save-hook 'omnisharp-fix-usings nil t)
+  (add-hook 'before-save-hook 'omnisharp-code-format-entire-file nil t))
 
 (use-package fsharp-mode
   :config
