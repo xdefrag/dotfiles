@@ -62,23 +62,8 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 
-(use-package minimal-theme
-  :disabled)
-(use-package nordless-theme
-  :disabled
-  :config (load-theme 'nordless t))
-(use-package gotham-theme
-  :disabled)
-(use-package nofrils-acme-theme
-  :disabled
-  :config (load-theme 'nofrils-acme t))
-(use-package sublime-themes
-  :disabled)
 (use-package doom-themes
   :config (load-theme 'doom-moonlight t))
-(use-package plan9-theme
-  :disabled
-  :config (load-theme 'plan9 t))
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
@@ -95,16 +80,10 @@
 (use-package add-node-modules-path
   :hook (js-mode . add-node-modules-path))
 
-(use-package f)
-(use-package s)
-(use-package dash)
-
 (use-package which-key
   :config
   (setq which-key-show-early-on-C-h t)
   (which-key-mode))
-
-(use-package helpful)
 
 (use-package general)
 
@@ -128,18 +107,11 @@
                 helm-mode-line-string nil)
   (helm-mode 1))
 
-(use-package helm-rg
-  :after helm)
-
-(use-package shr)
 (use-package json-mode)
 
 (use-package yasnippet
   :init (yas-global-mode 1))
 (use-package yasnippet-snippets)
-(use-package auto-yasnippet)
-(use-package java-snippets)
-(use-package go-snippets)
 
 (use-package company
   :init (add-hook 'after-init-hook 'global-company-mode)
@@ -152,41 +124,16 @@
   ;;                                  company-yasnippet))
   (add-to-list 'company-backends '(company-tabnine))
   (setq company-idle-delay 0
-        company-minimum-prefix-length 1))
+        company-minimum-prefix-length 1
+        company-show-numbers nil))
 (use-package company-tabnine)
 (use-package company-lsp
   :after company
   :config
   '(company-lsp-async t)
   '(company-lsp-enable-snippet t))
-(use-package company-lua)
-
-(use-package flycheck
-  :init (add-hook 'after-init-hook #'global-flycheck-mode)
-  :config
-  (setq flycheck-check-syntax-automatically '(save)))
-;; (use-package flycheck-golangci-lint
-;;   :after flycheck
-;;   :hook (go-mode . flycheck-golangci-lint-setup)
-;;   :config
-;;   (setq flycheck-golangci-lint-tests nil))
-;;   (setq flycheck-golangci-lint-enable-linters '("lll" "structcheck"))
-
-(use-package eslintd-fix
-  :hook (js-mode . #'eslintd-fix-mode))
-
-(use-package import-js
-  :config
-  ;; (eval-after-load 'js-mode
-  ;;   (run-import-js))
-  (add-hook 'before-save-hook
-            (lambda ()
-              (interactive)
-              (when (eq major-mode 'js-mode) (import-js-fix))) nil t))
 
 (use-package magit)
-(use-package ghub)
-(use-package forge)
 (use-package diff-hl
   :after magit
   :init (global-diff-hl-mode)
@@ -284,9 +231,6 @@
   :after lsp-mode helm
   :config
   (define-key lsp-mode-map [remap xref-find-apropos] #'helm-lsp-workspace-symbol))
-(use-package lsp-treemacs
-  :disabled
-  :after lsp treemacs)
 (use-package lsp-haskell
   :after lsp-mode
   :config
@@ -362,20 +306,6 @@
 (use-package go-gen-test)
 (use-package gotest)
 
-(use-package omnisharp
-  :config
-  (setq omnisharp-auto-complete-want-documentation nil)
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'before-save-hook 'omnisharp-fix-usings nil t)
-  (add-hook 'before-save-hook 'omnisharp-code-format-entire-file nil t))
-
-(use-package fsharp-mode
-  :config
-  (autoload 'fsharp-mode "fsharp-mode"     "Major mode for editing F# code." t)
-  (add-to-list 'auto-mode-alist '("\\.fs[iylx]?$" . fsharp-mode)))
-
-(use-package lua-mode)
-
 (defconst my-lisp-mode-hooks
   '(lisp-mode-hook
     emacs-lisp-mode-hook
@@ -410,56 +340,6 @@
   :after mu4e
   :init
   (mu4e-alert-enable-mode-line-display))
-
-(use-package kubernetes
-  :disabled
-  :commands (kubernetes-overview))
-
-(use-package kubernetes-evil
-  :disabled
-  :after kubernetes)
-
-(use-package nyan-mode
-  :config
-  (setq nyan-animate-nyancat t
-        nyan-wavy-trail t))
-
-(use-package emmet-mode
-  :config
-  (add-hook 'sgml-mode-hook 'emmet-mode)
-  (add-hook 'css-mode-hook  'emmet-mode))
-
-(use-package emojify
-  :config
-  (setq emojify-company-tooltips-p nil))
-
-(use-package adoc-mode
-  :config
-  (defun increment-clojure-cookbook ()
-    "When reading the Clojure cookbook, find the next section, and
-close the buffer. If the next section is a sub-directory or in
-the next chapter, open Dired so you can find it manually."
-    (interactive)
-    (let* ((cur (buffer-name)))
-      (split-cur (split-string cur "[-_]"))
-      (chap (car split-cur))
-      (rec (car (cdr split-cur)))
-      (rec-num (string-to-number rec))
-      (next-rec-num (1+ rec-num))
-      (next-rec-s (number-to-string next-rec-num))
-      (next-rec (if (< next-rec-num 10)
-                    (concat "0" next-rec-s))
-                next-rec-s)
-      (target (file-name-completion (concat chap "-" next-rec) ""))
-      (progn
-        (if (equal target nil)
-            (dired (file-name-directory (buffer-file-name))))
-        (find-file target)
-        (kill-buffer cur))))
-  ;; (define-key adoc-mode-map (kbd "M-+") 'increment-clojure-cookbook)
-  (add-to-list 'auto-mode-alist (cons "\\.txt\\'" 'adoc-mode))
-  (add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
-  (add-hook 'adoc-mode-hook 'cider-mode))
 
 ;; keys - main with leader
 (general-define-key
@@ -501,18 +381,6 @@ the next chapter, open Dired so you can find it manually."
  "go" 'lsp-describe-thing-at-point
  "gR" 'lsp-rename
  "gr" 'lsp-execute-code-action)
-
-(general-define-key
- :states '(normal visual motion)
- :keymaps '(omnisharp-mode-map)
- "gu" 'omnisharp-helm-find-usages
- "gi" 'omnisharp-find-implementations
- "gd" 'omnisharp-go-to-definition
- "gr" 'omnisharp-run-code-action-refactoring
- "gf" 'omnisharp-fix-code-issue-at-point
- "gF" 'omnisharp-fix-usings
- "gR" 'omnisharp-rename
- "go" 'omnisharp-current-type-documentation)
 
 ;; keys - insert
 (general-define-key
@@ -604,17 +472,23 @@ the next chapter, open Dired so you can find it manually."
 
 ;;; external private things
 
-;; (defvar cal-cfg
-;;   (s-concat org-directory "/cal/cal.el")
-;;   "Calendars config.")
-;; (when (f-exists? cal-cfg)
-;;   (load-file cal-cfg))
+(defvar cal-cfg
+  (s-concat org-directory "/cal/cal.el")
+  "Calendars config.")
+(when (f-exists? cal-cfg)
+  (load-file cal-cfg))
 
-;; (defvar mail-cfg
-;;   (s-concat org-directory "/mail/mail.el")
-;;   "Mail config.")
-;; (when (f-exists? mail-cfg)
-;;   (load-file mail-cfg))
+(defvar jira-cfg
+  (s-concat org-directory "/jira/jira.el")
+  "Jira config")
+(when (f-exists? jira-cfg)
+  (load-file jira-cfg))
+
+(defvar mail-cfg
+  (s-concat org-directory "/mail/mail.el")
+  "Mail config.")
+(when (f-exists? mail-cfg)
+  (load-file mail-cfg))
 
 (provide 'config.el)
 ;;; config.el ends here
