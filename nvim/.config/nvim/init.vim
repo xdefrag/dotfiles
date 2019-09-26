@@ -69,6 +69,8 @@ Plug 'lilydjwg/colorizer'                                               " Mark c
 "     \ 'do': './install.sh'
 "     \ }                                                                 " LSP
 
+Plug 'zxqfl/tabnine-vim'
+
 call plug#end()
 " }}}
 " Colors {{{

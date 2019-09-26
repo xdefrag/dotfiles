@@ -54,7 +54,6 @@ export GOPATH=~/go
 export GOBIN=~/go/bin
 
 export GO111MODULE=on
-export GOPROXY=https://goproxy.io
 
 alias v=nvim
 alias vi=nvim

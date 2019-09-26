@@ -144,13 +144,16 @@
 (use-package company
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (add-to-list 'company-backends '(company-lsp
-                                   company-omnisharp
-                                   company-lua
-                                   company-elisp
-                                   company-yasnippet))
+  ;; (add-to-list 'company-backends '(company-lsp
+  ;;                                  comapny-tabnine
+  ;;                                  company-omnisharp
+  ;;                                  company-lua
+  ;;                                  company-elisp
+  ;;                                  company-yasnippet))
+  (add-to-list 'company-backends '(company-tabnine))
   (setq company-idle-delay 0
         company-minimum-prefix-length 1))
+(use-package company-tabnine)
 (use-package company-lsp
   :after company
   :config
@@ -493,7 +496,6 @@ the next chapter, open Dired so you can find it manually."
  "k" 'evil-previous-visual-line
  "E" 'evil-end-of-line
  "B" 'evil-beginning-of-line
- "C-m" 'other-frame
  "gu" 'lsp-find-references
  "gi" 'lsp-goto-implementation
  "go" 'lsp-describe-thing-at-point
@@ -602,17 +604,17 @@ the next chapter, open Dired so you can find it manually."
 
 ;;; external private things
 
-(defvar cal-cfg
-  (s-concat org-directory "/cal/cal.el")
-  "Calendars config.")
-(when (f-exists? cal-cfg)
-  (load-file cal-cfg))
+;; (defvar cal-cfg
+;;   (s-concat org-directory "/cal/cal.el")
+;;   "Calendars config.")
+;; (when (f-exists? cal-cfg)
+;;   (load-file cal-cfg))
 
-(defvar mail-cfg
-  (s-concat org-directory "/mail/mail.el")
-  "Mail config.")
-(when (f-exists? mail-cfg)
-  (load-file mail-cfg))
+;; (defvar mail-cfg
+;;   (s-concat org-directory "/mail/mail.el")
+;;   "Mail config.")
+;; (when (f-exists? mail-cfg)
+;;   (load-file mail-cfg))
 
 (provide 'config.el)
 ;;; config.el ends here
