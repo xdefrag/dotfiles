@@ -2,7 +2,7 @@
 ;;; Commentary:
 
 ;;; Code:
-;;(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 (setq gc-cons-threshold 100000000)
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold 800000)))
@@ -32,24 +32,33 @@
 (global-hl-line-mode)
 
 (setq-default
-              ;; mode-line-format nil
-              electric-indent-inhibit t
-              ring-bell-function 'ignore
-              scroll-conservatively 100
-              frame-title-format '((:eval (projectile-project-name))))
+ ;; mode-line-format nil
+ electric-indent-inhibit t
+ ring-bell-function 'ignore
+ scroll-conservatively 100
+ frame-title-format '((:eval (projectile-project-name))))
+
+(setq-default
+ backup-directory-alist `(("." . "~/.emacs.backup"))
+ backup-by-copying t
+ delete-old-versions t
+ kept-new-versions 10
+ kept-old-versions 2
+ version-control t
+ auto-save-visited-mode t)
 
 (require 'package)
 (setq-default
  load-prefer-newer t
  package-enable-at-startup nil)
 
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+(package-initialize)
+
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 (setenv "SHELL" "/bin/zsh")
 
-(package-initialize)
 
 ;; init use-package.
 (unless (package-installed-p 'use-package)
@@ -63,13 +72,11 @@
 (setq use-package-always-ensure t)
 
 (use-package doom-themes
-  :config (load-theme 'doom-moonlight t))
+  :config (load-theme 'doom-wilmersdorf t))
 
 ;; autoupdate on startup all packages.
 (use-package auto-package-update
   :config
-  (setq auto-package-update-delete-old-versions t
-        auto-package-update-hide-results t)
   (auto-package-update-maybe))
 (use-package exec-path-from-shell
   :config
@@ -88,7 +95,7 @@
 (use-package general)
 
 (use-package spaceline
-  :init (setq powerline-default-separator 'slant)
+  :init (setq powerline-default-separator nil)
   :config
   (spaceline-emacs-theme)
   (spaceline-helm-mode t)
@@ -113,6 +120,8 @@
   :init (yas-global-mode 1))
 (use-package yasnippet-snippets)
 
+(use-package flycheck)
+
 (use-package company
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
@@ -122,9 +131,9 @@
   ;;                                  company-lua
   ;;                                  company-elisp
   ;;                                  company-yasnippet))
-  (add-to-list 'company-backends '(company-tabnine))
+  (add-to-list 'company-backends '(company-tabnine company-yasnippet))
   (setq company-idle-delay 0
-        company-minimum-prefix-length 1
+        company-minimum-prefix-length 2
         company-show-numbers nil))
 (use-package company-tabnine)
 (use-package company-lsp
@@ -421,13 +430,10 @@
                   "autojump"
                   "stow"
                   "luajit"
-                  "tmux"
                   "p7zip"
                   "fd"
                   "mu"
                   "offlineimap"
-                  "yabai"
-                  "skhd"
                   "ripgrep"
                   "openssl"))
   (-map (lambda (pkg) (shell-command (s-concat "brew install " pkg))) packages))
