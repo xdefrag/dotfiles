@@ -65,6 +65,8 @@ require'packer'.startup(function(use)
     end
   }
 
+  use { 'tpope/vim-surround' }
+
   use {
     'numToStr/Comment.nvim',
     config = function()
@@ -143,14 +145,27 @@ require'packer'.startup(function(use)
       local opts = { noremap = true, silent = true }
 
       vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').find_files({previewer = false})<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>sh', [[<cmd>lua require('telescope.builtin').help_tags()<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>st', [[<cmd>lua require('telescope.builtin').tags()<CR>]], opts)
+      vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').fd({previewer = false})<CR>]], opts)
       vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>sp', [[<cmd>lua require('telescope.builtin').live_grep()<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').tagsopts<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>?', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]], opts)
+      vim.api.nvim_set_keymap('n', '<leader>sq', [[<cmd>lua require('telescope.builtin').guickfix()<CR>]], opts)
+    end
+  }
+
+  use {
+    'nvim-telescope/telescope-project.nvim',
+    config = function ()
+      require'telescope'.load_extension'project'
+      require'telescope'.setup {
+        extensions = {
+          project = {
+            base_dirs = {'~/Code'},
+            hidden_files = true,
+            theme = "dropdown"
+          }
+        }
+      }
+
+      vim.keymap.set('n', '<leader>sp', ':Telescope project<CR>')
     end
   }
 
@@ -167,7 +182,7 @@ require'packer'.startup(function(use)
         },
       }
 
-      vim.api.nvim_set_keymap('n', '<Leader>on', ':NvimTreeToggle<CR>', { noremap=true, silent=true })
+      vim.keymap.set('n', '<Leader>on', ':NvimTreeToggle<CR>')
     end
   }
 
@@ -179,8 +194,6 @@ require'packer'.startup(function(use)
         highlight = {
           enable = true
         },
-        -- ensure_installed = "go norg",
-        sync_install = true
       }
     end
   }
