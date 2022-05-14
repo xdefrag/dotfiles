@@ -172,9 +172,21 @@ require'packer'.startup(function(use)
   }
 
   -- treesitter
-  -- use 'nvim-treesitter/nvim-treesitter'
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    config = function ()
+      require'nvim-treesitter.configs'.setup{
+        highlight = {
+          enable = true
+        },
+        -- ensure_installed = "go norg",
+        sync_install = true
+      }
+    end
+  }
+
   -- Additional textobjects for treesitter
-  -- use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
 
   -- lsp
   use {
@@ -213,6 +225,7 @@ require'packer'.startup(function(use)
 
       -- lspconfig setup
       local lspconfig = require'lspconfig'
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
 
       lspconfig.gopls.setup{
         on_attach = on_attach,
@@ -310,19 +323,19 @@ require'packer'.startup(function(use)
   use 'L3MON4D3/LuaSnip'
 
   -- -- go
-  -- use {
-  --   'ray-x/go.nvim',
-  --   config = function()
-  --     local capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  --     require 'go'.setup({
-  --         lsp_cfg = {
-  --           capabilities = capabilities,
-  --         },
-  --       })
-  --
-  --     -- vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require'go.format'.goimport() ]], false)
-  --   end
-  -- }
+  use {
+    'ray-x/go.nvim',
+    config = function()
+      local capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+      require 'go'.setup({
+          lsp_cfg = {
+            capabilities = capabilities,
+          },
+        })
+
+      vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require'go.format'.goimport() ]], false)
+    end
+  }
 
   -- neorg
   use {
