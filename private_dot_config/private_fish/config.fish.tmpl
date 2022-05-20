@@ -5,6 +5,12 @@ end
 set -gx PATH $PATH:/opt/homebrew/bin
 set -gx EDITOR nvim
 
+{{- if eq .chezmoi.hostname "NB-SPB-A064" }}
+set -gx GOPROXY https://athens.s.o3.ru
+set -gx GOSUMDB off
+set -gx GOLANG_PROTOBUF_REGISTRATION_CONFLICT warn
+{{- end }}
+
 alias v nvim
 alias vim nvim
 alias gst "git status"
