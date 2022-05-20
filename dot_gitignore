@@ -1,0 +1,12 @@
+.DS_Store
+.idea
+*.log
+tmp/
+
+#api/google/*
+
+grpc.org
+desc.org
+desc.norg
+
+tags
