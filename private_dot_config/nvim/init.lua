@@ -26,6 +26,8 @@ vim.opt.undofile = true
 vim.opt.showmode = false
 vim.opt.showcmd = false
 
+vim.opt.clipboard = "unnamedplus"
+
 vim.cmd [[set shortmess+=F]]
 vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require'go.format'.goimport() ]], false)
 
