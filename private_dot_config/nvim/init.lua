@@ -357,7 +357,7 @@ require'packer'.startup(function(use)
   -- neorg
   use {
     "nvim-neorg/neorg",
-    requires = "nvim-lua/plenary.nvim",
+    requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
     config = function()
       require 'neorg'.setup {
         load = {
@@ -380,6 +380,9 @@ require'packer'.startup(function(use)
             }
           },
           ["core.norg.concealer"] = {
+            config = {}
+          },
+          ["core.integrations.telescope"] = {
             config = {}
           },
         }
