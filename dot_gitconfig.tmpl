@@ -15,6 +15,16 @@
 	gpgsign = true
 [gpg]
 	program = gpg
+[push]
+	default = current
+[branch]
+	autosetuprebase = always
+[pull]
+	rebase = true
+[format]
+	pretty = oneline
+[init]
+	defaultBranch = master
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
 {{- if eq .chezmoi.hostname "NB-SPB-A064" }}

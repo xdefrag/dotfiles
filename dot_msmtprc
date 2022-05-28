@@ -1,0 +1,11 @@
+defaults
+auth on
+tls on
+
+account xdefrag@posteo.net
+host posteo.de
+port 587
+tls_starttls on
+from xdefrag@posteo.net
+user xdefrag@posteo.net
+passwordeval "pass xdefrag@posteo.net"

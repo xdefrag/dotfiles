@@ -1,0 +1,21 @@
+IMAPStore PersonalIMAP
+Host posteo.de
+Port 993
+User xdefrag@posteo.net
+PassCmd "pass xdefrag@posteo.net"
+AuthMechs LOGIN
+SSLType IMAPS
+
+MaildirStore PersonalLocal
+Path ~/.Mail/Personal/ 
+Inbox ~/.Mail/Personal/INBOX 
+Subfolders Verbatim
+
+Channel Personal
+Far :PersonalIMAP:
+Near :PersonalLocal:
+Create Both
+Expunge Both
+Patterns *
+SyncState *
+ExpireUnread no

@@ -1,0 +1,60 @@
+set assumed_charset="utf-8"
+set attach_save_dir="~/tmp"
+set beep=no
+set charset="utf-8"
+set check_new=no
+set date_format = "%m%d"
+set delete
+set edit_headers=yes
+set folder="~/.Mail"
+set help=no
+set index_format = "%Z %D %-15.15n %s"
+set mail_check=60
+set mbox_type=maildir
+set move=no
+set sidebar_visible=no
+set sleep_time=0
+set sort='reverse-threads'
+set sort_aux='last-date-received'
+set status_format="%f"
+set mailcap_path = ~/.mutt/mailcap
+
+unset markers
+
+auto_view text/html 
+
+set from = xdefrag@posteo.net
+set realname = "Stanislav Karkavin"
+
+set mbox_type = Maildir
+set folder = "~/.Mail/Personal/"
+
+set sendmail = "msmtp -a xdefrag@posteo.net"
+
+set spoolfile = +INBOX
+set postponed = +Drafts
+set record = +Sent
+set trash = +Trash
+
+bind index '[' sidebar-prev
+bind index ']' sidebar-next
+bind index '#' sidebar-open
+bind pager '[' sidebar-prev
+bind pager ']' sidebar-next
+bind pager '#' sidebar-open
+
+bind pager j next-line
+bind pager k previous-line
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+
+bind index,pager B sidebar-toggle-visible
+
+bind index,pager g noop
+macro index,pager gi "<change-folder>=INBOX<enter>" "go to inbox"
+macro index,pager gs "<change-folder>=Sent<enter>" "go to sent"
+macro index,pager gd "<change-folder>=Drafts<enter>" "go to drafts"
+macro index,pager gt "<change-folder>=Trash<enter>" "go to trash"
+
+macro index S "<shell-escape>mbsync -V Personal<enter><shell-escape>notmuch new<enter>" "sync email"
+macro index \Cf "<enter-command>unset wait_key<enter><shell-escape>read -p 'Enter a search term to find with notmuch: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/ for@a;print@a' \`\"<enter>" "show only messages matching a notmuch pattern"
