@@ -2,7 +2,10 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+{{- if eq .chezmoi.hostname "very-good-compluter" }}
 set -gx PATH $PATH:/opt/homebrew/bin
+{{- end }}
+
 set -gx EDITOR nvim
 
 {{- if eq .chezmoi.hostname "NB-SPB-A064" }}
@@ -13,6 +16,9 @@ set -gx GOLANG_PROTOBUF_REGISTRATION_CONFLICT warn
 
 alias v nvim
 alias vim nvim
+
+alias cz chezmoi
+
 alias gst "git status"
 alias gd "git diff"
 alias gdc "git diff --cached"
