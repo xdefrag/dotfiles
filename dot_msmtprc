@@ -1,6 +1,7 @@
 defaults
 auth on
 tls on
+logfile ~/.msmtp.log
 
 account xdefrag@posteo.net
 host posteo.de
