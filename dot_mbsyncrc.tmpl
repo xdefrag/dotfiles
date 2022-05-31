@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.hostname "very-good-computer" }}
 IMAPStore PersonalIMAP
 Host posteo.de
 Port 993
@@ -17,5 +18,29 @@ Near :PersonalLocal:
 Create Both
 Expunge Both
 Patterns *
+Sync All
 SyncState *
 ExpireUnread no
+{{- end }}
+
+{{- if eq .chezmoi.hostname "NB-SPB-A064" }}
+IMAPAccount WorkIMAP
+Host outlook.office365.com
+User skarkavin@ozon.ru
+PassCmd "pass sso.o3.ru"
+UseIMAPS yes
+
+MaildirStore WorkLocal
+Path ~/.Mail/Work/
+Inbox ~/.Mail/Work/INBOX
+
+Channel Work
+Far :WorkIMAP:
+Near :WorkLocal:
+Create Both
+Expunge Both
+Patterns *
+Sync All
+SyncState *
+ExpireUnread no
+{{- end }}
