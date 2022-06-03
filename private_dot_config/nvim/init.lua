@@ -350,6 +350,8 @@ require'packer'.startup(function(use)
           },
         })
 
+      vim.keymap.set("n", "<Leader>a", ":GoAlt<Enter>")
+
       vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require'go.format'.goimport() ]], false)
     end
   }
@@ -370,7 +372,8 @@ require'packer'.startup(function(use)
           ["core.norg.dirman"] = {
             config = {
               workspaces = {
-                home = "~/notes/home"
+                home = "~/Notes/Home",
+                work = "~/Notes/Work",
               }
             }
           },
