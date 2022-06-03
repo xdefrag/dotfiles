@@ -339,7 +339,7 @@ require'packer'.startup(function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'
 
-  -- -- go
+  -- go
   use {
     'ray-x/go.nvim',
     config = function()
@@ -390,6 +390,14 @@ require'packer'.startup(function(use)
           },
         }
       }
+    end
+  }
+  
+  -- marks
+  use {
+    "chentoast/marks.nvim",
+    config = function ()
+      require'marks'.setup{}
     end
   }
 end)
