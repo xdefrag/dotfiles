@@ -351,8 +351,6 @@ require'packer'.startup(function(use)
         })
 
       vim.keymap.set("n", "<Leader>a", ":GoAlt<Enter>")
-
-      vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require'go.format'.goimport() ]], false)
     end
   }
 
