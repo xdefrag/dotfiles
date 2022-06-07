@@ -29,7 +29,6 @@ vim.opt.showcmd = false
 vim.opt.clipboard = "unnamedplus"
 
 vim.cmd [[set shortmess+=F]]
-vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require'go.format'.goimport() ]], false)
 
 -- mode, keys, cmd, opts
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
@@ -238,6 +237,7 @@ require'packer'.startup(function(use)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>lr', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
       end
 
       -- lspconfig setup
@@ -247,6 +247,16 @@ require'packer'.startup(function(use)
       lspconfig.gopls.setup{
         on_attach = on_attach,
         capabilities = capabilities,
+        settings = {
+          gopls = {
+            env = {
+              GOLANG_PROTOBUF_REGISTRATION_CONFLICT = "ignore",
+            },
+            -- memoryMode = "DegradeClosed",
+            gofumpt = true,
+            staticcheck = true,
+          },
+        },
       }
 
       lspconfig.sumneko_lua.setup {
