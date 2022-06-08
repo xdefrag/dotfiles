@@ -172,6 +172,10 @@ require'packer'.startup(function(use)
     end
   }
 
+  use {
+    'junegunn/vim-easy-align'
+  }
+
   -- tree
   use {
     'kyazdani42/nvim-tree.lua',
