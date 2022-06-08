@@ -375,6 +375,7 @@ require'packer'.startup(function(use)
         integrations = {
           gitsigns = true,
           lualine = true,
+          tmux = true,
         },
       }
     end
