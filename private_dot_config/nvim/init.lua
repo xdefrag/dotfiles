@@ -368,12 +368,24 @@ require'packer'.startup(function(use)
     end
   }
 
+  use {
+    'Pocco81/TrueZen.nvim',
+    config = function ()
+      require'true-zen'.setup{
+        integrations = {
+          gitsigns = true,
+          lualine = true,
+        },
+      }
+    end
+  }
+
   -- neorg
   -- Default keybindings:
   -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
   use {
     "nvim-neorg/neorg",
-    requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
+    requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "folke/zen-mode.nvim" },
     config = function()
       require 'neorg'.setup {
         load = {
@@ -415,6 +427,7 @@ require'packer'.startup(function(use)
               -- zen_mode : Zen mode plugin to use. Currenly suppported:
               -- zen-mode (https://github.com/folke/zen-mode.nvim)
               -- truezen (https://github.com/Pocco81/TrueZen.nvim)
+              zen_mode = "truezen",
             }
           },
         }
