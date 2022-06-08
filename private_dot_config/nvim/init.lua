@@ -385,7 +385,7 @@ require'packer'.startup(function(use)
   -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
   use {
     "nvim-neorg/neorg",
-    requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "folke/zen-mode.nvim" },
+    requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "Pocco81/TrueZen.nvim" },
     config = function()
       require 'neorg'.setup {
         load = {
