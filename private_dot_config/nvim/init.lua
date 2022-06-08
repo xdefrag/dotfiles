@@ -369,6 +369,8 @@ require'packer'.startup(function(use)
   }
 
   -- neorg
+  -- Default keybindings:
+  -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
   use {
     "nvim-neorg/neorg",
     requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope" },
@@ -400,11 +402,26 @@ require'packer'.startup(function(use)
           ["core.integrations.telescope"] = {
             config = {}
           },
+          ["core.norg.journal"] = {
+            config = {
+              workspace = 'home',
+            }
+          },
+          ["core.export"] = {
+             config = {}
+          },
+          ["core.presenter"] = {
+            config = {
+              -- zen_mode : Zen mode plugin to use. Currenly suppported:
+              -- zen-mode (https://github.com/folke/zen-mode.nvim)
+              -- truezen (https://github.com/Pocco81/TrueZen.nvim)
+            }
+          },
         }
       }
     end
   }
-  
+
   -- marks
   use {
     "chentoast/marks.nvim",
