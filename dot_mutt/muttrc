@@ -36,6 +36,8 @@ set postponed = +Drafts
 set record = +Sent
 set trash = +Trash
 
+mailboxes +INBOX +Drafts +Sent +Trash +Archives
+
 bind index '[' sidebar-prev
 bind index ']' sidebar-next
 bind index '#' sidebar-open
@@ -55,6 +57,7 @@ macro index,pager gi "<change-folder>=INBOX<enter>" "go to inbox"
 macro index,pager gs "<change-folder>=Sent<enter>" "go to sent"
 macro index,pager gd "<change-folder>=Drafts<enter>" "go to drafts"
 macro index,pager gt "<change-folder>=Trash<enter>" "go to trash"
+macro index,pager ga "<change-folder>=Archives<enter>" "go to archives"
 
 macro index S "<shell-escape>mbsync -V Personal<enter><shell-escape>notmuch new<enter>" "sync email"
 macro index A ":set confirmappend=no delete=yes\n<tag-prefix><save-message>=Archives\n<sync-mailbox>:set confirmappend=yes delete=ask-yes\n"
