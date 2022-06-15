@@ -355,20 +355,20 @@ require'packer'.startup(function(use)
   use 'L3MON4D3/LuaSnip'
 
   -- go
-  use {
-    'ray-x/go.nvim',
-    config = function()
-      local capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-      require 'go'.setup({
-          lsp_cfg = {
-            capabilities = capabilities,
-          },
-        })
-
-      vim.keymap.set("n", "<Leader>a", ":GoAlt<Enter>")
-    end
-  }
-
+  -- use {
+  --   'ray-x/go.nvim',
+  --   config = function()
+  --     local capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  --     require 'go'.setup({
+  --         lsp_cfg = {
+  --           capabilities = capabilities,
+  --         },
+  --       })
+  --
+  --     vim.keymap.set("n", "<Leader>a", ":GoAlt<Enter>")
+  --   end
+  -- }
+  --
   use {
     'Pocco81/TrueZen.nvim',
     config = function ()
