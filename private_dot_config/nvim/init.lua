@@ -443,5 +443,12 @@ require'packer'.startup(function(use)
       require'marks'.setup{}
     end
   }
+
+  use {
+    "lifepillar/pgsql.vim",
+    config = function ()
+      vim.cmd [[let g:sql_type_default = 'pgsql']]
+    end
+  }
 end)
 
