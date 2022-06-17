@@ -388,7 +388,6 @@ require'packer'.startup(function(use)
   use {
     "nvim-neorg/neorg",
     ft = "norg",
-    after = "nvim-treesitter, telescope",
     requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "Pocco81/TrueZen.nvim" },
     config = function()
       require 'neorg'.setup {
