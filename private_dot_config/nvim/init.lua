@@ -448,11 +448,11 @@ require'packer'.startup(function(use)
     config = function ()
       local dap = require'dap'
       local bufopts = { noremap=true, silent=true }
-      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint(), bufopts)
-      vim.keymap.set('n', '<leader>dc', dap.continue(), bufopts)
-      vim.keymap.set('n', '<leader>di', dap.step_into(), bufopts)
-      vim.keymap.set('n', '<leader>do', dap.step_over(), bufopts)
-      vim.keymap.set('n', '<leader>dr', dap.repl.open(), bufopts)
+      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, bufopts)
+      vim.keymap.set('n', '<leader>dc', dap.continue, bufopts)
+      vim.keymap.set('n', '<leader>di', dap.step_into, bufopts)
+      vim.keymap.set('n', '<leader>do', dap.step_over, bufopts)
+      vim.keymap.set('n', '<leader>dr', dap.repl.open, bufopts)
     end
   }
 
@@ -463,7 +463,7 @@ require'packer'.startup(function(use)
       dapgo.setup()
 
       local bufopts = { noremap=true, silent=true }
-      vim.keymap.set('n', '<leader>dt', dapgo.debug_test(), bufopts)
+      vim.keymap.set('n', '<leader>dt', dapgo.debug_test, bufopts)
     end
   }
 end)
