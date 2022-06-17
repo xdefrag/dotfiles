@@ -354,21 +354,6 @@ require'packer'.startup(function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'
 
-  -- go
-  -- use {
-  --   'ray-x/go.nvim',
-  --   config = function()
-  --     local capabilities = require'cmp_nvim_lsp'.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  --     require 'go'.setup({
-  --         lsp_cfg = {
-  --           capabilities = capabilities,
-  --         },
-  --       })
-  --
-  --     vim.keymap.set("n", "<Leader>a", ":GoAlt<Enter>")
-  --   end
-  -- }
-  --
   use {
     'Pocco81/TrueZen.nvim',
     config = function ()
@@ -450,6 +435,35 @@ require'packer'.startup(function(use)
     "lifepillar/pgsql.vim",
     config = function ()
       vim.cmd [[let g:sql_type_default = 'pgsql']]
+    end
+  }
+
+  -- :lua require('dap-go').debug_test()
+  -- Setting breakpoints via :lua require'dap'.toggle_breakpoint().
+  -- Launching debug sessions and resuming execution via :lua require'dap'.continue().
+  -- Stepping through code via :lua require'dap'.step_over() and :lua require'dap'.step_into().
+  -- Inspecting the state via the built-in REPL: :lua require'dap'.repl.open() or using the widget UI (:help dap-widgets)
+  use {
+    'mfussenegger/nvim-dap',
+    config = function ()
+      local dap = require'dap'
+      local bufopts = { noremap=true, silent=true }
+      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint(), bufopts)
+      vim.keymap.set('n', '<leader>dc', dap.continue(), bufopts)
+      vim.keymap.set('n', '<leader>di', dap.step_into(), bufopts)
+      vim.keymap.set('n', '<leader>do', dap.step_over(), bufopts)
+      vim.keymap.set('n', '<leader>dr', dap.repl.open(), bufopts)
+    end
+  }
+
+  use {
+    'leoluz/nvim-dap-go',
+    config = function ()
+      local dapgo = require'dap-go'
+      dapgo.setup()
+
+      local bufopts = { noremap=true, silent=true }
+      vim.keymap.set('n', '<leader>dt', dapgo.debug_test(), bufopts)
     end
   }
 end)
