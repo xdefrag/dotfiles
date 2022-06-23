@@ -171,6 +171,8 @@ require 'packer'.startup(function(use)
       vim.keymap.set('n', '<leader>sq', ':Telescope quickfix<CR>')
       vim.keymap.set('n', '<leader>sk', ':Telescope keymaps<CR>')
       vim.keymap.set('n', '<leader>sm', ':Telescope marks<CR>')
+      vim.keymap.set('n', '<leader>sd', ':Telescope diagnostics<CR>')
+      vim.keymap.set('n', '<leader>sc', ':Telescope commands<CR>')
     end
   }
 
