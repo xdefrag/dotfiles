@@ -427,6 +427,19 @@ require 'packer'.startup(function(use)
     end
   }
 
+  use {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup {}
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      local cmp = require('cmp')
+      cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+      )
+    end
+  }
+
   -- marks
   use {
     "chentoast/marks.nvim",
@@ -466,14 +479,24 @@ require 'packer'.startup(function(use)
     config = function()
       require("dapui").setup {
         mappings = {
-          expand = { "<CR>", "<Space>" },
-          open = "o",
-          remove = "d",
-          edit = "e",
-          repl = "r",
-          toggle = "t",
+          expand = { '<CR>', '<Space>' },
+          open = 'o',
+          remove = 'd',
+          edit = 'e',
+          repl = 'r',
+          toggle = { 't', '<Space>' },
         },
       }
+      local dap, dapui = require 'dap', require 'dapui'
+      dap.listeners.after.event_initialized['dapui_config'] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated['dapui_config'] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited['dapui_config'] = function()
+        dapui.close()
+      end
     end
   }
 
@@ -503,4 +526,18 @@ require 'packer'.startup(function(use)
       vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
     end
   }
+
+  use({
+    'ray-x/navigator.lua',
+    requires = {
+      { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
+      { 'neovim/nvim-lspconfig' },
+    },
+    config = function()
+      require 'navigator'.setup {}
+
+      vim.cmd("autocmd FileType guihua lua require('cmp').setup.buffer { enabled = false }")
+      vim.cmd("autocmd FileType guihua_rust lua require('cmp').setup.buffer { enabled = false }")
+    end
+  })
 end)
