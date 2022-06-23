@@ -45,7 +45,7 @@ vim.keymap.set("t", "jk", '<C-\\><C-n>')
 vim.keymap.set("n", "<leader>ot", ':terminal<CR>')
 
 -- packer
-require'packer'.startup(function(use)
+require 'packer'.startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use {
@@ -73,7 +73,7 @@ require'packer'.startup(function(use)
   use {
     'numToStr/Comment.nvim',
     config = function()
-      require'Comment'.setup{}
+      require 'Comment'.setup {}
     end
   }
 
@@ -130,7 +130,7 @@ require'packer'.startup(function(use)
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
       -- Telescope
-      require'telescope'.setup {
+      require 'telescope'.setup {
         defaults = {
           mappings = {
             i = {
@@ -142,7 +142,7 @@ require'packer'.startup(function(use)
       }
 
       -- Enable telescope fzf native
-      require'telescope'.load_extension'fzf'
+      require 'telescope'.load_extension 'fzf'
 
       --Add leader shortcuts
       local opts = { noremap = true, silent = true }
@@ -155,12 +155,12 @@ require'packer'.startup(function(use)
 
   use {
     'nvim-telescope/telescope-project.nvim',
-    config = function ()
-      require'telescope'.load_extension'project'
-      require'telescope'.setup {
+    config = function()
+      require 'telescope'.load_extension 'project'
+      require 'telescope'.setup {
         extensions = {
           project = {
-            base_dirs = {'~/Code'},
+            base_dirs = { '~/Code' },
             hidden_files = true,
             theme = "dropdown"
           }
@@ -180,7 +180,7 @@ require'packer'.startup(function(use)
     'kyazdani42/nvim-tree.lua',
     requires = { 'kyazdani42/nvim-web-devicons' },
     config = function()
-      require 'nvim-tree'.setup{
+      require 'nvim-tree'.setup {
         disable_netrw = false,
         update_focused_file = {
           enable = true,
@@ -195,8 +195,8 @@ require'packer'.startup(function(use)
   -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
-    config = function ()
-      require'nvim-treesitter.configs'.setup{
+    config = function()
+      require 'nvim-treesitter.configs'.setup {
         highlight = {
           enable = true
         },
@@ -213,7 +213,7 @@ require'packer'.startup(function(use)
     config = function()
       -- Mappings.
       -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-      local opts = { noremap=true, silent=true }
+      local opts = { noremap = true, silent = true }
       vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
       vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
       vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
@@ -227,7 +227,7 @@ require'packer'.startup(function(use)
 
         -- Mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local bufopts = { noremap=true, silent=true, buffer=bufnr }
+        local bufopts = { noremap = true, silent = true, buffer = bufnr }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -246,10 +246,10 @@ require'packer'.startup(function(use)
         vim.keymap.set('n', '<space>lr', vim.lsp.codelens.run, bufopts)
       end
 
-      local lspconfig = require'lspconfig'
+      local lspconfig = require 'lspconfig'
       local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-      lspconfig.gopls.setup{
+      lspconfig.gopls.setup {
         capabilities = capabilities,
         on_attach = on_attach,
         settings = {
@@ -347,7 +347,7 @@ require'packer'.startup(function(use)
     'hrsh7th/cmp-nvim-lsp',
     config = function()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
+      capabilities = require 'cmp_nvim_lsp'.update_capabilities(capabilities)
     end
   }
 
@@ -356,8 +356,8 @@ require'packer'.startup(function(use)
 
   use {
     'Pocco81/TrueZen.nvim',
-    config = function ()
-      require'true-zen'.setup{
+    config = function()
+      require 'true-zen'.setup {
         integrations = {
           gitsigns = true,
           lualine = true,
@@ -408,7 +408,7 @@ require'packer'.startup(function(use)
             }
           },
           ["core.export"] = {
-             config = {}
+            config = {}
           },
           ["core.presenter"] = {
             config = {
@@ -426,14 +426,14 @@ require'packer'.startup(function(use)
   -- marks
   use {
     "chentoast/marks.nvim",
-    config = function ()
-      require'marks'.setup{}
+    config = function()
+      require 'marks'.setup {}
     end
   }
 
   use {
     "lifepillar/pgsql.vim",
-    config = function ()
+    config = function()
       vim.cmd [[let g:sql_type_default = 'pgsql']]
     end
   }
@@ -445,9 +445,9 @@ require'packer'.startup(function(use)
   -- Inspecting the state via the built-in REPL: :lua require'dap'.repl.open() or using the widget UI (:help dap-widgets)
   use {
     'mfussenegger/nvim-dap',
-    config = function ()
-      local dap = require'dap'
-      local bufopts = { noremap=true, silent=true }
+    config = function()
+      local dap = require 'dap'
+      local bufopts = { noremap = true, silent = true }
       vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, bufopts)
       vim.keymap.set('n', '<leader>dc', dap.continue, bufopts)
       vim.keymap.set('n', '<leader>di', dap.step_into, bufopts)
@@ -458,13 +458,19 @@ require'packer'.startup(function(use)
 
   use {
     'leoluz/nvim-dap-go',
-    config = function ()
-      local dapgo = require'dap-go'
+    config = function()
+      local dapgo = require 'dap-go'
       dapgo.setup()
 
-      local bufopts = { noremap=true, silent=true }
+      local bufopts = { noremap = true, silent = true }
       vim.keymap.set('n', '<leader>dt', dapgo.debug_test, bufopts)
     end
   }
-end)
 
+  use {
+    "klen/nvim-test",
+    config = function()
+      require('nvim-test').setup{}
+    end
+  }
+end)
