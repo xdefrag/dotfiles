@@ -514,9 +514,9 @@ require 'packer'.startup(function(use)
     'ray-x/go.nvim',
     config = function()
       require 'go'.setup {
-        lsp_cfg = true,
+        lsp_cfg = false,
         lsp_gofumpt = true,
-        lsp_on_attach = true,
+        lsp_on_attach = false,
       }
 
       -- vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
