@@ -46,13 +46,21 @@ vim.keymap.set("n", "<leader>ot", ':terminal<CR>')
 
 -- packer
 require 'packer'.startup(function(use)
-  use 'wbthomason/packer.nvim'
+  use {
+    'wbthomason/packer.nvim',
+    config = function()
+      local bufopts = { noremap = true, silent = true }
+      vim.keymap.set('n', '<leader>ps', ':PackerSync<CR>', bufopts)
+    end
+  }
 
   use {
     'morhetz/gruvbox',
     config = function()
       vim.opt.termguicolors = true
       vim.cmd [[colorscheme gruvbox]]
+
+
     end
   }
 
@@ -149,11 +157,17 @@ require 'packer'.startup(function(use)
       require 'telescope'.load_extension 'dap'
 
       --Add leader shortcuts
-      local opts = { noremap = true, silent = true }
+      local bufopts = { noremap = true, silent = true }
 
-      vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.builtin').buffers()<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>sf', [[<cmd>lua require('telescope.builtin').fd({previewer = false})<CR>]], opts)
-      vim.api.nvim_set_keymap('n', '<leader>sd', [[<cmd>lua require('telescope.builtin').grep_string()<CR>]], opts)
+      vim.keymap.set('n', '<leader><leader>', ':Telescope buffers<CR>', bufopts)
+      vim.keymap.set('n', '<leader>sf', ':Telescope fd previewer=false<CR>', bufopts)
+      vim.keymap.set('n', '<leader>sg', ':Telescope live_grep<CR>', bufopts)
+      vim.keymap.set('n', '<leader>gc', ':Telescope git_commits<CR>', bufopts)
+      vim.keymap.set('n', '<leader>gs', ':Telescope git_stash<CR>', bufopts)
+      vim.keymap.set('n', '<leader>gf', ':Telescope git_files<CR>', bufopts)
+      vim.keymap.set('n', '<leader>sq', ':Telescope quickfix<CR>', bufopts)
+      vim.keymap.set('n', '<leader>sk', ':Telescope keymaps<CR>', bufopts)
+      vim.keymap.set('n', '<leader>sm', ':Telescope marks<CR>', bufopts)
     end
   }
 
@@ -233,21 +247,25 @@ require 'packer'.startup(function(use)
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+        -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+        vim.keymap.set('n', 'gd', ':Telescope lsp_definitions<CR>', bufopts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+        -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+        vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>', bufopts)
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
         vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
         vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
         vim.keymap.set('n', '<space>wl', function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, bufopts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
         vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+        -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+        vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>', bufopts)
         vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
         vim.keymap.set('n', '<space>lr', vim.lsp.codelens.run, bufopts)
+
+        vim.keymap.set('n', '<leader>ss', ':Telescope lsp_document_symbols<CR>', bufopts)
       end
 
       local lspconfig = require 'lspconfig'
@@ -455,11 +473,6 @@ require 'packer'.startup(function(use)
     end
   }
 
-  -- :lua require('dap-go').debug_test()
-  -- Setting breakpoints via :lua require'dap'.toggle_breakpoint().
-  -- Launching debug sessions and resuming execution via :lua require'dap'.continue().
-  -- Stepping through code via :lua require'dap'.step_over() and :lua require'dap'.step_into().
-  -- Inspecting the state via the built-in REPL: :lua require'dap'.repl.open() or using the widget UI (:help dap-widgets)
   use {
     'mfussenegger/nvim-dap',
     config = function()
@@ -512,6 +525,7 @@ require 'packer'.startup(function(use)
 
   use {
     'ray-x/go.nvim',
+    requires = { 'ray-x/guihua.lua' },
     config = function()
       require 'go'.setup {
         lsp_cfg = false,
@@ -521,12 +535,19 @@ require 'packer'.startup(function(use)
         lsp_keymaps = false,
         lsp_codelens = false,
         lsp_document_formatting = false,
-        dap_debug_keymap = false,
+        dap_debug_keymap = true,
         run_in_floaterm = true,
       }
 
-      -- vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
-      -- vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
+      vim.cmd('autocmd FileType go noremap <Leader>tn :GoTest -n<CR>')
+      vim.cmd('autocmd FileType go noremap <Leader>tt :GoTest<CR>')
+      vim.cmd('autocmd FileType go noremap <Leader>tf :GoTest -f<CR>')
+      vim.cmd('autocmd FileType go noremap <Leader>tp :GoTest -p<CR>')
+      vim.cmd('autocmd FileType go noremap <Leader>dt :GoDebug -n<CR>')
+      vim.cmd('autocmd FileType go noremap <Leader>a :GoAlt<CR>')
+      vim.cmd('autocmd FileType go noremap <Leader>f :GoImport<CR>')
+
+      -- vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
     end
   }
 end)
