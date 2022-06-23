@@ -8,8 +8,6 @@ vim.opt.ignorecase = true
 vim.opt.incsearch = true
 vim.opt.smartcase = true
 
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldmethod = "indent"
 vim.opt.foldlevel = 2
 
@@ -25,6 +23,8 @@ vim.opt.undofile = true
 
 vim.opt.showmode = false
 vim.opt.showcmd = false
+
+vim.opt.number = false
 
 vim.opt.clipboard = "unnamedplus"
 
@@ -44,7 +44,6 @@ vim.keymap.set("t", "jk", '<C-\\><C-n>')
 
 vim.keymap.set("n", "<leader>ot", ':terminal<CR>')
 
--- packer
 require 'packer'.startup(function(use)
   use {
     'wbthomason/packer.nvim',
@@ -63,7 +62,6 @@ require 'packer'.startup(function(use)
     end
   }
 
-  -- essentials
   use 'ludovicchabant/vim-gutentags'
 
   use {
@@ -103,10 +101,18 @@ require 'packer'.startup(function(use)
 
   use {
     'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function()
       require 'lualine'.setup {
+        tabline = {
+          lualine_a = {
+            'filename',
+            file_status = false,
+            path = 1,
+          },
+        },
         options = {
-          icons_enabled = false,
+          icons_enabled = true,
           theme = 'gruvbox',
           component_separators = '|',
           section_separators = '',
@@ -127,17 +133,12 @@ require 'packer'.startup(function(use)
 
   use 'sheerun/vim-polyglot'
 
-  -- file picker
-  use {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    run = 'make'
-  }
-
   use {
     'nvim-telescope/telescope.nvim',
     requires = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope-dap.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
     },
     config = function()
       -- Telescope
@@ -157,17 +158,15 @@ require 'packer'.startup(function(use)
       require 'telescope'.load_extension 'dap'
 
       --Add leader shortcuts
-      local bufopts = { noremap = true, silent = true }
-
-      vim.keymap.set('n', '<leader><leader>', ':Telescope buffers<CR>', bufopts)
-      vim.keymap.set('n', '<leader>sf', ':Telescope fd previewer=false<CR>', bufopts)
-      vim.keymap.set('n', '<leader>sg', ':Telescope live_grep<CR>', bufopts)
-      vim.keymap.set('n', '<leader>gc', ':Telescope git_commits<CR>', bufopts)
-      vim.keymap.set('n', '<leader>gs', ':Telescope git_stash<CR>', bufopts)
-      vim.keymap.set('n', '<leader>gf', ':Telescope git_files<CR>', bufopts)
-      vim.keymap.set('n', '<leader>sq', ':Telescope quickfix<CR>', bufopts)
-      vim.keymap.set('n', '<leader>sk', ':Telescope keymaps<CR>', bufopts)
-      vim.keymap.set('n', '<leader>sm', ':Telescope marks<CR>', bufopts)
+      vim.keymap.set('n', '<leader><leader>', ':Telescope buffers<CR>')
+      vim.keymap.set('n', '<leader>sf', ':Telescope fd previewer=false<CR>')
+      vim.keymap.set('n', '<leader>sg', ':Telescope live_grep<CR>')
+      vim.keymap.set('n', '<leader>gc', ':Telescope git_commits<CR>')
+      vim.keymap.set('n', '<leader>gs', ':Telescope git_stash<CR>')
+      vim.keymap.set('n', '<leader>gf', ':Telescope git_files<CR>')
+      vim.keymap.set('n', '<leader>sq', ':Telescope quickfix<CR>')
+      vim.keymap.set('n', '<leader>sk', ':Telescope keymaps<CR>')
+      vim.keymap.set('n', '<leader>sm', ':Telescope marks<CR>')
     end
   }
 
@@ -193,7 +192,6 @@ require 'packer'.startup(function(use)
     'junegunn/vim-easy-align'
   }
 
-  -- tree
   use {
     'kyazdani42/nvim-tree.lua',
     requires = { 'kyazdani42/nvim-web-devicons' },
@@ -210,9 +208,9 @@ require 'packer'.startup(function(use)
     end
   }
 
-  -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
+    requires = { 'nvim-treesitter/nvim-treesitter-textobjects' },
     config = function()
       require 'nvim-treesitter.configs'.setup {
         highlight = {
@@ -222,10 +220,6 @@ require 'packer'.startup(function(use)
     end
   }
 
-  -- Additional textobjects for treesitter
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
-
-  -- lsp
   use {
     'neovim/nvim-lspconfig',
     config = function()
@@ -399,51 +393,51 @@ require 'packer'.startup(function(use)
   -- Default keybindings:
   -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
   use {
-    "nvim-neorg/neorg",
-    ft = "norg",
-    requires = { "nvim-lua/plenary.nvim", "nvim-neorg/neorg-telescope", "Pocco81/TrueZen.nvim" },
+    'nvim-neorg/neorg',
+    ft = 'norg',
+    requires = { 'nvim-lua/plenary.nvim', 'nvim-neorg/neorg-telescope', 'Pocco81/TrueZen.nvim' },
     config = function()
       require 'neorg'.setup {
         load = {
-          ["core.defaults"] = {},
-          ["core.gtd.base"] = {
+          ['core.defaults'] = {},
+          ['core.gtd.base'] = {
             config = {
               workspace = 'home'
             }
           },
-          ["core.norg.dirman"] = {
+          ['core.norg.dirman'] = {
             config = {
               workspaces = {
-                home = "~/Notes/Home",
-                work = "~/Notes/Work",
+                home = '~/Notes/Home',
+                work = '~/Notes/Work',
               }
             }
           },
-          ["core.norg.completion"] = {
+          ['core.norg.completion'] = {
             config = {
               engine = 'nvim-cmp'
             }
           },
-          ["core.norg.concealer"] = {
+          ['core.norg.concealer'] = {
             config = {}
           },
-          ["core.integrations.telescope"] = {
+          ['core.integrations.telescope'] = {
             config = {}
           },
-          ["core.norg.journal"] = {
+          ['core.norg.journal'] = {
             config = {
               workspace = 'home',
             }
           },
-          ["core.export"] = {
+          ['core.export'] = {
             config = {}
           },
-          ["core.presenter"] = {
+          ['core.presenter'] = {
             config = {
               -- zen_mode : Zen mode plugin to use. Currenly suppported:
               -- zen-mode (https://github.com/folke/zen-mode.nvim)
               -- truezen (https://github.com/Pocco81/TrueZen.nvim)
-              zen_mode = "truezen",
+              zen_mode = 'truezen',
             }
           },
         }
@@ -452,9 +446,9 @@ require 'packer'.startup(function(use)
   }
 
   use {
-    "windwp/nvim-autopairs",
+    'windwp/nvim-autopairs',
     config = function()
-      require("nvim-autopairs").setup {}
+      require 'nvim-autopairs'.setup {}
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
       local cmp = require('cmp')
       cmp.event:on(
@@ -466,14 +460,16 @@ require 'packer'.startup(function(use)
 
   -- marks
   use {
-    "chentoast/marks.nvim",
+    'chentoast/marks.nvim',
     config = function()
-      require 'marks'.setup {}
+      require 'marks'.setup {
+        force_write_shada = true,
+      }
     end
   }
 
   use {
-    "lifepillar/pgsql.vim",
+    'lifepillar/pgsql.vim',
     config = function()
       vim.cmd [[let g:sql_type_default = 'pgsql']]
     end
