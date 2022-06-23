@@ -512,9 +512,6 @@ require 'packer'.startup(function(use)
 
   use {
     'ray-x/go.nvim',
-    requires = {
-      { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
-    },
     config = function()
       require 'go'.setup {
         lsp_cfg = true,
@@ -522,22 +519,8 @@ require 'packer'.startup(function(use)
         lsp_on_attach = true,
       }
 
-      vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
-      vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
+      -- vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
+      -- vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
     end
   }
-
-  use({
-    'ray-x/navigator.lua',
-    requires = {
-      { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
-      { 'neovim/nvim-lspconfig' },
-    },
-    config = function()
-      require 'navigator'.setup {}
-
-      vim.cmd("autocmd FileType guihua lua require('cmp').setup.buffer { enabled = false }")
-      vim.cmd("autocmd FileType guihua_rust lua require('cmp').setup.buffer { enabled = false }")
-    end
-  })
 end)
