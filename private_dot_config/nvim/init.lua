@@ -113,6 +113,7 @@ require 'packer'.startup(function(use)
               path = 1,
             },
           },
+          lualine_x = { 'filetype' },
         },
         options = {
           icons_enabled = true,
@@ -236,7 +237,7 @@ require 'packer'.startup(function(use)
 
       -- Use an on_attach function to only map the following keys
       -- after the language server attaches to the current buffer
-      local on_attach = function(client, bufnr)
+      local on_attach = function(_, bufnr)
         -- Enable completion triggered by <c-x><c-o>
         vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -291,8 +292,6 @@ require 'packer'.startup(function(use)
             runtime = {
               -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
               version = 'LuaJIT',
-              -- Setup your lua path
-              path = runtime_path,
             },
             diagnostics = {
               -- Get the language server to recognize the `vim` global
