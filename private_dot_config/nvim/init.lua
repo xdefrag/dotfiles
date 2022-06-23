@@ -106,9 +106,11 @@ require 'packer'.startup(function(use)
       require 'lualine'.setup {
         tabline = {
           lualine_a = {
-            'filename',
-            file_status = false,
-            path = 1,
+            {
+              'filename',
+              file_status = false,
+              path = 1,
+            },
           },
         },
         options = {
