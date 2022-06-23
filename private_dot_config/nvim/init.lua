@@ -516,7 +516,13 @@ require 'packer'.startup(function(use)
       require 'go'.setup {
         lsp_cfg = false,
         lsp_gofumpt = true,
-        lsp_on_attach = false,
+        lsp_on_attach = nil,
+        icons = false,
+        lsp_keymaps = false,
+        lsp_codelens = false,
+        lsp_document_formatting = false,
+        dap_debug_keymap = false,
+        run_in_floaterm = true,
       }
 
       -- vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
