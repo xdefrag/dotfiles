@@ -127,7 +127,10 @@ require 'packer'.startup(function(use)
 
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-dap.nvim',
+    },
     config = function()
       -- Telescope
       require 'telescope'.setup {
@@ -143,6 +146,7 @@ require 'packer'.startup(function(use)
 
       -- Enable telescope fzf native
       require 'telescope'.load_extension 'fzf'
+      require 'telescope'.load_extension 'dap'
 
       --Add leader shortcuts
       local opts = { noremap = true, silent = true }
@@ -457,27 +461,43 @@ require 'packer'.startup(function(use)
   }
 
   use {
-    'leoluz/nvim-dap-go',
+    'rcarriga/nvim-dap-ui',
+    requires = { 'mfussenegger/nvim-dap' },
     config = function()
-      local dapgo = require 'dap-go'
-      dapgo.setup()
-
-      local bufopts = { noremap = true, silent = true }
-      vim.keymap.set('n', '<leader>dt', dapgo.debug_test, bufopts)
+      require("dapui").setup {
+        mappings = {
+          expand = { "<CR>", "<Space>" },
+          open = "o",
+          remove = "d",
+          edit = "e",
+          repl = "r",
+          toggle = "t",
+        },
+      }
     end
   }
 
   use {
-    "klen/nvim-test",
+    'theHamsta/nvim-dap-virtual-text',
+    requires = { 'mfussenegger/nvim-dap' },
     config = function()
-      require('nvim-test').setup {}
+      require 'nvim-dap-virtual-text'.setup {
+        commented = true,
+      }
+    end
+  }
 
-      local bufopts = { noremap = true, silent = true }
-      vim.keymap.set('n', '<leader>tn', ':TestNearest<CR>', bufopts)
-      vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', bufopts)
-      vim.keymap.set('n', '<leader>te', ':TestEdit<CR>', bufopts)
-      vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', bufopts)
-      vim.keymap.set('n', '<leader>tt', ':TestSuite<CR>', bufopts)
+  use {
+    'ray-x/go.nvim',
+    config = function()
+      require 'go'.setup {
+        lsp_cfg = true,
+        lsp_gofumpt = true,
+        lsp_on_attach = true,
+      }
+
+      vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
+      vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
     end
   }
 end)
