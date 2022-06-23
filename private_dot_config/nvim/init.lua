@@ -470,7 +470,14 @@ require 'packer'.startup(function(use)
   use {
     "klen/nvim-test",
     config = function()
-      require('nvim-test').setup{}
+      require('nvim-test').setup {}
+
+      local bufopts = { noremap = true, silent = true }
+      vim.keymap.set('n', '<leader>tn', ':TestNearest<CR>', bufopts)
+      vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', bufopts)
+      vim.keymap.set('n', '<leader>te', ':TestEdit<CR>', bufopts)
+      vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', bufopts)
+      vim.keymap.set('n', '<leader>tt', ':TestSuite<CR>', bufopts)
     end
   }
 end)
