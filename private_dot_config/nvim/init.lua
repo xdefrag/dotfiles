@@ -49,8 +49,7 @@ require 'packer'.startup(function(use)
   use {
     'wbthomason/packer.nvim',
     config = function()
-      local bufopts = { noremap = true, silent = true }
-      vim.keymap.set('n', '<leader>ps', ':PackerSync<CR>', bufopts)
+      vim.keymap.set('n', '<leader>ps', ':PackerSync<CR>')
     end
   }
 
@@ -71,6 +70,7 @@ require 'packer'.startup(function(use)
     'tpope/vim-fugitive',
     config = function()
       vim.keymap.set("n", "<leader>gg", ':Git<CR>')
+      vim.keymap.set('n', '<leader>gp', ':Git push<CR>')
     end
   }
 
