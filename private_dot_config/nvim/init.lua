@@ -26,6 +26,8 @@ vim.opt.showcmd = false
 
 vim.opt.number = false
 
+vim.opt.scrolloff = 15
+
 vim.opt.clipboard = "unnamedplus"
 
 vim.cmd [[set shortmess+=F]]
