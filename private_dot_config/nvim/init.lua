@@ -104,8 +104,9 @@ require 'packer'.startup(function(use)
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function()
       require 'lualine'.setup {
-        tabline = {
-          lualine_a = {
+        tabline = {},
+        sections = {
+          lualine_c = {
             {
               'filename',
               file_status = false,
