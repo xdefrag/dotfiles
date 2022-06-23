@@ -489,6 +489,7 @@ require 'packer'.startup(function(use)
 
   use {
     'ray-x/go.nvim',
+    requires = { 'ray-x/guihua.lua' },
     config = function()
       require 'go'.setup {
         lsp_cfg = true,
