@@ -545,6 +545,7 @@ require 'packer'.startup(function(use)
         lsp_document_formatting = false,
         dap_debug_keymap = true,
         run_in_floaterm = true,
+        build_tags = 'integration,statemachine_test',
       }
 
       vim.cmd('autocmd FileType go noremap <Leader>tn :GoTest -n<CR>')
