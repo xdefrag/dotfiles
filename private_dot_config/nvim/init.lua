@@ -175,6 +175,7 @@ require 'packer'.startup(function(use)
       vim.keymap.set('n', '<leader>sm', ':Telescope marks<CR>')
       vim.keymap.set('n', '<leader>sd', ':Telescope diagnostics<CR>')
       vim.keymap.set('n', '<leader>sc', ':Telescope commands<CR>')
+      vim.keymap.set('n', '<leader>sh', ':Telescope help_tags<CR>')
     end
   }
 
