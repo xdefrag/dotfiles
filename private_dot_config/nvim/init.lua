@@ -46,6 +46,9 @@ vim.keymap.set("t", "jk", '<C-\\><C-n>')
 
 vim.keymap.set("n", "<leader>ot", ':terminal<CR>')
 
+vim.keymap.set('n', '<Leader>go', ':DiffviewOpen<CR>')
+vim.keymap.set('n', '<Leader>fh', ':DiffviewFileHistory<CR>')
+
 require 'packer'.startup(function(use)
   use {
     'wbthomason/packer.nvim',
@@ -569,11 +572,5 @@ require 'packer'.startup(function(use)
     'sindrets/diffview.nvim',
     requires = 'nvim-lua/plenary.nvim',
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
-    config = function()
-      require 'diffview'.setup {}
-
-      vim.keymap.set('n', '<Leader>go', ':DiffviewOpen<CR>')
-      vim.keymap.set('n', '<Leader>fh', ':DiffviewFileHistory<CR>')
-    end
   }
 end)
