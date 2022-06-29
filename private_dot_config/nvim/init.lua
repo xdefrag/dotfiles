@@ -32,6 +32,11 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.cmd [[set shortmess+=F]]
 
+vim.cmd [[
+autocmd BufWinLeave ?* mkview
+autocmd BufWinEnter ?* silent loadview 
+]]
+
 -- mode, keys, cmd, opts
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
