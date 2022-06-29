@@ -282,6 +282,7 @@ require 'packer'.startup(function(use)
             env = {
               GOLANG_PROTOBUF_REGISTRATION_CONFLICT = "ignore",
             },
+            directoryFilters = { "-graphql", "-vendor" },
             -- memoryMode = "DegradeClosed",
             gofumpt = true,
             staticcheck = true,
