@@ -572,9 +572,8 @@ require 'packer'.startup(function(use)
     config = function()
       require 'diffview'.setup {}
 
-      vim.keymap.set('n', '<Leader>do', ':DiffviewOpen<CR>')
-      vim.keymap.set('n', '<Leader>dc', ':DiffviewClose<CR>')
-      vim.keymap.set('n', '<Leader>dh', ':DiffviewFileHistory<CR>')
+      vim.keymap.set('n', '<Leader>go', ':DiffviewOpen<CR>')
+      vim.keymap.set('n', '<Leader>fh', ':DiffviewFileHistory<CR>')
     end
   }
 end)
