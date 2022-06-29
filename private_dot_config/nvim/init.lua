@@ -564,4 +564,18 @@ require 'packer'.startup(function(use)
       vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
     end
   }
+
+  use {
+    'sindrets/diffview.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    config = function()
+      require 'diffview'.setup {
+        -- keymaps = {
+        --   disable_defaults = false,
+        --   view = {},
+        -- },
+      }
+    end
+  }
 end)
