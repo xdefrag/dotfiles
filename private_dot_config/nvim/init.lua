@@ -283,11 +283,10 @@ require 'packer'.startup(function(use)
               GOLANG_PROTOBUF_REGISTRATION_CONFLICT = "ignore",
             },
             directoryFilters = {
-              -- "-graphql",
-              "-exec_gqlgen.go",
+              "-graphql",
               "-vendor",
             },
-            -- memoryMode = "DegradeClosed",
+            memoryMode = "DegradeClosed",
             gofumpt = true,
             staticcheck = true,
             buildFlags = { '-tags=integration,statemachine_test' },
