@@ -570,12 +570,11 @@ require 'packer'.startup(function(use)
     requires = 'nvim-lua/plenary.nvim',
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
     config = function()
-      require 'diffview'.setup {
-        -- keymaps = {
-        --   disable_defaults = false,
-        --   view = {},
-        -- },
-      }
+      require 'diffview'.setup {}
+
+      vim.keymap.set('n', '<Leader>do', ':DiffviewOpen<CR>')
+      vim.keymap.set('n', '<Leader>dc', ':DiffviewClose<CR>')
+      vim.keymap.set('n', '<Leader>dh', ':DiffviewFileHistory<CR>')
     end
   }
 end)
