@@ -33,8 +33,8 @@ vim.opt.clipboard = "unnamedplus"
 vim.cmd [[set shortmess+=F]]
 
 vim.cmd [[
-autocmd BufWinLeave ?* mkview
-autocmd BufWinEnter ?* silent loadview 
+autocmd BufWinLeave ?* silent! mkview
+autocmd BufWinEnter ?* silent! loadview 
 ]]
 
 -- mode, keys, cmd, opts
