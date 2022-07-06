@@ -4,8 +4,10 @@ end
 
 set fish_greeting
 
+set -U fish_user_paths ~/go/bin $fish_user_paths
+
 {{- if eq .chezmoi.hostname "very-good-computer" }}
-set -gx PATH $PATH:/opt/homebrew/bin
+set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 {{- end }}
 
 set -gx EDITOR nvim
