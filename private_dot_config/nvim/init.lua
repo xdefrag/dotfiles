@@ -194,7 +194,7 @@ require 'packer'.startup(function(use)
       require 'telescope'.setup {
         extensions = {
           project = {
-            base_dirs = {},
+            base_dirs = { '~/Code', '~/ozon' },
             hidden_files = true,
             theme = "dropdown"
           }
