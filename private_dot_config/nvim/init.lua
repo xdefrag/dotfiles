@@ -569,7 +569,7 @@ require 'packer'.startup(function(use)
       vim.cmd('autocmd FileType go noremap <Leader>a :GoAlt<CR>')
       vim.cmd('autocmd FileType go noremap <Leader>f :GoImport<CR>')
 
-      vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
+      -- vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
     end
   }
 
