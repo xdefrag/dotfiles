@@ -294,10 +294,11 @@ require 'packer'.startup(function(use)
               "-graphql",
               "-vendor",
             },
-            memoryMode = "DegradeClosed",
-            gofumpt = true,
+            -- memoryMode = "DegradeClosed",
+            gofumpt = false,
             staticcheck = true,
             buildFlags = { '-tags=integration,statemachine_test' },
+            usePlaceholders = false,
           },
         },
       }
@@ -569,7 +570,7 @@ require 'packer'.startup(function(use)
       vim.cmd('autocmd FileType go noremap <Leader>a :GoAlt<CR>')
       vim.cmd('autocmd FileType go noremap <Leader>f :GoImport<CR>')
 
-      -- vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
+      vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
     end
   }
 
