@@ -44,5 +44,14 @@ alias gaa "git add ."
 alias crq "cmus-remote -q"
 alias crl "cmus-remote -l"
 
-alias nmq "cd ~/ExportedMusic; cmus-remote -q (nnn -T t -p -)"
-alias nml "cd ~/ExportedMusic; cmus-remote -l (nnn -T t -p -)"
+
+{{- if eq .chezmoi.hostname "very-good-computer" }}
+set -gx MUSIC_PATH ~/Music
+{{- end}}
+
+{{- if eq .chezmoi.hostname "NB-SPB-A064" }}
+set -gx MUSIC_PATH ~/ExportedMusic
+{{- end}}
+
+alias nmq "cd $MUSIC_PATH; cmus-remote -q (nnn -T t -p -)"
+alias nml "cd $MUSIC_PATH; cmus-remote -l (nnn -T t -p -)"
