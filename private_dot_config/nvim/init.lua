@@ -32,10 +32,10 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.cmd [[set shortmess+=F]]
 
-vim.cmd [[
-autocmd BufWinLeave ?* silent! mkview
-autocmd BufWinEnter ?* silent! loadview 
-]]
+-- vim.cmd [[
+-- autocmd BufWinLeave ?* silent! mkview
+-- autocmd BufWinEnter ?* silent! loadview
+-- ]]
 
 -- mode, keys, cmd, opts
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
@@ -624,5 +624,22 @@ require 'packer'.startup(function(use)
     'sindrets/diffview.nvim',
     requires = 'nvim-lua/plenary.nvim',
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+  }
+
+  use {
+    "aserowy/tmux.nvim",
+    config = function()
+      require("tmux").setup({
+          copy_sync = {
+            enable = true,
+          },
+          navigation = {
+            enable_default_keybindings = true,
+          },
+          resize = {
+            enable_default_keybindings = true,
+          }
+        })
+    end
   }
 end)
