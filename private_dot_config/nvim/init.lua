@@ -338,6 +338,11 @@ require 'packer'.startup(function(use)
           },
         },
       }
+
+      lspconfig.gdscript.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
     end
   }
 
