@@ -443,10 +443,12 @@ font:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
+{{- if eq .chezmoi.hostname "very-good-computer" }}
 shell:
  program: /opt/homebrew/bin/fish
  args:
    - --login
+{{- end }}
 
 # Startup directory
 #
