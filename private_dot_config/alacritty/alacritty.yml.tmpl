@@ -449,7 +449,12 @@ shell:
  args:
    - --login
 {{- end }}
-
+{{- if eq .chezmoi.hostname "NB-SPB-A064" }}
+shell:
+ program: /run/current-system/sw/bin/fish
+ args:
+   - --login
+{{- end }}
 # Startup directory
 #
 # Directory the shell is started in. If this is unset, or `None`, the working
