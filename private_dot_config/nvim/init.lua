@@ -298,6 +298,7 @@ require 'packer'.startup(function(use)
         on_attach = on_attach,
         settings = {
           gopls = {
+          -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
             env = {
               GOLANG_PROTOBUF_REGISTRATION_CONFLICT = "ignore",
             },
@@ -310,6 +311,7 @@ require 'packer'.startup(function(use)
             staticcheck = true,
             buildFlags = { '-tags=integration,statemachine_test' },
             usePlaceholders = false,
+            experimentalPackageCacheKey = true,
           },
         },
       }
