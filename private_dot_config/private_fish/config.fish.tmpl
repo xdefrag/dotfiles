@@ -46,9 +46,10 @@ alias gaa "git add ."
 alias crq "cmus-remote -q"
 alias crl "cmus-remote -l"
 
-
 {{- if eq .chezmoi.hostname "very-good-computer" }}
 set -gx MUSIC_PATH ~/Music
+
+alias glc "git show | head -1 | awk '{ print $1 }' | wl-copy"
 {{- end}}
 
 {{- if eq .chezmoi.hostname "NB-SPB-A064" }}
