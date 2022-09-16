@@ -345,6 +345,11 @@ require 'packer'.startup(function(use)
         capabilities = capabilities,
         on_attach = on_attach,
       }
+
+      lspconfig.elixirls.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
     end
   }
 
