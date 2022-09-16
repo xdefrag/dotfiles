@@ -347,7 +347,7 @@ require 'packer'.startup(function(use)
       }
 
       lspconfig.elixirls.setup{
-        cmd = '/opt/homebrew/bin/elixir-ls';
+        cmd = {'/opt/homebrew/bin/elixir-ls'};
         capabilities = capabilities,
         on_attach = on_attach,
       }
