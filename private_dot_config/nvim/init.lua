@@ -454,7 +454,7 @@ require 'packer'.startup(function(use)
   }
 
   use {
-    'Pocco81/TrueZen.nvim',
+    'Pocco81/true-zen.nvim',
     config = function()
       require 'true-zen'.setup {
         integrations = {
@@ -472,7 +472,7 @@ require 'packer'.startup(function(use)
   use {
     'nvim-neorg/neorg',
     ft = 'norg',
-    requires = { 'nvim-lua/plenary.nvim', 'nvim-neorg/neorg-telescope', 'Pocco81/TrueZen.nvim' },
+    requires = { 'nvim-lua/plenary.nvim', 'nvim-neorg/neorg-telescope', 'Pocco81/true-zen.nvim' },
     config = function()
       require 'neorg'.setup {
         load = {
@@ -513,7 +513,7 @@ require 'packer'.startup(function(use)
             config = {
               -- zen_mode : Zen mode plugin to use. Currenly suppported:
               -- zen-mode (https://github.com/folke/zen-mode.nvim)
-              -- truezen (https://github.com/Pocco81/TrueZen.nvim)
+              -- truezen (https://github.com/Pocco81/true-zen.nvim)
               zen_mode = 'truezen',
             }
           },
