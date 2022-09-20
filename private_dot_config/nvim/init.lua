@@ -199,24 +199,6 @@ require 'packer'.startup(function(use)
   }
 
   use {
-    'nvim-telescope/telescope-project.nvim',
-    config = function()
-      require 'telescope'.load_extension 'project'
-      require 'telescope'.setup {
-        extensions = {
-          project = {
-            base_dirs = { '~/Code', '~/ozon' },
-            hidden_files = true,
-            theme = "dropdown"
-          }
-        }
-      }
-
-      vim.keymap.set('n', '<leader>sp', ':Telescope project<CR>')
-    end
-  }
-
-  use {
     'junegunn/vim-easy-align'
   }
 
