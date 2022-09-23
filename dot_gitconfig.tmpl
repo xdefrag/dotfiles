@@ -1,14 +1,7 @@
 [user]
-/* {{- if eq .chezmoi.hostname "very-good-computer" }} */
 	name = Stanislav Karkavin
 	email = xdefrag@posteo.net
 	signingkey = 51051160
-/* {{- end }} */
-/* {{- if eq .chezmoi.hostname "NB-SPB-A064" }} */
-	/* name = Stanislav Karkavin */
-	/* email = skarkavin@ozon.ru */
-	/* signingkey = 00F8AC2B */
-/* {{- end }} */
 [core]
   excludesfile = ~/.gitignore
 [commit]
@@ -27,7 +20,5 @@
 	defaultBranch = master
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
-/* {{- if eq .chezmoi.hostname "NB-SPB-A064" }} */
 [url "ssh://git@gitlab.ozon.ru/"]
 	insteadOf = https://gitlab.ozon.ru/
-/* {{- end }} */
