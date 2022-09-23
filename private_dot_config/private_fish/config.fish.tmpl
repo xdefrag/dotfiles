@@ -1,7 +1,4 @@
 if status is-interactive
-    # Commands to run in interactive sessions can go here
-end
-
 set fish_greeting
 
 set -U fish_user_paths ~/go/bin $fish_user_paths
@@ -12,12 +9,10 @@ set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 
 set -gx EDITOR nvim
 
-{{- if eq .chezmoi.hostname "NB-SPB-A064" }}
 set -gx GOPROXY https://goproxy.s.o3.ru
 set -gx GOSUMDB off
 set -gx GOLANG_PROTOBUF_REGISTRATION_CONFLICT warn
 set -gx S2S_AUTH_URL https://sso-test.o3.ru/auth/realms/service2service
-{{- end }}
 
 alias cl clear
 
@@ -51,18 +46,12 @@ alias kx kubectx
 alias crq "cmus-remote -q"
 alias crl "cmus-remote -l"
 
-{{- if eq .chezmoi.hostname "very-good-computer" }}
 set -gx MUSIC_PATH ~/Music
-{{- end}}
-
-{{- if eq .chezmoi.hostname "NB-SPB-A064" }}
-set -gx MUSIC_PATH ~/ExportedMusic
-
-alias glc "git show | head -1 | awk '{ print $1 }' | wl-copy"
-{{- end}}
 
 alias nmq "cd $MUSIC_PATH; cmus-remote -q (nnn -T t -p -)"
 alias nml "cd $MUSIC_PATH; cmus-remote -l (nnn -T t -p -)"
 
 source ~/.config/fish/gruvbox.fish
 theme_gruvbox dark
+
+end
