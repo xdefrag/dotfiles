@@ -285,11 +285,11 @@ require 'packer'.startup(function(use)
               GOLANG_PROTOBUF_REGISTRATION_CONFLICT = "ignore",
             },
             directoryFilters = {
-              "-graphql",
+              "-graphql/exec_gqlgen.go",
               "-vendor",
             },
             -- memoryMode = "DegradeClosed",
-            gofumpt = false,
+            gofumpt = true,
             staticcheck = true,
             buildFlags = { '-tags=integration,statemachine_test' },
             usePlaceholders = false,
