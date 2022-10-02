@@ -51,6 +51,10 @@ set -gx MUSIC_PATH ~/Music
 alias nmq "cd $MUSIC_PATH; cmus-remote -q (nnn -T t -p -)"
 alias nml "cd $MUSIC_PATH; cmus-remote -l (nnn -T t -p -)"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 source ~/.config/fish/gruvbox.fish
 theme_gruvbox dark
 
