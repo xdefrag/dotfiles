@@ -333,6 +333,10 @@ require 'packer'.startup(function(use)
         capabilities = capabilities,
         on_attach = on_attach,
       }
+
+      lspconfig.tsserver.setup{}
+
+      lspconfig.graphql.setup{}
     end
   }
 
