@@ -5,6 +5,9 @@ set -U fish_user_paths ~/go/bin $fish_user_paths
 
 {{- if eq .chezmoi.hostname "very-good-computer" }}
 set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
+
+fish_add_path /opt/homebrew/opt/heimdal/bin                                                                                                            17:58:23
+fish_add_path /opt/homebrew/opt/heimdal/sbin
 {{- end }}
 
 set -gx EDITOR nvim
