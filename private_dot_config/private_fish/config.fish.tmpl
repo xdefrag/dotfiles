@@ -14,6 +14,7 @@ fish_add_path ~/.ghcup/bin
 
 set -gx C_INCLUDE_PATH "$(xcrun --show-sdk-path)/usr/include/ffi"
 fish_add_path /opt/homebrew/opt/llvm@12/bin
+fish_add_path /opt/homebrew/opt/gcc@12/bin
 {{- end }}
 
 set -gx EDITOR nvim
