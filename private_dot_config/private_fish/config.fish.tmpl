@@ -1,20 +1,14 @@
 if status is-interactive
 set fish_greeting
 
-set -U fish_user_paths ~/go/bin $fish_user_paths
+fish_add_path ~/go/bin
+fish_add_path ~/.local/bin
 
 {{- if eq .chezmoi.hostname "very-good-computer" }}
 set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 
 fish_add_path /opt/homebrew/opt/heimdal/bin                                                                                                            17:58:23
 fish_add_path /opt/homebrew/opt/heimdal/sbin
-
-fish_add_path ~/.ghcup/hls/1.7.0.0/bin
-fish_add_path ~/.ghcup/bin
-
-set -gx C_INCLUDE_PATH "$(xcrun --show-sdk-path)/usr/include/ffi"
-fish_add_path /opt/homebrew/opt/llvm@12/bin
-fish_add_path /opt/homebrew/opt/gcc@12/bin
 {{- end }}
 
 set -gx EDITOR nvim
