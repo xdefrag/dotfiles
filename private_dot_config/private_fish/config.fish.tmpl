@@ -11,6 +11,11 @@ fish_add_path /opt/homebrew/opt/heimdal/bin                                     
 fish_add_path /opt/homebrew/opt/heimdal/sbin
 
 set -gx C_INCLUDE_PATH "$(xcrun --show-sdk-path)/usr/include/ffi"
+
+set -gx LDFLAGS "-L/opt/homebrew/opt/llvm@12/lib -Wl,-rpath,/opt/homebrew/opt/llvm@12/lib"
+set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm@12/include"
+
+fish_add_path /opt/homebrew/opt/llvm@12/bin
 {{- end }}
 
 set -gx EDITOR nvim
