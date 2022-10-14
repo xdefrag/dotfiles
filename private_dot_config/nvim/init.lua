@@ -353,11 +353,6 @@ require 'packer'.startup(function(use)
         capabilities = capabilities,
         on_attach = on_attach,
       }
-
-      lspconfig.zk.setup{
-        capabilities = capabilities,
-        on_attach = on_attach,
-      }
     end
   }
 
@@ -641,5 +636,12 @@ require 'packer'.startup(function(use)
     'sindrets/diffview.nvim',
     requires = 'nvim-lua/plenary.nvim',
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+  }
+
+  use {
+    'mickael-menu/zk-nvim',
+    config = function()
+      require'zk'.setup{}
+    end
   }
 end)
