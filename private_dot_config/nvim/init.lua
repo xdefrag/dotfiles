@@ -645,9 +645,9 @@ require 'packer'.startup(function(use)
       require'zk'.setup{}
 
       local bufopts = { noremap = true, silent = true }
-      vim.keymap.set('n', 'nN', ':ZkNew<Enter>', bufopts)
-      vim.keymap.set('n', 'nn', ':Telescope zk notes<Enter>', bufopts)
-      vim.keymap.set('n', 'nt', ':Telescope zk tags<Enter>', bufopts)
+      vim.keymap.set('n', 'zn', ':ZkNew<Enter>', bufopts)
+      vim.keymap.set('n', 'zf', ':Telescope zk notes<Enter>', bufopts)
+      vim.keymap.set('n', 'zt', ':Telescope zk tags<Enter>', bufopts)
     end
   }
 end)
