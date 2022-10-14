@@ -334,9 +334,30 @@ require 'packer'.startup(function(use)
         on_attach = on_attach,
       }
 
-      lspconfig.tsserver.setup{}
+      lspconfig.tsserver.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
 
-      lspconfig.graphql.setup{}
+      lspconfig.graphql.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      lspconfig.dockerls.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      lspconfig.hls.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+
+      lspconfig.zk.setup{
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
     end
   }
 
