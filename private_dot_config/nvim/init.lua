@@ -643,6 +643,11 @@ require 'packer'.startup(function(use)
     'mickael-menu/zk-nvim',
     config = function()
       require'zk'.setup{}
+
+      local bufopts = { noremap = true, silent = true }
+      vim.keymap.set('n', 'nN', ':ZkNew<Enter>', bufopts)
+      vim.keymap.set('n', 'nn', ':Telescope zk notes<Enter>', bufopts)
+      vim.keymap.set('n', 'nt', ':Telescope zk tags<Enter>', bufopts)
     end
   }
 end)
