@@ -62,10 +62,10 @@ require 'packer'.startup(function(use)
     config = function()
       vim.opt.termguicolors = true
       vim.cmd [[colorscheme gruvbox]]
-
-
     end
   }
+
+  use { 'xdefrag/vim-beelzebub' }
 
   use 'ludovicchabant/vim-gutentags'
 
@@ -80,8 +80,6 @@ require 'packer'.startup(function(use)
   use { 'tpope/vim-surround' }
 
   use { 'tpope/vim-dispatch' }
-
-  use { 'tpope/vim-obsession' }
 
   use {
     'numToStr/Comment.nvim',
