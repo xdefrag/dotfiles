@@ -570,4 +570,11 @@ require 'packer'.startup(function(use)
       vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
     end
   }
+
+  use {
+    'jubnzv/mdeval.nvim',
+    config = function ()
+      require 'mdeval'.setup{}
+    end
+  }
 end)
