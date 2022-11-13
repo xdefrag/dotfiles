@@ -65,8 +65,6 @@ require 'packer'.startup(function(use)
     end
   }
 
-  use { 'xdefrag/vim-beelzebub' }
-
   use 'ludovicchabant/vim-gutentags'
 
   use {
