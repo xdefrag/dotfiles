@@ -46,9 +46,6 @@ vim.keymap.set("t", "jk", '<C-\\><C-n>')
 
 vim.keymap.set("n", "<leader>ot", ':terminal<CR>')
 
-vim.keymap.set('n', '<Leader>go', ':DiffviewOpen HEAD~<CR>')
-vim.keymap.set('n', '<Leader>fh', ':DiffviewFileHistory<CR>')
-
 require 'packer'.startup(function(use)
   use {
     'wbthomason/packer.nvim',
@@ -578,6 +575,8 @@ require 'packer'.startup(function(use)
         require_confirmation=false,
         eval_options = {},
       }
+
+      vim.cmd('autocmd FileType md noremap <Leader>e :MdEval<CR>')
     end
   }
 end)
