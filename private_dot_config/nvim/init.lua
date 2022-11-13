@@ -574,7 +574,9 @@ require 'packer'.startup(function(use)
   use {
     'jubnzv/mdeval.nvim',
     config = function ()
-      require'mdeval'.setup()
+      require'mdeval'.setup({
+        require_confirmation=false,
+      })
     end
   }
 end)
