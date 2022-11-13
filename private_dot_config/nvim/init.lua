@@ -405,7 +405,6 @@ require 'packer'.startup(function(use)
         sources = {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
-          { name = 'neorg' },
           { name = 'emoji' },
         },
       }
@@ -465,62 +464,6 @@ require 'packer'.startup(function(use)
           lualine = true,
           tmux = true,
         },
-      }
-    end
-  }
-
-  -- neorg
-  -- Default keybindings:
-  -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/keybinds/keybinds.lua
-  use {
-    'nvim-neorg/neorg',
-    ft = 'norg',
-    requires = { 'nvim-lua/plenary.nvim', 'nvim-neorg/neorg-telescope', 'Pocco81/true-zen.nvim' },
-    config = function()
-      require 'neorg'.setup {
-        load = {
-          ['core.defaults'] = {},
-          ['core.gtd.base'] = {
-            config = {
-              workspace = 'home'
-            }
-          },
-          ['core.norg.dirman'] = {
-            config = {
-              workspaces = {
-                home = '~/Notes/Home',
-                work = '~/Notes/Work',
-              }
-            }
-          },
-          ['core.norg.completion'] = {
-            config = {
-              engine = 'nvim-cmp'
-            }
-          },
-          ['core.norg.concealer'] = {
-            config = {}
-          },
-          ['core.integrations.telescope'] = {
-            config = {}
-          },
-          ['core.norg.journal'] = {
-            config = {
-              workspace = 'home',
-            }
-          },
-          ['core.export'] = {
-            config = {}
-          },
-          ['core.presenter'] = {
-            config = {
-              -- zen_mode : Zen mode plugin to use. Currenly suppported:
-              -- zen-mode (https://github.com/folke/zen-mode.nvim)
-              -- truezen (https://github.com/Pocco81/true-zen.nvim)
-              zen_mode = 'truezen',
-            }
-          },
-        }
       }
     end
   }
@@ -630,24 +573,6 @@ require 'packer'.startup(function(use)
       vim.cmd('autocmd FileType go noremap <Leader>f :GoImport<CR>')
 
       vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
-    end
-  }
-
-  use {
-    'sindrets/diffview.nvim',
-    requires = 'nvim-lua/plenary.nvim',
-    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
-  }
-
-  use {
-    'mickael-menu/zk-nvim',
-    config = function()
-      require'zk'.setup{}
-
-      local bufopts = { noremap = true, silent = true }
-      vim.keymap.set('n', 'zn', ':ZkNew<Enter>', bufopts)
-      vim.keymap.set('n', 'zf', ':Telescope zk notes<Enter>', bufopts)
-      vim.keymap.set('n', 'zt', ':Telescope zk tags<Enter>', bufopts)
     end
   }
 end)
