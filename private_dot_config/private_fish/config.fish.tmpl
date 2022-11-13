@@ -4,7 +4,6 @@ set fish_greeting
 fish_add_path ~/go/bin
 fish_add_path ~/.local/bin
 
-{{- if eq .chezmoi.hostname "very-good-computer" }}
 set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 
 fish_add_path /opt/homebrew/opt/heimdal/bin                                                                                                            17:58:23
@@ -15,7 +14,6 @@ set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm@12/include"
 set -gx LDFLAGS "-L/opt/homebrew/opt/llvm@12/lib -Wl,-rpath,/opt/homebrew/opt/llvm@12/lib"
 
 fish_add_path /opt/homebrew/opt/llvm@12/bin
-{{- end }}
 
 set -gx EDITOR nvim
 
