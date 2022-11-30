@@ -32,6 +32,10 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.cmd [[set shortmess+=F]]
 
+-- netrw
+vim.g.netrw_keepdir = 0
+vim.g.netrw_banner = 0
+
 -- mode, keys, cmd, opts
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
@@ -45,6 +49,7 @@ vim.keymap.set("t", "<Esc>", '<C-\\><C-n>')
 vim.keymap.set("t", "jk", '<C-\\><C-n>')
 
 vim.keymap.set("n", "<leader>ot", ':terminal<CR>')
+vim.keymap.set("n", "<leader>on", ':Explore<CR>')
 
 require 'packer'.startup(function(use)
   use {
@@ -193,22 +198,6 @@ require 'packer'.startup(function(use)
 
   use {
     'junegunn/vim-easy-align'
-  }
-
-  use {
-    'kyazdani42/nvim-tree.lua',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function()
-      require 'nvim-tree'.setup {
-        disable_netrw = false,
-        update_focused_file = {
-          enable = true,
-          update_cwd = true,
-        },
-      }
-
-      vim.keymap.set('n', '<Leader>on', ':NvimTreeToggle<CR>')
-    end
   }
 
   use {
