@@ -205,6 +205,8 @@ require 'packer'.startup(function(use)
     requires = { 'nvim-treesitter/nvim-treesitter-textobjects' },
     config = function()
       require 'nvim-treesitter.configs'.setup {
+        ensure_installed = {"lua", "go"},
+        auto_install = true,
         highlight = {
           enable = true
         },
