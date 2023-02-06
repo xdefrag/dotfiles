@@ -9,7 +9,7 @@ vim.opt.incsearch = true
 vim.opt.smartcase = true
 
 vim.opt.foldmethod = "indent"
-vim.opt.foldlevel = 2
+vim.opt.foldlevel = 4
 
 vim.opt.completeopt = 'menu,menuone,noselect'
 vim.opt.updatetime = 25
