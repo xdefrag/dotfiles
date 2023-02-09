@@ -422,6 +422,19 @@ require 'packer'.startup(function(use)
   }
 
   use {
+    'tzachar/cmp-tabnine',
+    requires = {'hrsh7th/nvim-cmp'},
+    run = './install.sh',
+    config = function ()
+      require'cmp'.setup {
+        sources = {
+          { name = 'cmp_tabnine' },
+        },
+      }
+    end
+  }
+
+  use {
     'hrsh7th/cmp-nvim-lsp',
     config = function()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
