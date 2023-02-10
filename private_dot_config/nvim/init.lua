@@ -345,6 +345,7 @@ require 'packer'.startup(function(use)
     requires = {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-emoji',
+      {'tzachar/cmp-tabnine', run = './install.sh'},
     },
     config = function()
       local luasnip = require 'luasnip'
@@ -389,6 +390,7 @@ require 'packer'.startup(function(use)
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'emoji' },
+          { name = 'cmp_tabnine' },
         },
       }
 
@@ -418,19 +420,6 @@ require 'packer'.startup(function(use)
           { name = 'cmdline' }
         })
       })
-    end
-  }
-
-  use {
-    'tzachar/cmp-tabnine',
-    requires = {'hrsh7th/nvim-cmp'},
-    run = './install.sh',
-    config = function ()
-      require'cmp'.setup {
-        sources = {
-          { name = 'cmp_tabnine' },
-        },
-      }
     end
   }
 
