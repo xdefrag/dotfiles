@@ -390,7 +390,7 @@ require 'packer'.startup(function(use)
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'emoji' },
-          { name = 'cmp_tabnine' },
+          { name = 'cmp_tabnine', keyword_length = 0 },
         },
       }
 
