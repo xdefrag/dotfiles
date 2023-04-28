@@ -184,6 +184,7 @@ require 'packer'.startup(function(use)
       -- Enable telescope fzf native
       require 'telescope'.load_extension 'fzf'
       require 'telescope'.load_extension 'dap'
+      require 'telescope'.load_extension 'file_browser'
 
       --Add leader shortcuts
       vim.keymap.set('n', '<leader><leader>', ':Telescope buffers<CR>')
