@@ -49,7 +49,9 @@ vim.keymap.set("t", "<Esc>", '<C-\\><C-n>')
 vim.keymap.set("t", "jk", '<C-\\><C-n>')
 
 vim.keymap.set("n", "<leader>ot", ':terminal<CR>')
-vim.keymap.set("n", "<leader>on", ':Explore<CR>')
+vim.keymap.set("n", "<leader>on", ':NvimTreeFocus<CR>')
+
+vim.keymap.set('n', '<leader>cp', ':let @+=expand("%") . \':\' . line(".")<CR>')
 
 require 'packer'.startup(function(use)
   use {
@@ -59,8 +61,16 @@ require 'packer'.startup(function(use)
     end
   }
 
+  -- use {
+  --   'morhetz/gruvbox',
+  --   config = function()
+  --     vim.opt.termguicolors = true
+  --     vim.cmd [[colorscheme gruvbox]]
+  --   end
+  -- }
+  --
   use {
-    'morhetz/gruvbox',
+    "ellisonleao/gruvbox.nvim",
     config = function()
       vim.opt.termguicolors = true
       vim.cmd [[colorscheme gruvbox]]
@@ -176,7 +186,7 @@ require 'packer'.startup(function(use)
         },
         extensions = {
           file_browser = {
-            hijack_netrw = true,
+            hijack_netrw = false,
           },
         },
       }
@@ -222,6 +232,15 @@ require 'packer'.startup(function(use)
         highlight = {
           enable = true
         },
+      }
+    end
+  }
+
+  use {
+    'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      require'treesitter-context'.setup{
+        enable = true,
       }
     end
   }
@@ -422,6 +441,27 @@ require 'packer'.startup(function(use)
     requires = { 'rafamadriz/friendly-snippets' },
     config = function()
       require 'luasnip.loaders.from_vscode'.lazy_load()
+    end
+  }
+
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require'nvim-tree'.setup{
+        sort_by = "case_sensitive",
+        renderer = {
+          group_empty = true,
+        },
+        filters = {
+          dotfiles = true,
+        },
+        update_focused_file = {
+          enable = true,
+          update_root = false,
+          ignore_list = {},
+        },
+      }
     end
   }
 
