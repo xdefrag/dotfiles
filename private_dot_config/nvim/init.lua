@@ -61,14 +61,6 @@ require 'packer'.startup(function(use)
     end
   }
 
-  -- use {
-  --   'morhetz/gruvbox',
-  --   config = function()
-  --     vim.opt.termguicolors = true
-  --     vim.cmd [[colorscheme gruvbox]]
-  --   end
-  -- }
-  --
   use {
     "ellisonleao/gruvbox.nvim",
     config = function()
@@ -184,17 +176,11 @@ require 'packer'.startup(function(use)
             },
           },
         },
-        extensions = {
-          file_browser = {
-            hijack_netrw = false,
-          },
-        },
       }
 
       -- Enable telescope fzf native
       require 'telescope'.load_extension 'fzf'
       require 'telescope'.load_extension 'dap'
-      require 'telescope'.load_extension 'file_browser'
 
       --Add leader shortcuts
       vim.keymap.set('n', '<leader><leader>', ':Telescope buffers<CR>')
@@ -209,13 +195,7 @@ require 'packer'.startup(function(use)
       vim.keymap.set('n', '<leader>sd', ':Telescope diagnostics<CR>')
       vim.keymap.set('n', '<leader>sc', ':Telescope commands<CR>')
       vim.keymap.set('n', '<leader>sh', ':Telescope help_tags<CR>')
-      vim.keymap.set('n', '<leader>sb', ':Telescope file_browser<CR>')
     end
-  }
-
-  use {
-    "nvim-telescope/telescope-file-browser.nvim",
-    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   }
 
   use {
@@ -284,7 +264,7 @@ require 'packer'.startup(function(use)
         -- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
         -- vim.keymap.set('n', '<space>lr', vim.lsp.codelens.run, bufopts)
 
-        -- vim.keymap.set('n', '<leader>ss', ':Telescope lsp_document_symbols<CR>', bufopts)
+        vim.keymap.set('n', '<leader>ss', ':Telescope lsp_document_symbols<CR>', bufopts)
       end
 
       local lspconfig = require 'lspconfig'
@@ -393,37 +373,11 @@ require 'packer'.startup(function(use)
         },
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'copilot', keyword_length = 0 },
           { name = 'luasnip' },
           { name = 'emoji' },
         },
       }
-
-      -- Set configuration for specific filetype.
-      cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-          { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-        }, {
-          { name = 'buffer' },
-        })
-      })
-
-      -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline('/', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' }
-        }
-      })
-
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' }
-        }, {
-          { name = 'cmdline' }
-        })
-      })
     end
   }
 
@@ -441,6 +395,24 @@ require 'packer'.startup(function(use)
     requires = { 'rafamadriz/friendly-snippets' },
     config = function()
       require 'luasnip.loaders.from_vscode'.lazy_load()
+    end
+  }
+
+  use {
+    'zbirenbaum/copilot.lua',
+    config = function()
+      require'copilot'.setup{
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      }
+    end
+  }
+
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function ()
+      require'copilot_cmp'.setup()
     end
   }
 
@@ -514,10 +486,10 @@ require 'packer'.startup(function(use)
       local dap = require 'dap'
       local bufopts = { noremap = true, silent = true }
       vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, bufopts)
-      vim.keymap.set('n', '<leader>dc', dap.continue, bufopts)
-      vim.keymap.set('n', '<leader>di', dap.step_into, bufopts)
-      vim.keymap.set('n', '<leader>do', dap.step_over, bufopts)
-      vim.keymap.set('n', '<leader>dr', dap.repl.open, bufopts)
+      -- vim.keymap.set('n', '<leader>dc', dap.continue, bufopts)
+      -- vim.keymap.set('n', '<leader>di', dap.step_into, bufopts)
+      -- vim.keymap.set('n', '<leader>do', dap.step_over, bufopts)
+      -- vim.keymap.set('n', '<leader>dr', dap.repl.open, bufopts)
     end
   }
 
