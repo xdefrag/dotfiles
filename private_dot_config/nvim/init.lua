@@ -174,6 +174,11 @@ require 'packer'.startup(function(use)
             },
           },
         },
+        extensions = {
+          file_browser = {
+            hijack_netrw = true,
+          },
+        },
       }
 
       -- Enable telescope fzf native
@@ -193,7 +198,13 @@ require 'packer'.startup(function(use)
       vim.keymap.set('n', '<leader>sd', ':Telescope diagnostics<CR>')
       vim.keymap.set('n', '<leader>sc', ':Telescope commands<CR>')
       vim.keymap.set('n', '<leader>sh', ':Telescope help_tags<CR>')
+      vim.keymap.set('n', '<leader>sb', ':Telescope file_browser<CR>')
     end
+  }
+
+  use {
+    "nvim-telescope/telescope-file-browser.nvim",
+    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   }
 
   use {
