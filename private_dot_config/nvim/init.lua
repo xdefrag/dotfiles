@@ -192,7 +192,6 @@ require("packer").startup(function(use)
 			vim.keymap.set("n", "<leader>sq", ":Telescope quickfix<CR>")
 			vim.keymap.set("n", "<leader>sk", ":Telescope keymaps<CR>")
 			vim.keymap.set("n", "<leader>sm", ":Telescope marks<CR>")
-			vim.keymap.set("n", "<leader>sd", ":Telescope diagnostics<CR>")
 			vim.keymap.set("n", "<leader>sc", ":Telescope commands<CR>")
 			vim.keymap.set("n", "<leader>sh", ":Telescope help_tags<CR>")
 		end,
@@ -254,7 +253,8 @@ require("packer").startup(function(use)
 		after = "mason.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "gopls", "tsserver", "lua_ls", "rust_analyzer" },
+				ensure_installed = nil,
+				automatic_installation = true,
 			})
 		end,
 	})
@@ -285,24 +285,15 @@ require("packer").startup(function(use)
 		"neovim/nvim-lspconfig",
 		after = { "mason.nvim", "mason-lspconfig.nvim" },
 		config = function()
-			-- Mappings.
-			-- See `:help vim.diagnostic.*` for documentation on any of the below functions
-			local opts = { noremap = true, silent = true }
-			-- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-			vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-			-- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
-			-- Use an on_attach function to only map the following keys
-			-- after the language server attaches to the current buffer
-			local on_attach = function(_, bufnr)
+			local lsp_on_attach = function(_, bufnr)
 				-- Enable completion triggered by <c-x><c-o>
 				vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
 				-- Mappings.
 				-- See `:help vim.lsp.*` for documentation on any of the below functions
 				local bufopts = { noremap = true, silent = true, buffer = bufnr }
-				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+
+				-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 				-- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
 				vim.keymap.set("n", "gd", ":Telescope lsp_definitions<CR>", bufopts)
 				vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
@@ -314,14 +305,17 @@ require("packer").startup(function(use)
 				-- vim.keymap.set('n', '<space>wl', function()
 				-- print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 				-- end, bufopts)
-				vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-				vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
 				-- vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 				vim.keymap.set("n", "gr", ":Telescope lsp_references<CR>", bufopts)
 				-- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
 				-- vim.keymap.set('n', '<space>lr', vim.lsp.codelens.run, bufopts)
 
-				vim.keymap.set("n", "<leader>ss", ":Telescope lsp_document_symbols<CR>", bufopts)
+				vim.keymap.set("n", "<leader>sw", ":Telescope lsp_document_symbols<CR>", bufopts)
+				vim.keymap.set("n", "<leader>ss", ":Telescope lsp_workspace_symbols<CR>", bufopts)
+
+				vim.keymap.set("n", "<leader>dc", ":DapContinue<CR>", bufopts)
 			end
 
 			local lspconfig = require("lspconfig")
@@ -329,7 +323,7 @@ require("packer").startup(function(use)
 
 			lspconfig.gopls.setup({
 				capabilities = capabilities,
-				on_attach = on_attach,
+				on_attach = lsp_on_attach,
 				settings = {
 					gopls = {
 						-- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
@@ -352,33 +346,33 @@ require("packer").startup(function(use)
 
 			lspconfig.gdscript.setup({
 				capabilities = capabilities,
-				on_attach = on_attach,
+				on_attach = lsp_on_attach,
 			})
 
 			lspconfig.elixirls.setup({
 				cmd = { "/opt/homebrew/bin/elixir-ls" },
 				capabilities = capabilities,
-				on_attach = on_attach,
+				on_attach = lsp_on_attach,
 			})
 
 			lspconfig.tsserver.setup({
 				capabilities = capabilities,
-				on_attach = on_attach,
+				on_attach = lsp_on_attach,
 			})
 
 			lspconfig.graphql.setup({
 				capabilities = capabilities,
-				on_attach = on_attach,
+				on_attach = lsp_on_attach,
 			})
 
 			lspconfig.dockerls.setup({
 				capabilities = capabilities,
-				on_attach = on_attach,
+				on_attach = lsp_on_attach,
 			})
 
 			lspconfig.hls.setup({
 				capabilities = capabilities,
-				on_attach = on_attach,
+				on_attach = lsp_on_attach,
 			})
 		end,
 	})
@@ -388,6 +382,7 @@ require("packer").startup(function(use)
 		requires = {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-emoji",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 		},
 		config = function()
 			local luasnip = require("luasnip")
@@ -430,6 +425,7 @@ require("packer").startup(function(use)
 				},
 				sources = {
 					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp_signature_help" },
 					{ name = "copilot", keyword_length = 0 },
 					{ name = "luasnip" },
 					{ name = "emoji" },
@@ -540,7 +536,7 @@ require("packer").startup(function(use)
 			local dap = require("dap")
 			local bufopts = { noremap = true, silent = true }
 			vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, bufopts)
-			-- vim.keymap.set('n', '<leader>dc', dap.continue, bufopts)
+			-- vim.keymap.set("n", "<leader>dc", dap.continue, bufopts)
 			-- vim.keymap.set('n', '<leader>di', dap.step_into, bufopts)
 			-- vim.keymap.set('n', '<leader>do', dap.step_over, bufopts)
 			-- vim.keymap.set('n', '<leader>dr', dap.repl.open, bufopts)
@@ -664,6 +660,65 @@ require("packer").startup(function(use)
 					end
 				end,
 			})
+		end,
+	})
+
+	use({
+		"klen/nvim-test",
+		config = function()
+			require("nvim-test").setup({})
+
+			vim.keymap.set("n", "<leader>tt", ":TestSuite<CR>")
+			vim.keymap.set("n", "<leader>tf", ":TestFile<CR>")
+			vim.keymap.set("n", "<leader>tn", ":TestNearest<CR>")
+			vim.keymap.set("n", "<leader>ti", ":TestInfo<CR>")
+		end,
+	})
+
+	use({
+		"simrat39/rust-tools.nvim",
+		after = { "nvim-lspconfig", "null-ls.nvim", "nvim-dap", "plenary.nvim" },
+		config = function()
+			local rt = require("rust-tools")
+			rt.setup({
+				server = {
+					on_attach = function(_, bufnr)
+						local bufopts = { buffer = bufnr }
+
+						vim.keymap.set("n", "<leader>dc", ":RustDebuggables<CR>", bufopts)
+						vim.keymap.set("n", "K", rt.hover_actions.hover_actions, bufopts)
+						vim.keymap.set("n", "<leader>ca", rt.code_action_group.code_action_group, bufopts)
+
+						vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+						vim.keymap.set("n", "gr", "<Cmd>Telescope lsp_references<CR>", bufopts)
+						vim.keymap.set("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", bufopts)
+						vim.keymap.set("n", "<leader>sw", "<Cmd>Telescope lsp_document_symbols<CR>", bufopts)
+						vim.keymap.set("n", "<leader>ss", "<Cmd>Telescope lsp_workspace_symbols<CR>", bufopts)
+					end,
+				},
+			})
+		end,
+	})
+
+	use({
+		"rgroli/other.nvim",
+		config = function()
+			require("other-nvim").setup({
+				mappings = {
+					{
+						context = "test",
+						pattern = "(.*).go$",
+						target = "%1_test.go",
+					},
+					{
+						context = "implementation",
+						pattern = "(.*)_test.go$",
+						target = "%1.go",
+					},
+				},
+			})
+
+			vim.keymap.set("n", "<leader>a", ":Other<CR>")
 		end,
 	})
 end)
