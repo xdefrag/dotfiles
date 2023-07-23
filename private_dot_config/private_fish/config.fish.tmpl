@@ -31,6 +31,8 @@ set -gx HOMEBREW_NO_ANALYTICS true
 
 set -gx FLUTTER_GIT_URL ssh://git@github.com/flutter/flutter.git
 set -gx ANDROID_HOME /Users/xdefrag/Library/Android/sdk
+fish_add_path $ANDROID_HOME/tools/bin
+fish_add_path $ANDROID_HOME/platform-tools
 
 alias cl clear
 
