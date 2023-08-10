@@ -19,6 +19,8 @@ set -gx LDFLAGS "-L/opt/homebrew/opt/llvm@12/lib -Wl,-rpath,/opt/homebrew/opt/ll
 fish_add_path /opt/homebrew/opt/llvm@12/bin
 fish_add_path /opt/homebrew/opt/curl/bin
 
+fish_add_path $HOME/.o3-cli/bin
+
 set -gx EDITOR nvim
 
 set -gx _GOPROXY https://goproxy.s.o3.ru
