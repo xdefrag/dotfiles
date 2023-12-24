@@ -76,6 +76,10 @@ set -gx MUSIC_PATH ~/Music
 alias nmq "cd $MUSIC_PATH; cmus-remote -q (nnn -T t -p -)"
 alias nml "cd $MUSIC_PATH; cmus-remote -l (nnn -T t -p -)"
 
+function xkcdpass
+    cat /usr/share/dict/words | perl -MList::Util -e 'print List::Util::shuffle <>' | head -n 4 | awk '{ sub(".", substr(toupper($0),1,1)); printf "%s", $0 }'; echo
+end
+
 source ~/.config/fish/gruvbox.fish
 theme_gruvbox dark
 
