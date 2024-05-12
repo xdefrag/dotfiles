@@ -53,6 +53,37 @@ vim.keymap.set("n", "<leader>on", ":NvimTreeFocus<CR>")
 
 vim.keymap.set("n", "<leader>cp", ':let @+=expand("%") . \':\' . line(".")<CR>')
 
+lsp_on_attach = function(_, bufnr)
+	-- Enable completion triggered by <c-x><c-o>
+	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+	-- Mappings.
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+
+	-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+	-- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+	vim.keymap.set("n", "gd", ":Telescope lsp_definitions<CR>", bufopts)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+	-- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+	vim.keymap.set("n", "gi", ":Telescope lsp_implementations<CR>", bufopts)
+	-- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+	-- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+	-- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+	-- vim.keymap.set('n', '<space>wl', function()
+	-- print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	-- end, bufopts)
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+	-- vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+	vim.keymap.set("n", "gr", ":Telescope lsp_references<CR>", bufopts)
+	vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
+	-- vim.keymap.set('n', '<space>lr', vim.lsp.codelens.run, bufopts)
+
+	vim.keymap.set("n", "<leader>sw", ":Telescope lsp_document_symbols<CR>", bufopts)
+	vim.keymap.set("n", "<leader>ss", ":Telescope lsp_workspace_symbols<CR>", bufopts)
+end
+
 require("packer").startup(function(use)
 	use({
 		"wbthomason/packer.nvim",
@@ -68,6 +99,16 @@ require("packer").startup(function(use)
 			vim.cmd([[colorscheme gruvbox]])
 		end,
 	})
+
+	-- use({
+	-- 	"mcchrish/zenbones.nvim",
+	-- 	requires = "rktjmp/lush.nvim",
+	-- 	config = function()
+	-- 		vim.opt.termguicolors = true
+	-- 		-- vim.opt.background = "black"
+	-- 		vim.cmd([[colorscheme zenwritten]])
+	-- 	end,
+	-- })
 
 	use("ludovicchabant/vim-gutentags")
 
@@ -285,39 +326,6 @@ require("packer").startup(function(use)
 		"neovim/nvim-lspconfig",
 		after = { "mason.nvim", "mason-lspconfig.nvim" },
 		config = function()
-			local lsp_on_attach = function(_, bufnr)
-				-- Enable completion triggered by <c-x><c-o>
-				vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-				-- Mappings.
-				-- See `:help vim.lsp.*` for documentation on any of the below functions
-				local bufopts = { noremap = true, silent = true, buffer = bufnr }
-
-				-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-				-- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-				vim.keymap.set("n", "gd", ":Telescope lsp_definitions<CR>", bufopts)
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-				-- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-				vim.keymap.set("n", "gi", ":Telescope lsp_implementations<CR>", bufopts)
-				-- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-				-- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-				-- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-				-- vim.keymap.set('n', '<space>wl', function()
-				-- print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-				-- end, bufopts)
-				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-				-- vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-				vim.keymap.set("n", "gr", ":Telescope lsp_references<CR>", bufopts)
-				-- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-				-- vim.keymap.set('n', '<space>lr', vim.lsp.codelens.run, bufopts)
-
-				vim.keymap.set("n", "<leader>sw", ":Telescope lsp_document_symbols<CR>", bufopts)
-				vim.keymap.set("n", "<leader>ss", ":Telescope lsp_workspace_symbols<CR>", bufopts)
-
-				vim.keymap.set("n", "<leader>dc", ":DapContinue<CR>", bufopts)
-			end
-
 			local lspconfig = require("lspconfig")
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -331,15 +339,14 @@ require("packer").startup(function(use)
 							GOLANG_PROTOBUF_REGISTRATION_CONFLICT = "ignore",
 						},
 						directoryFilters = {
-							"-graphql/exec_gqlgen.go",
 							"-vendor",
 						},
 						-- memoryMode = "DegradeClosed",
 						gofumpt = true,
 						staticcheck = true,
-						buildFlags = { "-tags=integration,statemachine_test" },
+						buildFlags = { "-tags=integration" },
 						usePlaceholders = false,
-						experimentalPackageCacheKey = true,
+						-- experimentalPackageCacheKey = true,
 					},
 				},
 			})
@@ -358,6 +365,14 @@ require("packer").startup(function(use)
 			lspconfig.tsserver.setup({
 				capabilities = capabilities,
 				on_attach = lsp_on_attach,
+				root_dir = lspconfig.util.root_pattern("package.json"),
+				single_file_support = false,
+			})
+
+			lspconfig.denols.setup({
+				capabilities = capabilities,
+				on_attach = lsp_on_attach,
+				root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
 			})
 
 			lspconfig.graphql.setup({
@@ -404,29 +419,11 @@ require("packer").startup(function(use)
 						behavior = cmp.ConfirmBehavior.Replace,
 						select = true,
 					}),
-					["<Tab>"] = function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
-						elseif luasnip.expand_or_jumpable() then
-							luasnip.expand_or_jump()
-						else
-							fallback()
-						end
-					end,
-					["<S-Tab>"] = function(fallback)
-						if cmp.visible() then
-							cmp.select_prev_item()
-						elseif luasnip.jumpable(-1) then
-							luasnip.jump(-1)
-						else
-							fallback()
-						end
-					end,
 				},
 				sources = {
+					{ name = "copilot", keyword_length = 0 },
 					{ name = "nvim_lsp" },
 					{ name = "nvim_lsp_signature_help" },
-					{ name = "copilot", keyword_length = 0 },
 					{ name = "luasnip" },
 					{ name = "emoji" },
 				},
@@ -448,6 +445,7 @@ require("packer").startup(function(use)
 		requires = { "rafamadriz/friendly-snippets" },
 		config = function()
 			require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip.loaders.from_snipmate").lazy_load()
 		end,
 	})
 
@@ -457,6 +455,13 @@ require("packer").startup(function(use)
 			require("copilot").setup({
 				suggestion = { enabled = false },
 				panel = { enabled = false },
+				filetypes = {
+					go = true,
+					javascript = true,
+					typescript = true,
+					dart = true,
+					["*"] = false,
+				},
 			})
 		end,
 	})
@@ -466,6 +471,38 @@ require("packer").startup(function(use)
 		after = { "copilot.lua" },
 		config = function()
 			require("copilot_cmp").setup()
+		end,
+	})
+
+	use({
+		"nvim-neotest/neotest",
+		requires = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-neotest/neotest-go",
+			"markemmons/neotest-deno",
+		},
+		config = function()
+			require("neotest").setup({
+				adapters = {
+					require("neotest-go")({
+						experimental = {
+							test_table = true,
+						},
+						args = { "-count=1", "-timeout=60s" },
+					}),
+					require("neotest-deno"),
+				},
+			})
+
+			local bufopts = { noremap = true, silent = true }
+			vim.keymap.set("n", "<leader>tt", "<cmd>lua require('neotest').run.run()<cr>", bufopts)
+			vim.keymap.set("n", "<leader>ta", "<cmd>lua require('neotest').run.attach()<cr>", bufopts)
+			vim.keymap.set("n", "<leader>ts", "<cmd>lua require('neotest').run.stop()<cr>", bufopts)
+			vim.keymap.set("n", "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", bufopts)
+			vim.keymap.set("n", "<leader>td", "<cmd>lua require('neotest').run.run({ strategy = 'dap' })<cr>", bufopts)
 		end,
 	})
 
@@ -545,7 +582,10 @@ require("packer").startup(function(use)
 
 	use({
 		"rcarriga/nvim-dap-ui",
-		requires = { "mfussenegger/nvim-dap" },
+		requires = {
+			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio",
+		},
 		config = function()
 			require("dapui").setup({
 				mappings = {
@@ -633,19 +673,19 @@ require("packer").startup(function(use)
 					null_ls.builtins.diagnostics.sqlfluff.with({
 						extra_args = { "--dialect", "postgres" }, -- change to your dialect
 					}),
-					null_ls.builtins.diagnostics.staticcheck,
+					-- null_ls.builtins.diagnostics.staticcheck,
 					null_ls.builtins.formatting.buf,
 					null_ls.builtins.formatting.fish_indent,
 					null_ls.builtins.formatting.gdformat,
 					null_ls.builtins.formatting.gofumpt,
-					-- null_ls.builtins.formatting.goimports,
+					null_ls.builtins.formatting.goimports,
 					null_ls.builtins.formatting.jq,
 					-- null_ls.builtins.formatting.nixpkgs_fmt,
 					-- null_ls.builtins.formatting.pg_format,
 					null_ls.builtins.formatting.rustfmt,
 					null_ls.builtins.formatting.stylua,
 					null_ls.builtins.formatting.taplo,
-					null_ls.builtins.formatting.yamlfmt,
+					-- null_ls.builtins.formatting.yamlfmt,
 				},
 				on_attach = function(client, bufnr)
 					if client.supports_method("textDocument/formatting") then
@@ -660,18 +700,6 @@ require("packer").startup(function(use)
 					end
 				end,
 			})
-		end,
-	})
-
-	use({
-		"klen/nvim-test",
-		config = function()
-			require("nvim-test").setup({})
-
-			vim.keymap.set("n", "<leader>tt", ":TestSuite<CR>")
-			vim.keymap.set("n", "<leader>tf", ":TestFile<CR>")
-			vim.keymap.set("n", "<leader>tn", ":TestNearest<CR>")
-			vim.keymap.set("n", "<leader>ti", ":TestInfo<CR>")
 		end,
 	})
 
@@ -719,6 +747,33 @@ require("packer").startup(function(use)
 			})
 
 			vim.keymap.set("n", "<leader>a", ":Other<CR>")
+		end,
+	})
+
+	use({
+		"Nash0x7E2/awesome-flutter-snippets",
+	})
+
+	use({
+		"stevearc/dressing.nvim",
+		config = function()
+			require("dressing").setup({})
+		end,
+	})
+
+	use({
+		"akinsho/flutter-tools.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"stevearc/dressing.nvim", -- optional for vim.ui.select
+		},
+		config = function()
+			require("flutter-tools").setup({
+				lsp = {
+					capabilities = vim.lsp.protocol.make_client_capabilities(),
+					on_attach = lsp_on_attach,
+				},
+			})
 		end,
 	})
 end)
