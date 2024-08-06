@@ -1,9 +1,7 @@
 [user]
 	name = Stanislav Karkavin
-	email = skarkavin@ozon.ru
-	signingkey = BF5C69092A4272C2F3969407E93C571826158F0D
-	; email = me@xdefrag.dev
-	; signingkey = DB956C1DD8450DBA8A203156301D5E00654A95E6
+	email = me@xdefrag.dev
+	signingkey = DB956C1DD8450DBA8A203156301D5E00654A95E6
 [core]
   excludesfile = ~/.gitignore
 [commit]
