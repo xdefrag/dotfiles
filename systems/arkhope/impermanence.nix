@@ -27,6 +27,7 @@
         "Music"
         "Video"
         "Games"
+        "Pictures"
         ".local/share/nvim"
         ".config/nvim"
         ".config/alacritty"

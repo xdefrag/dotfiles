@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   alacritty-theme-ayu-dark = builtins.fetchurl {
     url =
@@ -43,6 +43,7 @@ in {
     innoextract
     pass
     xclip
+    dmenu
 
     # programming
     busybox
@@ -82,7 +83,7 @@ in {
     shellAliases = {
       v = "nvim";
       gst = "git status";
-      gdc = "git diff --cache";
+      gdc = "git diff --cached";
       gp = "git push";
       gpf = "git push --force";
       gri = "git rebase --interactive";
@@ -151,6 +152,10 @@ in {
         normal.family = "Iosevka Nerd Font Mono";
         size = 10.0;
       };
+      shell = {
+        program = "${pkgs.tmux}/bin/tmux";
+        args = [ "new-session" "-A" "-s" "general" ];
+      };
     };
   };
 
@@ -163,6 +168,37 @@ in {
   };
 
   programs.home-manager.enable = true;
+
+  xsession.windowManager.i3 = {
+    enable = true;
+    config = {
+      terminal = "${pkgs.alacritty}/bin/alacritty";
+      fonts = {
+        names = [ "Iosevka Nerd Font Mono" "monospace" ];
+        style = "Bold Semi-Condensed";
+        size = 11.0;
+      };
+      window = {
+        titlebar = false;
+        hideEdgeBorders = "smart";
+      };
+      startup = [{
+        always = false;
+        command = "exec ${pkgs.alacritty}/bin/alacritty";
+        notification = false;
+      }];
+      assigns = {
+        "1: main" = [{ class = "^Alacritty$"; }];
+        "2: web" = [{ class = "^Brave-browser$"; }];
+      };
+    };
+  };
+
+  xsession.initExtra = ''
+    ${pkgs.feh}/bin/feh --bg-scale "$HOME"/Pictures/wallpaper.jpg
+  '';
+
+  services.syncthing.enable = true;
 
   home.stateVersion = "23.11";
 }
