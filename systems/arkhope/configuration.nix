@@ -13,7 +13,7 @@
 
   nixpkgs.config.allowUnfree = false;
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "arkhope";
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable =
@@ -48,7 +48,7 @@
   services.xserver = {
     windowManager.i3 = {
       enable = true;
-      extraPackages = with pkgs; [ dmenu i3status i3lock i3blocks alacritty ];
+      extraPackages = with pkgs; [ dmenu i3status i3lock i3blocks ];
     };
   };
 
@@ -81,24 +81,6 @@
     isNormalUser = true;
     extraGroups =
       [ "wheel" "audio" "video" "input" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      brave
-      syncthing
-      unzip
-      feh
-      busybox
-      innoextract
-      tmux
-      pass
-      xclip
-      fish
-      git
-      nodejs-slim
-      ctags
-      nixd
-      nixfmt-classic
-      gcc
-    ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -155,6 +137,5 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
 
