@@ -1,5 +1,5 @@
-{ impermanence, ... }: {
-  imports = [ impermanence.nixosModules.impermanence ];
+{ inputs, ... }: {
+  imports = [ inputs.impermanence.nixosModules.impermanence ];
 
   environment.persistence."/persist" = {
     directories = [
@@ -31,11 +31,12 @@
         ".config/nvim"
         ".config/alacritty"
         ".config/fish"
+        ".config/i3"
         ".config/syncthing"
         ".config/BraveSoftware"
         ".dotfiles"
       ];
-      files = [ ".gitconfig" ".tmux.conf" ".config/i3/config" ];
+      files = [ ];
     };
   };
 }
