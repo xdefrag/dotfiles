@@ -85,13 +85,20 @@
     initialHashedPassword =
       "$y$j9T$ugg1nNi7vUk1.ho4y23fC1$9jSV3.xAitJIyz0W59pTlS1dgoDAPHJBnTlCMWpbYAD";
     isNormalUser = true;
-    extraGroups =
-      [ "wheel" "audio" "video" "input" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "audio"
+      "video"
+      "input"
+      "docker"
+    ]; # Enable ‘sudo’ for the user.
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [ neovim ];
+
+  virtualisation.docker.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

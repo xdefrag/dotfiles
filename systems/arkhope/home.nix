@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 let
   alacritty-theme-ayu-dark = builtins.fetchurl {
     url =
@@ -15,16 +15,6 @@ let
       "https://github.com/edouard-lopez/ayu-theme.fish/blob/main/conf.d/ayu-dark.fish";
     sha256 = "0nlyfvdhjiafcvlpkf0xvvl2rf9qhvxs3qw2jamwp6zs8v95xl5h";
   };
-  tmux-pomodoro-plus = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "tmux-pomodoro-plus";
-    version = "";
-    src = pkgs.fetchFromGitHub {
-      owner = "olimorris";
-      repo = "tmux-pomodoro-plus";
-      rev = "51fb321da594dab5a4baa532b53ea19b628e2822";
-      sha256 = "sha256-LjhG2+DOAtLwBspOzoI2UDTgbUFWj7vvj6TQXqWw9z0=";
-    };
-  };
 in {
   home.username = "xdefrag";
   home.homeDirectory = "/home/xdefrag";
@@ -36,7 +26,7 @@ in {
 
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "Iosevka" ]; })
-    brave
+    qutebrowser
     syncthing
     unzip
     feh
@@ -44,10 +34,12 @@ in {
     pass
     xclip
     dmenu
+    session-desktop
 
     # programming
     busybox
     gnumake
+    ripgrep
     ctags
     nodejs_22
     typescript
@@ -137,7 +129,7 @@ in {
     mouse = false;
     sensibleOnTop = true;
     disableConfirmationPrompt = true;
-    plugins = with pkgs.tmuxPlugins; [ yank urlview tmux-pomodoro-plus ];
+    plugins = with pkgs.tmuxPlugins; [ yank urlview ];
     extraConfig = lib.mkAfter ''
       source ~/.config/tmux/themes/ayu_dark.conf
     '';
@@ -176,7 +168,7 @@ in {
       fonts = {
         names = [ "Iosevka Nerd Font Mono" "monospace" ];
         style = "Bold Semi-Condensed";
-        size = 11.0;
+        size = 14.0;
       };
       window = {
         titlebar = false;
@@ -189,7 +181,7 @@ in {
       }];
       assigns = {
         "1: main" = [{ class = "^Alacritty$"; }];
-        "2: web" = [{ class = "^Brave-browser$"; }];
+        "2: web" = [{ class = "^qutebrowser$"; }];
       };
     };
   };
@@ -197,8 +189,6 @@ in {
   xsession.initExtra = ''
     ${pkgs.feh}/bin/feh --bg-scale "$HOME"/Pictures/wallpaper.jpg
   '';
-
-  services.syncthing.enable = true;
 
   home.stateVersion = "23.11";
 }

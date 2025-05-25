@@ -33,8 +33,6 @@
         ".config/alacritty"
         ".config/fish"
         ".config/i3"
-        ".config/syncthing"
-        ".config/BraveSoftware"
         ".dotfiles"
       ];
       files = [ ];
