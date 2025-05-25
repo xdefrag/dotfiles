@@ -33,6 +33,7 @@
         ".config/alacritty"
         ".config/fish"
         ".config/i3"
+        ".config/qutebrowser"
         ".dotfiles"
       ];
       files = [ ];

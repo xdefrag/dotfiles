@@ -131,6 +131,9 @@ in {
     disableConfirmationPrompt = true;
     plugins = with pkgs.tmuxPlugins; [ yank urlview ];
     extraConfig = lib.mkAfter ''
+      set -g default-terminal "tmux-256color"
+      set -ga terminal-overrides ",*256col*:Tc"
+
       source ~/.config/tmux/themes/ayu_dark.conf
     '';
   };
@@ -159,6 +162,112 @@ in {
     vimdiffAlias = true;
   };
 
+  programs.qutebrowser = {
+    enable = true;
+    searchEngines = { nw = "https://wiki.nixos.org/index.php?=search={}"; };
+    settings = { colors = { webpage = { darkmode = { enabled = true; }; }; }; };
+  };
+
+  # TODO: https://abhinandhs.in/articles/setting-up-newsboat-the-nix-way
+  programs.newsboat = {
+    enable = true;
+    urls = [
+      {
+        title = "Mises Institute";
+        tags = [ "libertarianism" ];
+        url = "https://mises.org/rss.xml";
+      }
+      {
+        title = "Cato Institute";
+        tags = [ "libertarianism" ];
+        url = "https://www.cato.org/rss.xml";
+      }
+      {
+        title = "Gray Mirror";
+        tags = [ "nrx" ];
+        url = "https://graymirror.substack.com/feed";
+      }
+      {
+        title = "NixOS Newsletters";
+        tags = [ "nixos" "software" ];
+        url = "https://nixos.org/blog/newsletters-rss.xml";
+      }
+      {
+        title = "NixOS Announcements";
+        tags = [ "nixos" "software" ];
+        url = "https://nixos.org/blog/announcements-rss.xml";
+      }
+      {
+        title = "NixOS Stories";
+        tags = [ "nixos" "software" ];
+        url = "https://nixos.org/blog/stories-rss.xml";
+      }
+      {
+        title = "Neovim News";
+        tags = [ "neovim" "software" ];
+        url = "https://neovim.io/news.xml";
+      }
+      {
+        title = "Golang Weekly";
+        tags = [ "golang" "software" ];
+        url = "https://cprss.s3.amazonaws.com/golangweekly.com.xml";
+      }
+      {
+        title = "Stellar Blog";
+        tags = [ "stellar" "software" ];
+        url = "https://stellar.org/blog/rss.xml";
+      }
+      {
+        title = "Liberland Press";
+        tags = [ "liberland" "dao" "focj" ];
+        url = "https://liberlandpress.com/feed/";
+      }
+      {
+        title = "Golang Releases";
+        tags = [ "golang" "software" "github" ];
+        url = "https://github.com/golang/go/releases.atom";
+      }
+      {
+        title = "Watermill Releases";
+        tags = [ "golang" "software" "github" ];
+        url = "https://github.com/ThreeDotsLabs/watermill/releases.atom";
+      }
+      {
+        title = "Lo Releases";
+        tags = [ "golang" "software" "github" ];
+        url = "https://github.com/samber/lo/releases.atom";
+      }
+    ];
+    extraConfig = ''
+      refresh-on-startup yes
+      reload-threads 100
+
+      show-read-feeds yes
+      show-read-articles yes
+
+      color info default default reverse
+      color listnormal_unread yellow default
+      color listfocus blue default reverse bold
+      color listfocus_unread blue default reverse bold
+
+      text-width 80
+
+      bind-key h quit
+      bind-key j down
+      bind-key k up
+      bind-key l open
+      bind-key H prev-feed
+      bind-key L next-feed
+      bind-key g home
+      bind-key G end
+      bind-key SPACE macro-prefix 
+      bind-key b bookmark 
+      bind-key ^F pagedown 
+      bind-key ^B pageup 
+      bind-key ^H toggle-show-read-feeds
+    '';
+  };
+
   programs.home-manager.enable = true;
 
   xsession.windowManager.i3 = {
@@ -168,7 +277,7 @@ in {
       fonts = {
         names = [ "Iosevka Nerd Font Mono" "monospace" ];
         style = "Bold Semi-Condensed";
-        size = 14.0;
+        size = 18.0;
       };
       window = {
         titlebar = false;
@@ -183,6 +292,53 @@ in {
         "1: main" = [{ class = "^Alacritty$"; }];
         "2: web" = [{ class = "^qutebrowser$"; }];
       };
+      colors = {
+        focused = {
+          border = "#FFCC66";
+          background = "#1F2430";
+          text = "#CBCCC6";
+          indicator = "#FFCC66";
+          childBorder = "#FFCC66";
+        };
+        unfocused = {
+          border = "#707A8C";
+          background = "#1F2430";
+          text = "#CBCCC6";
+          indicator = "#707A8C";
+          childBorder = "#707A8C";
+        };
+        urgent = {
+          border = "#FF6B6B";
+          background = "#1F2430";
+          text = "#CBCCC6";
+          indicator = "#FF6B6B";
+          childBorder = "#FF6B6B";
+        };
+        background = "#1F2430";
+      };
+      bars = [{
+        statusCommand = "${pkgs.i3status}/bin/i3status";
+        colors = {
+          background = "#1F2430";
+          statusline = "#CBCCC6";
+          separator = "#707A8C";
+          focusedWorkspace = {
+            border = "#FFCC66";
+            background = "#1F2430";
+            text = "#CBCCC6";
+          };
+          inactiveWorkspace = {
+            border = "#707A8C";
+            background = "#1F2430";
+            text = "#CBCCC6";
+          };
+          urgentWorkspace = {
+            border = "#FF6B6B";
+            background = "#1F2430";
+            text = "#CBCCC6";
+          };
+        };
+      }];
     };
   };
 
