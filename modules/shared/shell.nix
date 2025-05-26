@@ -36,9 +36,24 @@ in {
       }
     ];
     shellInit = ''
-      # Source Home Manager session variables
-      if test -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-        bass source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      # Add Home Manager paths to PATH
+      if test -d "/etc/profiles/per-user/$USER/bin"
+        fish_add_path --prepend "/etc/profiles/per-user/$USER/bin"
+      end
+      if test -d "$HOME/.nix-profile/bin"
+        fish_add_path --prepend "$HOME/.nix-profile/bin"
+      end
+      
+      # Source Home Manager session variables using bass (for bash compatibility)
+      if command -q bass
+        if test -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+          bass source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+        else if test -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+          bass source "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
+        end
+      else
+        # Fallback: manually set common environment variables
+        set -gx EDITOR nvim
       end
     '';
     shellInitLast = ''
