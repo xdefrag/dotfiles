@@ -6,7 +6,7 @@
     ../../modules/nixos/networking.nix
     ../../modules/nixos/users.nix
     ../../modules/nixos/services.nix
-    ../../modules/shared/base.nix
+    ../../modules/nixos/base.nix
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480s
   ];
 

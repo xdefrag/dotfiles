@@ -9,6 +9,8 @@
     ../../modules/shared/development.nix
     ../../modules/shared/shell.nix
     ../../modules/shared/security.nix
+    ../../modules/shared/utilities.nix
+    ../../modules/shared/media.nix
   ];
 
   home = {

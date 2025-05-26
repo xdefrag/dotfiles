@@ -7,9 +7,17 @@
     };
   };
 
+  programs.gpg = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     pass
+    gnupg
   ] ++ lib.optionals pkgs.stdenv.isLinux [
-    xclip  # For clipboard integration (Linux only)
+    pinentry  # GPG PIN entry (Linux only)
+    xclip     # For clipboard integration (Linux only)
+  ] ++ lib.optionals pkgs.stdenv.isDarwin [
+    pinentry_mac  # macOS GPG PIN entry
   ];
 } 

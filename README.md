@@ -45,7 +45,11 @@ darwin-rebuild switch --flake .#ipstale
 ### Standalone Home Manager
 
 ```bash
+# Linux
 home-manager switch --flake .#xdefrag@standalone
+
+# macOS
+home-manager switch --flake .#xdefrag@darwin
 ```
 
 ## Модули
@@ -54,7 +58,9 @@ home-manager switch --flake .#xdefrag@standalone
 - **base.nix** - базовые настройки Nix (experimental features, gc, etc.)
 - **development.nix** - инструменты разработки (Go, Node.js, языковые серверы)
 - **shell.nix** - настройки shell (fish, aliases)
-- **security.nix** - настройки безопасности (GPG, SSH)
+- **security.nix** - настройки безопасности (GPG, SSH, pass)
+- **utilities.nix** - системные утилиты (curl, wget, fd, fzf, tree, etc.)
+- **media.nix** - медиа утилиты (ffmpeg, mpv)
 
 ### Home Manager modules (`modules/home-manager/`)
 - **terminal.nix** - терминальные приложения (alacritty, tmux)
@@ -108,6 +114,30 @@ home-manager switch --flake .#xdefrag@standalone
   system.stateVersion = "23.11";
 }
 ```
+
+## Миграция из Homebrew в Home Manager
+
+В рамках оптимизации конфигурации были перенесены следующие пакеты из Homebrew в Home Manager:
+
+### Перенесенные пакеты:
+- **Development tools**: `git`, `go`, `gofumpt`, `golangci-lint`, `gopls`, `lua-language-server`, `node`
+- **System utilities**: `curl`, `wget`, `fd`, `fzf`, `tree`, `ncdu`, `p7zip`, `unzip`, `tldr`, `ripgrep`, `jq`
+- **Shell**: `fish`, `tmux`
+- **Media**: `ffmpeg`, `mpv`, `newsboat`
+- **Security**: `gnupg`, `pass`, `pinentry`
+- **Terminal**: `alacritty`
+
+### Новые модули:
+- **`modules/shared/utilities.nix`** - системные утилиты с настройкой fzf
+- **`modules/shared/media.nix`** - медиа утилиты с конфигурацией mpv
+- **`modules/nixos/base.nix`** и **`modules/darwin/base.nix`** - разделенные системные настройки
+
+### Преимущества миграции:
+- Декларативная конфигурация всех инструментов
+- Единообразные настройки на всех платформах
+- Автоматическая настройка программ (fzf, mpv, gpg)
+- Уменьшение зависимости от Homebrew
+- Лучшая интеграция с Nix экосистемой
 
 ## Преимущества
 

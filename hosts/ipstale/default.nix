@@ -4,7 +4,7 @@
     ../../modules/darwin/homebrew.nix
     ../../modules/darwin/fonts.nix
     ../../modules/darwin/security.nix
-    ../../modules/shared/base.nix
+    ../../modules/darwin/base.nix
   ];
 
   # Host-specific settings

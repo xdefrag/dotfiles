@@ -66,6 +66,11 @@
           modules = [ ./users/xdefrag ];
           extraSpecialArgs = { inherit inputs; };
         };
+        "xdefrag@darwin" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [ ./users/xdefrag ];
+          extraSpecialArgs = { inherit inputs; };
+        };
       };
     };
 } 
