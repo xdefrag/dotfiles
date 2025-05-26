@@ -1,4 +1,7 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+let
+  colors = import ../../modules/shared/colorscheme.nix;
+in {
   imports = [
     ../../modules/home-manager/terminal.nix
     ../../modules/home-manager/editors.nix
@@ -46,48 +49,48 @@
       };
       colors = {
         focused = {
-          border = "#FFCC66";
-          background = "#1F2430";
-          text = "#CBCCC6";
-          indicator = "#FFCC66";
-          childBorder = "#FFCC66";
+          border = colors.everforest.aqua;
+          background = colors.everforest.bg1;
+          text = colors.everforest.fg;
+          indicator = colors.everforest.aqua;
+          childBorder = colors.everforest.aqua;
         };
         unfocused = {
-          border = "#707A8C";
-          background = "#1F2430";
-          text = "#CBCCC6";
-          indicator = "#707A8C";
-          childBorder = "#707A8C";
+          border = colors.everforest.grey0;
+          background = colors.everforest.bg0;
+          text = colors.everforest.fg;
+          indicator = colors.everforest.grey0;
+          childBorder = colors.everforest.grey0;
         };
         urgent = {
-          border = "#FF6B6B";
-          background = "#1F2430";
-          text = "#CBCCC6";
-          indicator = "#FF6B6B";
-          childBorder = "#FF6B6B";
+          border = colors.everforest.red;
+          background = colors.everforest.bg0;
+          text = colors.everforest.fg;
+          indicator = colors.everforest.red;
+          childBorder = colors.everforest.red;
         };
-        background = "#1F2430";
+        background = colors.everforest.bg0;
       };
       bars = [{
         statusCommand = "${pkgs.i3status}/bin/i3status";
         colors = {
-          background = "#1F2430";
-          statusline = "#CBCCC6";
-          separator = "#707A8C";
+          background = colors.everforest.bg0;
+          statusline = colors.everforest.fg;
+          separator = colors.everforest.grey0;
           focusedWorkspace = {
-            border = "#FFCC66";
-            background = "#1F2430";
-            text = "#CBCCC6";
+            border = colors.everforest.aqua;
+            background = colors.everforest.bg1;
+            text = colors.everforest.fg;
           };
           inactiveWorkspace = {
-            border = "#707A8C";
-            background = "#1F2430";
-            text = "#CBCCC6";
+            border = colors.everforest.grey0;
+            background = colors.everforest.bg0;
+            text = colors.everforest.fg;
           };
           urgentWorkspace = {
-            border = "#FF6B6B";
-            background = "#1F2430";
-            text = "#CBCCC6";
+            border = colors.everforest.red;
+            background = colors.everforest.bg0;
+            text = colors.everforest.fg;
           };
         };
       }];

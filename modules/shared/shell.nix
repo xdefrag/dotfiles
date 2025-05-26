@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  colors = import ./colorscheme.nix;
+in {
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -27,10 +30,46 @@
         name = "sponge";
         src = pkgs.fishPlugins.sponge;
       }
+      {
+        name = "bass";
+        src = pkgs.fishPlugins.bass;
+      }
     ];
+    shellInit = ''
+      # Source Home Manager session variables
+      if test -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+        bass source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      end
+    '';
     shellInitLast = ''
       set fish_greeting
-      enable_ayu_theme_dark
+      
+      # Everforest color scheme for fish
+      set -g fish_color_normal ${colors.everforest.fg}
+      set -g fish_color_command ${colors.everforest.green}
+      set -g fish_color_keyword ${colors.everforest.purple}
+      set -g fish_color_quote ${colors.everforest.yellow}
+      set -g fish_color_redirection ${colors.everforest.aqua}
+      set -g fish_color_end ${colors.everforest.orange}
+      set -g fish_color_error ${colors.everforest.red}
+      set -g fish_color_param ${colors.everforest.fg}
+      set -g fish_color_comment ${colors.everforest.grey0}
+      set -g fish_color_selection --background=${colors.everforest.bg2}
+      set -g fish_color_search_match --background=${colors.everforest.bg3}
+      set -g fish_color_operator ${colors.everforest.aqua}
+      set -g fish_color_escape ${colors.everforest.purple}
+      set -g fish_color_autosuggestion ${colors.everforest.grey0}
+      
+      # Prompt colors
+      set -g fish_color_cwd ${colors.everforest.blue}
+      set -g fish_color_user ${colors.everforest.green}
+      set -g fish_color_host ${colors.everforest.aqua}
+      
+      # Pager colors
+      set -g fish_pager_color_progress ${colors.everforest.grey0}
+      set -g fish_pager_color_prefix ${colors.everforest.aqua}
+      set -g fish_pager_color_completion ${colors.everforest.fg}
+      set -g fish_pager_color_description ${colors.everforest.grey1}
     '';
   };
 } 

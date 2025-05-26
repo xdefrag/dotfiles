@@ -56,18 +56,19 @@ home-manager switch --flake .#xdefrag@darwin
 
 ### Shared modules (`modules/shared/`)
 - **base.nix** - базовые настройки Nix (experimental features, gc, etc.)
+- **colorscheme.nix** - единая цветовая схема Everforest Dark Soft для всех приложений
 - **development.nix** - инструменты разработки (Go, Node.js, языковые серверы)
-- **shell.nix** - настройки shell (fish, aliases)
+- **shell.nix** - настройки shell (fish, aliases, цветовая схема)
 - **security.nix** - настройки безопасности (GPG, SSH, pass)
 - **utilities.nix** - системные утилиты (curl, wget, fd, fzf, tree, etc.)
 - **media.nix** - медиа утилиты (ffmpeg, mpv)
 
 ### Home Manager modules (`modules/home-manager/`)
-- **terminal.nix** - терминальные приложения (alacritty, tmux)
+- **terminal.nix** - терминальные приложения (alacritty, tmux) с цветовой схемой Everforest
 - **editors.nix** - редакторы (neovim)
 - **browsers.nix** - браузеры (qutebrowser)
-- **media.nix** - медиа приложения (newsboat)
-- **themes.nix** - темы и шрифты
+- **media.nix** - медиа приложения (newsboat) с цветовой схемой Everforest
+- **themes.nix** - шрифты (Iosevka Nerd Font)
 - **git.nix** - конфигурация Git
 
 ### NixOS modules (`modules/nixos/`)
@@ -139,6 +140,23 @@ home-manager switch --flake .#xdefrag@darwin
 - Уменьшение зависимости от Homebrew
 - Лучшая интеграция с Nix экосистемой
 
+## Цветовая схема
+
+Конфигурация использует единую цветовую схему **Everforest Dark Soft** для всех приложений:
+
+- **Основа**: Зеленая цветовая схема, разработанная для комфорта глаз
+- **Применение**: Fish shell, Alacritty, Tmux, Newsboat, i3 window manager
+- **Файл**: `modules/shared/colorscheme.nix` - централизованное определение всех цветов
+- **Источник**: [Everforest by sainnhe](https://github.com/sainnhe/everforest/blob/master/palette.md)
+
+### Основные цвета:
+- **Фон**: `#333C43` (dark soft background)
+- **Текст**: `#D3C6AA` (основной текст)
+- **Акцент**: `#83C092` (aqua - ссылки, выделения)
+- **Ошибки**: `#E67E80` (red)
+- **Успех**: `#A7C080` (green)
+- **Предупреждения**: `#DBBC7F` (yellow)
+
 ## Преимущества
 
 - **Переиспользование кода** - общие настройки используются на всех платформах
@@ -147,3 +165,4 @@ home-manager switch --flake .#xdefrag@darwin
 - **Поддержка множества платформ** - единая конфигурация для Linux и macOS
 - **Централизованное управление** - все настройки в одном месте
 - **Условная логика** - разные настройки для разных платформ/хостов
+- **Единая цветовая схема** - согласованный внешний вид всех приложений

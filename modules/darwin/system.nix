@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, pkgs, ... }: {
   # System defaults
   system.defaults = {
     # Dock settings

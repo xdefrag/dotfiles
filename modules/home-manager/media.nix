@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  colors = import ../shared/colorscheme.nix;
+in {
   programs.newsboat = {
     enable = true;
     urls = [
@@ -130,10 +133,14 @@
       show-read-feeds yes
       show-read-articles yes
 
-      color info default default reverse
-      color listnormal_unread yellow default
-      color listfocus blue default reverse bold
-      color listfocus_unread blue default reverse bold
+      # Everforest color scheme for newsboat
+      color background          default   default
+      color listnormal          default   default
+      color listnormal_unread   ${colors.everforest.yellow}   default
+      color listfocus           ${colors.everforest.bg0}      ${colors.everforest.aqua}   bold
+      color listfocus_unread    ${colors.everforest.bg0}      ${colors.everforest.green}  bold
+      color info                ${colors.everforest.fg}       ${colors.everforest.bg1}    bold
+      color article             default   default
 
       text-width 80
 

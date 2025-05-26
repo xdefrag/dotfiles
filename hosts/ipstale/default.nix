@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ../../modules/darwin/system.nix
     ../../modules/darwin/homebrew.nix
@@ -16,6 +16,11 @@
 
   # The platform the configuration will be used on
   nixpkgs.hostPlatform = "aarch64-darwin";
+
+  # System packages that should be available in /Applications/Nix Apps
+  environment.systemPackages = with pkgs; [
+    alacritty
+  ];
 
   # User configuration
   home-manager = {
